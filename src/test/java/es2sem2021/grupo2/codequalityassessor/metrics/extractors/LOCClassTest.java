@@ -39,4 +39,11 @@ class LOCClassTest {
 		HashMap<String, Integer> results = LOCClass.getClassLOC(f);
 		assertNull(results);
 	}
+	
+	@Test
+	void EmptyFile() {
+		File f = new File("testFiles\\src\\Empty.java");
+		HashMap<String, Integer> results = LOCClass.getClassLOC(f);
+		assertNull(results);
+	}
 }
