@@ -22,5 +22,11 @@ class LOCClassTest {
 		int numberLines = LOCClass.getClassLOC(f);
 		assertEquals(50, numberLines);
 	}
-
+	
+	@Test
+	void SourceCodeParserLines() throws IOException {
+		File f = new File("C:\\jasml_0.10\\src\\com\\jasml\\compiler\\SourceCodeParser.java");
+		int numberLines = LOCClass.getClassLOC(f);
+		assertEquals(1371, numberLines);
+	}
 }

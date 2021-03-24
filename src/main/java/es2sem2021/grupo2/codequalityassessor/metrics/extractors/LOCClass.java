@@ -12,12 +12,11 @@ public class LOCClass {
 	public static int getClassLOC(File f) throws IOException {
 		String[] lines = Files.readString(f.toPath()).split("\r\n");
 		int firstLine = 0;
-		Pattern patternStart = Pattern.compile("class+", Pattern.CASE_INSENSITIVE);
+		Pattern patternStart = Pattern.compile("class\\s+", Pattern.CASE_INSENSITIVE);
 		for (String l: lines) {
 			Matcher matcher = patternStart.matcher(l);
 			firstLine++;
 			if (matcher.find()) {
-				System.out.println(firstLine);
 				break;
 			}
 		}
@@ -26,7 +25,6 @@ public class LOCClass {
 		for (int i=lines.length-1; i>firstLine; i--) {
 		    Matcher matcher = patternEnd.matcher(lines[i]);
 			if (matcher.find()) {
-				System.out.println(i+1);
 				return i - firstLine + 2;
 			}
 		}
