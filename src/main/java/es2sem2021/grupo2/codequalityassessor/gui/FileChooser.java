@@ -1,9 +1,12 @@
-package es2sem2021.grupo2.codequalityassessor;
+package es2sem2021.grupo2.codequalityassessor.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
    
 public class FileChooser extends JFrame implements ActionListener{
 
@@ -52,6 +55,16 @@ public class FileChooser extends JFrame implements ActionListener{
             if (r == JFileChooser.APPROVE_OPTION) {
                 // set the label to the path of the selected directory
                 label.setText(j.getSelectedFile().getAbsolutePath());
+                FileGenerator g = new FileGenerator(j.getSelectedFile().getAbsolutePath());
+                try {
+					g.main();
+				} catch (InvalidFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
             // if the user cancelled the operation
             else
