@@ -7,17 +7,14 @@ import java.util.List;
 
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter; 
 
 public class NOM {
-	public static void main( String[] args )
-	{
-		System.out.println(nom("C:\\Users\\MestreGui\\Downloads\\jasml_0.10\\src\\com\\jasml\\compiler\\GrammerException.java"));
-	}
-
 	private static class MethodNameCollector extends VoidVisitorAdapter<List<String>> {			
 		@Override
 		public void visit(MethodDeclaration md, List<String> collector) {
@@ -42,8 +39,24 @@ public class NOM {
 			VoidVisitor<List<String>> constructorNameCollector = new ConstructorNameCollector();
 			methodNameCollector.visit(compilationUnit, methodNames);
 			constructorNameCollector.visit(compilationUnit, methodNames);
-			//methodNames.forEach(n -> System.out.println("Method Name Collected: " + n));
-			res=methodNames.size();
+			int innerMethods=0;
+			//VoidVisitor<List<String>> innerMethodNameCollector = new MethodNameCollector();
+			///VoidVisitor<List<String>> innerConstructorNameCollector = new ConstructorNameCollector();
+			for(TypeDeclaration type : compilationUnit.getTypes()) {
+		        List<BodyDeclaration> members = type.getMembers();
+		        for(BodyDeclaration member : members) {
+		        	if(member.isClassOrInterfaceDeclaration()) {
+		        		for(MethodDeclaration method : member.asClassOrInterfaceDeclaration().getMethods()) {
+		        			innerMethods++;
+		        		}
+		        		for(ConstructorDeclaration constructor : member.asClassOrInterfaceDeclaration().getConstructors()) {
+		        			innerMethods++;
+		        		}
+		            }
+	                
+		        }
+		    }
+			res=methodNames.size()-innerMethods;;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

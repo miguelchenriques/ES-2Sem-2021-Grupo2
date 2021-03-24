@@ -7,8 +7,18 @@ import org.junit.jupiter.api.Test;
 class NOMTest {
 
 	@Test
-	void test() {
-		assertEquals(4,NOM.nom("C:\\Users\\MestreGui\\Downloads\\jasml_0.10\\src\\com\\jasml\\compiler\\GrammerException.java"));
+	void testGrammerException() {
+		assertEquals(4,NOM.nom("testFiles\\src\\com\\jasml\\compiler\\GrammerException.java"));
+	}
+	
+	@Test
+	void testParsingException() {
+		assertEquals(6,NOM.nom("testFiles\\src\\com\\jasml\\compiler\\ParsingException.java"));
+	}
+	
+	@Test
+	void testSourceCodeParser() {
+		assertEquals(29,NOM.nom("testFiles\\src\\com\\jasml\\compiler\\SourceCodeParser.java"));
 	}
 	
 
