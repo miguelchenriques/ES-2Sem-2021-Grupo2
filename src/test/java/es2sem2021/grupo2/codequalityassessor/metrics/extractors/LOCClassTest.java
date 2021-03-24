@@ -11,21 +11,21 @@ class LOCClassTest {
 
 	@Test
 	void GrammerExceptionLines() throws IOException {
-		File f = new File("C:\\jasml_0.10\\src\\com\\jasml\\compiler\\GrammerException.java");
+		File f = new File("testFiles\\src\\com\\jasml\\compiler\\GrammerException.java");
 		int numberLines = LOCClass.getClassLOC(f);
 		assertEquals(18, numberLines);
 	}
 	
 	@Test
 	void ParsingExceptionLines() throws IOException {
-		File f = new File("C:\\jasml_0.10\\src\\com\\jasml\\compiler\\ParsingException.java");
+		File f = new File("testFiles\\src\\com\\jasml\\compiler\\ParsingException.java");
 		int numberLines = LOCClass.getClassLOC(f);
 		assertEquals(50, numberLines);
 	}
 	
 	@Test
 	void SourceCodeParserLines() throws IOException {
-		File f = new File("C:\\jasml_0.10\\src\\com\\jasml\\compiler\\SourceCodeParser.java");
+		File f = new File("testFiles\\src\\com\\jasml\\compiler\\SourceCodeParser.java");
 		int numberLines = LOCClass.getClassLOC(f);
 		assertEquals(1371, numberLines);
 	}
