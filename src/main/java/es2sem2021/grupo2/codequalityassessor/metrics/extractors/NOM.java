@@ -19,7 +19,7 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.utils.Pair; 
 
 public class NOM {
-	private static class MethodNameCollector extends VoidVisitorAdapter<List<String>> {			
+	/*private static class MethodNameCollector extends VoidVisitorAdapter<List<String>> {			
 		@Override
 		public void visit(MethodDeclaration md, List<String> collector) {
 			super.visit(md, collector);
@@ -33,7 +33,7 @@ public class NOM {
 			super.visit(md, collector);
 			collector.add(md.getDeclarationAsString());
 		}
-	}
+	}*/
 	
 	public static HashMap<String,Integer> getClassNOM(File f){
 		try {
