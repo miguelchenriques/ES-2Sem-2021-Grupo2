@@ -5,30 +5,29 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
-public class CYCLO_method {
+public class WMCClass {
 	
-	public static HashMap<String, Integer> getMethodCyclo(File f) {
+	public static HashMap<String, Integer> getClassWMC(File f) {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
 			LexicalPreservingPrinter.setup(compilationUnit);
 			
-			ArrayList<Pair<String, Integer>> methods = new ArrayList<>();
-			MethodNameCollector methodName = new MethodNameCollector();
-			methodName.visit(compilationUnit, methods);
+			ArrayList<Pair<String, Integer>> classes = new ArrayList<>();
+			ClassNameCollector className = new ClassNameCollector();
+			className.visit(compilationUnit, classes);
 			
-			return getResults(methods);
+			return getResults(classes);
 		} catch (FileNotFoundException | ParseProblemException e) {
 			return null;
 		}
@@ -47,9 +46,9 @@ public class CYCLO_method {
 		return results;
 	}
 	
-	public static class MethodNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
+	public static class ClassNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
 	    @Override
-	    public void visit(MethodDeclaration n, List<Pair<String, Integer>> collector) {
+	    public void visit(ClassOrInterfaceDeclaration n, List<Pair<String, Integer>> collector) {
 	        super.visit(n, collector);
 	        int lines = countCyclo(LexicalPreservingPrinter.print(n));
 	        collector.add(new Pair<String, Integer>(n.getNameAsString(), lines));

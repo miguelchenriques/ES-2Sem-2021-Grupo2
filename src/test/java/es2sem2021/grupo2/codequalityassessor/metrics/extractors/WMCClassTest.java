@@ -8,33 +8,35 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-class CYCLO_methodTest {
+class WMCClassTest {
 	
 	@Test
 	void ParsingExceptionLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\ParsingException.java");
-		HashMap<String,Integer> numberCyclo = CYCLO_method.getMethodCyclo(f);
-		assertEquals(5, numberCyclo.get("getMessage").intValue());
+		HashMap<String,Integer> numberCyclo = WMCClass.getClassWMC(f);
+		assertEquals(5, numberCyclo.get("ParsingException").intValue());
 	}
 	
 	@Test
 	void SourceCodeParserLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\SourceCodeParser.java");
-		HashMap<String,Integer> numberCyclo = CYCLO_method.getMethodCyclo(f);
-		assertEquals(1, numberCyclo.get("main.parse").intValue());
+		HashMap<String,Integer> numberCyclo = WMCClass.getClassWMC(f);
+		assertEquals(278, numberCyclo.get("SourceCodeParser").intValue());
+		assertEquals(0, numberCyclo.get("SourceCodeParser.OpcodeWrapper").intValue());
+		assertEquals(0, numberCyclo.get("SourceCodeParser.LabeledInstructions").intValue());
 	}
 	
 	@Test
 	void InvalidFile() {
 		File f = new File("not\\valid\\path.java");
-		HashMap<String, Integer> results = CYCLO_method.getMethodCyclo(f);
+		HashMap<String, Integer> results = WMCClass.getClassWMC(f);
 		assertNull(results);
 	}
 	
 	@Test
 	void InvalidClass() {
 		File f = new File("testFiles\\src\\InvalidClass.java");
-		HashMap<String, Integer> results = CYCLO_method.getMethodCyclo(f);
+		HashMap<String, Integer> results = WMCClass.getClassWMC(f);
 		assertNull(results);
 	}
 }

@@ -24,37 +24,28 @@ public class LOC_method {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
 			LexicalPreservingPrinter.setup(compilationUnit);
 			
-			ArrayList<Pair<String, Integer>> classes = new ArrayList<>();
-			MethodNameCollector className = new MethodNameCollector();
-			className.visit(compilationUnit, classes);
+			ArrayList<Pair<String, Integer>> methods = new ArrayList<>();
+			MethodNameCollector methodName = new MethodNameCollector();
+			methodName.visit(compilationUnit, methods);
 			
-			return getResults(classes);
+			return getResults(methods);
 		} catch (FileNotFoundException | ParseProblemException e) {	
 			return null;
 		}
 	}
 	
-	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> classes) {
-		if (classes.size()<1) return null;
+	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> methods) {
+		if (methods.size()<1) return null;
 		
-		Pair<String, Integer> main = classes.remove(classes.size()-1);
+		Pair<String, Integer> main = methods.remove(methods.size()-1);
 		HashMap<String, Integer> results = new HashMap<>();
 		
 		results.put(main.a, main.b);
-		for (Pair<String, Integer> pair: classes) {
+		for (Pair<String, Integer> pair: methods) {
 			results.put(main.a+ "." + pair.a, pair.b);
 		}
 		return results;
 	}
-	
-//	public static class ClassNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
-//	    @Override
-//	    public void visit(ClassOrInterfaceDeclaration n, List<Pair<String, Integer>> collector) {
-//	        super.visit(n, collector);
-//	        int lines = countLines(LexicalPreservingPrinter.print(n));
-//	        collector.add(new Pair<String, Integer>(n.getNameAsString(), lines));
-//	    }
-//	}
 	
 	
 	public static class MethodNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
