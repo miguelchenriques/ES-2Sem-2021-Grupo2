@@ -1,4 +1,4 @@
-package es2sem2021.grupo2.codequalityassessor.gui;
+package es2sem2021.grupo2.codequalityassessor.xlsx;
 
 public class Method {
 
