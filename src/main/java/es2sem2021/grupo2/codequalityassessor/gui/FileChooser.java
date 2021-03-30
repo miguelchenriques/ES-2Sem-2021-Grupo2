@@ -13,6 +13,11 @@ import es2sem2021.grupo2.codequalityassessor.xlsx.FileGenerator;
 public class FileChooser extends JFrame implements ActionListener{
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	FileChooser(){
 		
 	}
@@ -57,9 +62,9 @@ public class FileChooser extends JFrame implements ActionListener{
             if (r == JFileChooser.APPROVE_OPTION) {
                 // set the label to the path of the selected directory
                 label.setText(j.getSelectedFile().getAbsolutePath());
-                FileGenerator g = new FileGenerator(j.getSelectedFile().getAbsolutePath());
+                FileGenerator fileGenerator = new FileGenerator(j.getSelectedFile().getAbsolutePath());
                 try {
-					g.main();
+					fileGenerator.main();
 				} catch (InvalidFormatException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
