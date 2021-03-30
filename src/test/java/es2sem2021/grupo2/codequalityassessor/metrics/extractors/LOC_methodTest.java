@@ -13,16 +13,16 @@ public class LOC_methodTest {
 	void ParsingExceptionLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\ParsingException.java");
 		HashMap<String,Integer> numberLines = LOC_method.getLOCMethod(f);
-		assertEquals(21, numberLines.get("getMessage").intValue());
+		assertEquals(6, numberLines.get("ParsingException(int, int, int, String)").intValue());
 	}
 	
 	@Test
 	void SourceCodeParserLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\SourceCodeParser.java");
 		HashMap<String,Integer> numberLines = LOC_method.getLOCMethod(f);
-		assertEquals(20, numberLines.get("main.preprocessConstantValues").intValue());
-		assertEquals(523, numberLines.get("main.parseMethodInstructions").intValue());
-		assertEquals(3, numberLines.get("main.parseLineNumbers").intValue());
+		assertEquals(20, numberLines.get("SourceCodeParser.preprocessConstantValues()").intValue());
+		assertEquals(523, numberLines.get("SourceCodeParser.parseMethodInstructions(Method)").intValue());
+		assertEquals(79, numberLines.get("SourceCodeParser.parseInnerClasses()").intValue());
 	}
 	
 	@Test

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,8 +13,10 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.metamodel.ConstructorDeclarationMetaModel;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
@@ -24,11 +27,33 @@ public class LOC_method {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
 			LexicalPreservingPrinter.setup(compilationUnit);
 			
+			
+			ArrayList<Pair<String, Integer>> constructors = new ArrayList<>();
+			ConstructorNameCollector constName = new ConstructorNameCollector();
+			constName.visit(compilationUnit, constructors);
+			
 			ArrayList<Pair<String, Integer>> methods = new ArrayList<>();
 			MethodNameCollector methodName = new MethodNameCollector();
-			methodName.visit(compilationUnit, methods);
+			methodName.visit(compilationUnit, methods);				
 			
-			return getResults(methods);
+			
+//			System.out.println("CONST SIZE: " + constructors.size());
+//			
+			constructors.addAll(methods);
+//			
+//			for(Pair<String, Integer> p: constructors)
+//				System.out.println("P: " + p);
+//			
+//			System.out.println("CONST SIZE" + constructors.size());
+			
+			
+//			HashMap<String, Integer> teste = getResults(constructors);
+//			Set<String> set =  teste.keySet();
+//			for(String s: set){
+//				System.out.println(s);
+//			}
+			
+			return getResults(constructors);
 		} catch (FileNotFoundException | ParseProblemException e) {	
 			return null;
 		}
@@ -37,12 +62,10 @@ public class LOC_method {
 	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> methods) {
 		if (methods.size()<1) return null;
 		
-		Pair<String, Integer> main = methods.remove(methods.size()-1);
 		HashMap<String, Integer> results = new HashMap<>();
 		
-		results.put(main.a, main.b);
 		for (Pair<String, Integer> pair: methods) {
-			results.put(main.a+ "." + pair.a, pair.b);
+			results.put(pair.a, pair.b);
 		}
 		return results;
 	}
@@ -52,8 +75,24 @@ public class LOC_method {
 	    @Override
 	    public void visit(MethodDeclaration n, List<Pair<String, Integer>> collector) {
 	        super.visit(n, collector);
+	        String s = n.getDeclarationAsString(false,false,false);
+	        s = s.substring(s.indexOf(" ")+1);
+	        String className = ((ClassOrInterfaceDeclaration)n.getParentNode().get()).getNameAsString();
+	        s = className + "." + s;
 	        int lines = countLines(LexicalPreservingPrinter.print(n));
-	        collector.add(new Pair<String, Integer>(n.getNameAsString(), lines));
+	        collector.add(new Pair<String, Integer>(s, lines));
+	    }
+	}
+	
+	public static class ConstructorNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
+	    @Override
+	    public void visit(ConstructorDeclaration n, List<Pair<String, Integer>> collector) {
+	        super.visit(n, collector);
+	        String s = n.getDeclarationAsString(false,false,false);
+//	        System.out.println("S ESTE: " + s);
+	        int lines = countLines(LexicalPreservingPrinter.print(n));
+	        collector.add(new Pair<String, Integer>(s, lines));
+//	        System.out.println("COLLECTOR: " + collector);
 	    }
 	}
 	
