@@ -66,7 +66,6 @@ public class LOCClass {
 				break;
 			}
 		}
-		
 		int lastLine = firstLine;
 		Pattern patternEnd = Pattern.compile("^\\s*\\}$", Pattern.CASE_INSENSITIVE);
 		for (int i=lines.length-1; i>firstLine; i--) {
