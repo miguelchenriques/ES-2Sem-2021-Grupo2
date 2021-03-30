@@ -5,29 +5,30 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
-public class LOCClass {
+public class CYCLO_method {
 	
-	public static HashMap<String, Integer> getClassLOC(File f) {
+	public static HashMap<String, Integer> getMethodCyclo(File f) {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
 			LexicalPreservingPrinter.setup(compilationUnit);
 			
-			ArrayList<Pair<String, Integer>> classes = new ArrayList<>();
-			ClassNameCollector className = new ClassNameCollector();
-			className.visit(compilationUnit, classes);
+			ArrayList<Pair<String, Integer>> methods = new ArrayList<>();
+			MethodNameCollector methodName = new MethodNameCollector();
+			methodName.visit(compilationUnit, methods);
 			
-			return getResults(classes);
+			return getResults(methods);
 		} catch (FileNotFoundException | ParseProblemException e) {
 			return null;
 		}
@@ -46,36 +47,26 @@ public class LOCClass {
 		return results;
 	}
 	
-	public static class ClassNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
+	public static class MethodNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
 	    @Override
-	    public void visit(ClassOrInterfaceDeclaration n, List<Pair<String, Integer>> collector) {
+	    public void visit(MethodDeclaration n, List<Pair<String, Integer>> collector) {
 	        super.visit(n, collector);
-	        int lines = countLines(LexicalPreservingPrinter.print(n));
+	        int lines = countCyclo(LexicalPreservingPrinter.print(n));
 	        collector.add(new Pair<String, Integer>(n.getNameAsString(), lines));
 	    }
 	}
 	
-	private static int countLines(String code) {
+	private static int countCyclo(String code) {
 		String[] lines = code.split("\r\n");
-		int firstLine = 0;
-		Pattern patternStart = Pattern.compile("class\\s+", Pattern.CASE_INSENSITIVE);
+		int count = 0;
+		Pattern pattern = Pattern.compile("((if|while|for)\\s*)|(case\\s*)", Pattern.CASE_INSENSITIVE);
 		for (String l: lines) {
-			Matcher matcher = patternStart.matcher(l);
-			firstLine++;
+			Matcher matcher = pattern.matcher(l);
 			if (matcher.find()) {
-				break;
+				count++;
 			}
 		}
 		
-		int lastLine = firstLine;
-		Pattern patternEnd = Pattern.compile("^\\s*\\}$", Pattern.CASE_INSENSITIVE);
-		for (int i=lines.length-1; i>firstLine; i--) {
-		    Matcher matcher = patternEnd.matcher(lines[i]);
-			if (matcher.find()) {
-				lastLine = i + 1;
-				break;
-			}
-		}
-		return lastLine - firstLine + 1;
+		return count;
 	}
 }

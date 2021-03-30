@@ -8,35 +8,33 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-class LOCClassTest {
+class CYCLO_methodTest {
 	
 	@Test
 	void ParsingExceptionLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\ParsingException.java");
-		HashMap<String,Integer> numberLines = LOCClass.getClassLOC(f);
-		assertEquals(50, numberLines.get("ParsingException").intValue());
+		HashMap<String,Integer> numberCyclo = CYCLO_method.getMethodCyclo(f);
+		assertEquals(5, numberCyclo.get("getMessage").intValue());
 	}
 	
 	@Test
 	void SourceCodeParserLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\SourceCodeParser.java");
-		HashMap<String,Integer> numberLines = LOCClass.getClassLOC(f);
-		assertEquals(1371, numberLines.get("SourceCodeParser").intValue());
-		assertEquals(14, numberLines.get("SourceCodeParser.OpcodeWrapper").intValue());
-		assertEquals(13, numberLines.get("SourceCodeParser.LabeledInstructions").intValue());
+		HashMap<String,Integer> numberCyclo = CYCLO_method.getMethodCyclo(f);
+		assertEquals(1, numberCyclo.get("main.parse").intValue());
 	}
 	
 	@Test
 	void InvalidFile() {
 		File f = new File("not\\valid\\path.java");
-		HashMap<String, Integer> results = LOCClass.getClassLOC(f);
+		HashMap<String, Integer> results = CYCLO_method.getMethodCyclo(f);
 		assertNull(results);
 	}
 	
 	@Test
 	void InvalidClass() {
 		File f = new File("testFiles\\src\\InvalidClass.java");
-		HashMap<String, Integer> results = LOCClass.getClassLOC(f);
+		HashMap<String, Integer> results = CYCLO_method.getMethodCyclo(f);
 		assertNull(results);
 	}
 }

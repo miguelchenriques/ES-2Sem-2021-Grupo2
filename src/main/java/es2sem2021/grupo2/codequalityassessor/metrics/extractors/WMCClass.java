@@ -16,9 +16,9 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
-public class LOCClass {
+public class WMCClass {
 	
-	public static HashMap<String, Integer> getClassLOC(File f) {
+	public static HashMap<String, Integer> getClassWMC(File f) {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
 			LexicalPreservingPrinter.setup(compilationUnit);
@@ -50,32 +50,22 @@ public class LOCClass {
 	    @Override
 	    public void visit(ClassOrInterfaceDeclaration n, List<Pair<String, Integer>> collector) {
 	        super.visit(n, collector);
-	        int lines = countLines(LexicalPreservingPrinter.print(n));
+	        int lines = countCyclo(LexicalPreservingPrinter.print(n));
 	        collector.add(new Pair<String, Integer>(n.getNameAsString(), lines));
 	    }
 	}
 	
-	private static int countLines(String code) {
+	private static int countCyclo(String code) {
 		String[] lines = code.split("\r\n");
-		int firstLine = 0;
-		Pattern patternStart = Pattern.compile("class\\s+", Pattern.CASE_INSENSITIVE);
+		int count = 0;
+		Pattern pattern = Pattern.compile("((if|while|for)\\s*)|(case\\s*)", Pattern.CASE_INSENSITIVE);
 		for (String l: lines) {
-			Matcher matcher = patternStart.matcher(l);
-			firstLine++;
+			Matcher matcher = pattern.matcher(l);
 			if (matcher.find()) {
-				break;
+				count++;
 			}
 		}
 		
-		int lastLine = firstLine;
-		Pattern patternEnd = Pattern.compile("^\\s*\\}$", Pattern.CASE_INSENSITIVE);
-		for (int i=lines.length-1; i>firstLine; i--) {
-		    Matcher matcher = patternEnd.matcher(lines[i]);
-			if (matcher.find()) {
-				lastLine = i + 1;
-				break;
-			}
-		}
-		return lastLine - firstLine + 1;
+		return count;
 	}
 }
