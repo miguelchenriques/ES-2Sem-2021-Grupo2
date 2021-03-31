@@ -36,9 +36,6 @@ public class CYCLO_method {
 			
 			consts.addAll(methods);
 			
-			for(String s: getResults(consts).keySet())
-				System.out.println(s);
-			
 			return getResults(consts);
 		} catch (FileNotFoundException | ParseProblemException e) {
 			return null;

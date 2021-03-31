@@ -1,13 +1,18 @@
 package es2sem2021.grupo2.codequalityassessor.metrics;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.utils.Pair;
 
 import es2sem2021.grupo2.codequalityassessor.metrics.extractors.CYCLO_method;
@@ -19,8 +24,17 @@ import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
 public class MetricsExtractor {
 	
-	public static List<Method> extract(File f) {
+	/**
+	 * Returns the list of Method objects with all the metrics from the java file passed as argument
+	 * 
+	 * @param f		the java file to extract metrics and methods
+	 * @return		list of Method objects 
+	 * @throws FileNotFoundException
+	 */
+	public static List<Method> extract(File f) throws FileNotFoundException {
 		List<Method> methods = new ArrayList<Method>();
+		
+		String packageName = getPackage(f);
 		
 		HashMap<String, Integer> locClass = LOCClass.getClassLOC(f);
 		HashMap<String, Integer> locMethod = LOC_method.getLOCMethod(f);
@@ -36,11 +50,17 @@ public class MetricsExtractor {
 			String methodDeclaration = methodPair.b;
 		}
 		
-		methods.add(new Method( "abc", "Fill", "Main", 10, 11, 12, 14, 15));
+		methods.add(new Method( packageName, "Fill", "Main", 10, 11, 12, 14, 15));
 		return methods;
 	}
 	
-	
+	/**
+	 * Returns the name of the Parent class from the set of classes passed. The classes inside the Set must be 
+	 * "ParentClass.InnerClass1" for a inner class and "ParentClass" for the parent class.
+	 * 
+	 * @param classes	the set of classes in the file
+	 * @return			the parent class name
+	 */
 	private static String getMainClass(Set<String> classes) {
 		for (String s: classes) {
 			if (!s.contains(".")) {
@@ -50,6 +70,15 @@ public class MetricsExtractor {
 		return null;
 	}
 	
+	/**
+	 * Returns a pair with the first element being the class name and the second being the method name and it's
+	 * parameter types. The method passed can be a constructor or a method, if it is a method it has do be passed
+	 * with the following format: "Class.method(ParamType1, ParamType2, etc..)"
+	 * If it is a constructor: "Class(ParamType1, ParamType2, etc...)"
+	 * 
+	 * @param method    the method or constructor declaration
+	 * @return			A pair with class as the first element and the name and parameters as the second element
+	 */
 	private static Pair<String, String> getMethodPair(String method) {
 		// Pattern para verificar se existe um ponto entre nomes por ex: Class.Methodo(Tipo, int)
 		// Pattern falha se for depois dos parenteses por ex: Construtor(Tipo.OutroTipo, int, String)
@@ -65,6 +94,23 @@ public class MetricsExtractor {
 		
 		String className = method.substring(0, method.indexOf("("));
 		return new Pair<String, String>(className, method);
+	}
+	
+	/**
+	 * Returns the package name from the file java file passed as argument if it exists a package declaration,
+	 * return an empty string if it doesn't exist.
+	 * 
+	 * @param f  java file to be parsed
+	 * @return   the package name
+	 * @throws FileNotFoundException
+	 */
+	private static String getPackage(File f) throws FileNotFoundException {
+		CompilationUnit compilationUnit = StaticJavaParser.parse(f);
+		Optional<PackageDeclaration> packageDeclaration = compilationUnit.getPackageDeclaration();
+		
+		if (packageDeclaration.isEmpty()) return "";
+		
+		return packageDeclaration.get().getNameAsString();
 	}
 	
 }
