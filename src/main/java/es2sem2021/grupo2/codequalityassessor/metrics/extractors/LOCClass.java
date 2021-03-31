@@ -18,6 +18,13 @@ import com.github.javaparser.utils.Pair;
 
 public class LOCClass {
 	
+	/**
+	 * Returns the names of every class in the file with it's corresponding lines of code. The name of the
+	 * inner classes returns with the following format: "MainClass.InnerClass"
+	 * 
+	 * @param f		java file to count classes lines of code
+	 * @return		hashmap with the class name and the lines of code
+	 */
 	public static HashMap<String, Integer> getClassLOC(File f) {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);

@@ -22,14 +22,20 @@ public class FileGenerator {
 	public String fileName;
 	public File folder;
 	
-	public FileGenerator(String filePath) {
-		this.folder = new File(filePath);
-		this.fileName = filePath.substring(filePath.lastIndexOf("\\") + 1);
+	public FileGenerator(File folder) {
+		this.folder = folder;
+		this.fileName = folder.getName();
 	}
 
 	private static String[] columns = { "MethodID", "Package", "Class", "Method", "NOM_class", "LOC_class", "WMC_class",
 			"is_God_Class", "LOC_method", "CYCLO_method", "is_Long_Method" };
 
+	/**
+	 * Creates the xlsx file with all the methods and metrics from the files in the selected folder
+	 * 
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 */
 	public void main() throws IOException, InvalidFormatException {
 		
 		List<Method> methods = new ArrayList<>();

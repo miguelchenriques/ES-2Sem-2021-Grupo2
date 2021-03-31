@@ -62,7 +62,7 @@ public class FileChooser extends JFrame implements ActionListener{
             if (r == JFileChooser.APPROVE_OPTION) {
                 // set the label to the path of the selected directory
                 label.setText(j.getSelectedFile().getAbsolutePath());
-                FileGenerator fileGenerator = new FileGenerator(j.getSelectedFile().getAbsolutePath());
+                FileGenerator fileGenerator = new FileGenerator(j.getSelectedFile());
                 try {
 					fileGenerator.main();
 				} catch (InvalidFormatException e) {
