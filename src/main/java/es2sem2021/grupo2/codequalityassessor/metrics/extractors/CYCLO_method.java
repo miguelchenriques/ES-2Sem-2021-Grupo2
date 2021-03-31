@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
@@ -24,25 +26,32 @@ public class CYCLO_method {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
 			LexicalPreservingPrinter.setup(compilationUnit);
 			
+			ArrayList<Pair<String, Integer>> consts = new ArrayList<>();
+			ConstructorNameCollector constsName = new ConstructorNameCollector();
+			constsName.visit(compilationUnit, consts);
+			
 			ArrayList<Pair<String, Integer>> methods = new ArrayList<>();
 			MethodNameCollector methodName = new MethodNameCollector();
 			methodName.visit(compilationUnit, methods);
 			
-			return getResults(methods);
+			consts.addAll(methods);
+			
+			for(String s: getResults(consts).keySet())
+				System.out.println(s);
+			
+			return getResults(consts);
 		} catch (FileNotFoundException | ParseProblemException e) {
 			return null;
 		}
 	}
 	
-	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> classes) {
-		if (classes.size()<1) return null;
+	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> methods) {
+		if (methods.size()<1) return null;
 		
-		Pair<String, Integer> main = classes.remove(classes.size()-1);
 		HashMap<String, Integer> results = new HashMap<>();
 		
-		results.put(main.a, main.b);
-		for (Pair<String, Integer> pair: classes) {
-			results.put(main.a+ "." + pair.a, pair.b);
+		for (Pair<String, Integer> pair: methods) {
+			results.put(pair.a, pair.b);
 		}
 		return results;
 	}
@@ -52,7 +61,24 @@ public class CYCLO_method {
 	    public void visit(MethodDeclaration n, List<Pair<String, Integer>> collector) {
 	        super.visit(n, collector);
 	        int lines = countCyclo(LexicalPreservingPrinter.print(n));
-	        collector.add(new Pair<String, Integer>(n.getNameAsString(), lines));
+	        String s = n.getDeclarationAsString(false,false,false);
+            s = s.substring(s.indexOf(" ")+1);
+            String className = ((ClassOrInterfaceDeclaration)n.getParentNode().get()).getNameAsString();
+            s = className + "." + s;
+	        collector.add(new Pair<String, Integer>(s, lines));
+	    }
+	}
+	
+	public static class ConstructorNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
+	    @Override
+	    public void visit(ConstructorDeclaration n, List<Pair<String, Integer>> collector) {
+	        super.visit(n, collector);
+	        int lines = countCyclo(LexicalPreservingPrinter.print(n));
+	        String s = n.getDeclarationAsString(false,false,false);
+            s = s.substring(s.indexOf(" ")+1);
+            String className = ((ClassOrInterfaceDeclaration)n.getParentNode().get()).getNameAsString();
+            s = className + "." + s;
+	        collector.add(new Pair<String, Integer>(n.getDeclarationAsString(false,false,false), lines));
 	    }
 	}
 	
