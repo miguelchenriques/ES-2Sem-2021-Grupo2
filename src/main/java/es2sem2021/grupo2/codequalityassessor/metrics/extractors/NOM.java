@@ -34,7 +34,14 @@ public class NOM {
 			collector.add(md.getDeclarationAsString());
 		}
 	}*/
-	
+	/**
+	 * Returns an HashMap with all the classes belonging to the file as keys and their corresponding number of methods.
+	 * If the file doesn't exist or there is some problem with the parsing it returns null.
+	 * 
+	 * @param f	java file to be parsed
+	 * @return the classes of the file and their number of methods
+	 * @throws FileNotFoundException or ParseProblemException
+	 */
 	public static HashMap<String,Integer> getClassNOM(File f){
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
@@ -47,6 +54,14 @@ public class NOM {
 		}
 	}
 	
+	/**
+	 * Returns an HashMap with all the classes belonging to the file as keys and their corresponding number of methods. 
+	 * The HashMap is a conversion of the ArrayList created on ClassNameCollector with the classes named correctly(The inner classes have the main class as well).
+	 * Returns null if the ArrayList doesn't have any pair.
+	 * 
+	 * @param classes ArrayList with all the class names and their corresponding number of methods	
+	 * @return an HashMap with all the results
+	 */
 	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> classes) {
 		if (classes.size()<1) return null;
 		
@@ -60,25 +75,16 @@ public class NOM {
 		return results;
 	}
 	
+
 	public static class ClassNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
 	    @Override
 	    public void visit(ClassOrInterfaceDeclaration n, List<Pair<String, Integer>> collector) {
 	        super.visit(n, collector);
-	        int methods = countMethods(n);
+	        int methods = n.getMethods().size()  + n.getConstructors().size();
 	        collector.add(new Pair<String, Integer>(n.getNameAsString(), methods));
 	    }
 	}
 	
-	public static int countMethods(ClassOrInterfaceDeclaration n) {
-		int methods = 0;
-		for(MethodDeclaration method : n.getMethods()) {
-			methods++;
-		}
-		for(ConstructorDeclaration constructor : n.getConstructors()) {
-			methods++;
-		}
-		return methods;
-	}
 	/*public static int nom(String filepath){
 		int res=0;
 		try {
