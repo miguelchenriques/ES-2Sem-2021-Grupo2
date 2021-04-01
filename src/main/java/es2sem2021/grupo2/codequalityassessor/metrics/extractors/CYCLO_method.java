@@ -1,6 +1,5 @@
 package es2sem2021.grupo2.codequalityassessor.metrics.extractors;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,11 +13,7 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.BinaryExpr;
-import com.github.javaparser.ast.expr.BinaryExpr.Operator;
-import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.DoStmt;
-import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.ForEachStmt;
 import com.github.javaparser.ast.stmt.ForStmt;
 import com.github.javaparser.ast.stmt.IfStmt;
@@ -30,6 +25,11 @@ import com.github.javaparser.utils.Pair;
 
 public class CYCLO_method {
 
+	/**
+	 * 
+	 * @param f
+	 * @return
+	 */
 	public static HashMap<String, Integer> getMethodCyclo(File f) {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
@@ -45,15 +45,17 @@ public class CYCLO_method {
 
 			consts.addAll(methods);
 
-			for(String s: getResults(consts).keySet())
-				System.out.println(s);
-
 			return getResults(consts);
 		} catch (FileNotFoundException | ParseProblemException e) {
 			return null;
 		}
 	}
 
+	/**
+	 * 
+	 * @param methods
+	 * @return
+	 */
 	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> methods) {
 		if (methods.size()<1) return null;
 
@@ -65,13 +67,6 @@ public class CYCLO_method {
 		return results;
 	}
 	
-	private static List<Node> getOrsAnds(Expression n) {
-		List<Node> l = new ArrayList<Node>();
-		ExpressionVisitor es = new ExpressionVisitor();
-		es.visit(new ExpressionStmt(n) , l);
-		return l;
-	}
-
 	public static class MethodNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
 		@Override
 		public void visit(MethodDeclaration n, List<Pair<String, Integer>> collector) {
@@ -123,14 +118,12 @@ public class CYCLO_method {
 		@Override
 		public void visit(IfStmt is, List<Node> collector) {
 			super.visit(is, collector);
-			collector.addAll(getOrsAnds(is.getCondition()));
 			collector.add(is);
 		}
 
 		@Override
 		public void visit(WhileStmt ws, List<Node> collector) {
 			super.visit(ws, collector);
-			collector.addAll(getOrsAnds(ws.getCondition()));
 			collector.add(ws);
 		}
 		
@@ -138,7 +131,6 @@ public class CYCLO_method {
 		public void visit(SwitchStmt ss, List<Node> collector) {
 			super.visit(ss, collector);
 			collector.addAll(ss.getEntries());
-			collector.add(ss);
 		}
 		
 		@Override
@@ -146,18 +138,5 @@ public class CYCLO_method {
 			super.visit(ds, collector);
 			collector.add(ds);
 		}	
-	}
-	
-	private static class ExpressionVisitor extends VoidVisitorAdapter<List<Node>> {
-
-		@Override
-		public void visit(BinaryExpr be, List<Node> collector) {
-			super.visit(be, collector);
-			if(be.getOperator() == Operator.OR || be.getOperator() == Operator.AND) {
-				collector.add(be);
-			}
-		}
-		
-	}
-	
+	}	
 }
