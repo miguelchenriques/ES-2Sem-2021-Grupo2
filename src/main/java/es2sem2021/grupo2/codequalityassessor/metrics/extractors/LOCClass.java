@@ -55,26 +55,9 @@ public class LOCClass {
 	    }
 	}
 	
-	private static int countLines(String code) {
-		String[] lines = code.split("\r\n");
-		int firstLine = 0;
-		Pattern patternStart = Pattern.compile("class\\s+", Pattern.CASE_INSENSITIVE);
-		for (String l: lines) {
-			Matcher matcher = patternStart.matcher(l);
-			firstLine++;
-			if (matcher.find()) {
-				break;
-			}
-		}
-		int lastLine = firstLine;
-		Pattern patternEnd = Pattern.compile("^\\s*\\}$", Pattern.CASE_INSENSITIVE);
-		for (int i=lines.length-1; i>firstLine; i--) {
-		    Matcher matcher = patternEnd.matcher(lines[i]);
-			if (matcher.find()) {
-				lastLine = i + 1;
-				break;
-			}
-		}
-		return lastLine - firstLine + 1;
+	
+	private static int countLines(String classCode) {
+		String[] lines = classCode.split("\r\n");
+		return lines.length;
 	}
 }
