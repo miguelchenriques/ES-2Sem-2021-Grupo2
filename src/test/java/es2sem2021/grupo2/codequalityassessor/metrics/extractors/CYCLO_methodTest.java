@@ -14,14 +14,14 @@ class CYCLO_methodTest {
 	void ParsingExceptionLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\ParsingException.java");
 		HashMap<String,Integer> numberCyclo = CYCLO_method.getMethodCyclo(f);
-		assertEquals(8, numberCyclo.get("ParsingException.getMessage()").intValue());
+		assertEquals(6, numberCyclo.get("ParsingException.getMessage()").intValue());
 	}
 	
 	@Test
 	void SourceCodeParserLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\SourceCodeParser.java");
 		HashMap<String,Integer> numberCyclo = CYCLO_method.getMethodCyclo(f);
-		assertEquals(2, numberCyclo.get("SourceCodeParser.parse()").intValue());
+		assertEquals(17, numberCyclo.get("SourceCodeParser.parseField()").intValue());
 	}
 	
 	@Test
