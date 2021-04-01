@@ -14,16 +14,16 @@ class LOCClassTest {
 	void ParsingExceptionLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\ParsingException.java");
 		HashMap<String,Integer> numberLines = LOCClass.getClassLOC(f);
-		assertEquals(50, numberLines.get("ParsingException").intValue());
+		assertEquals(45, numberLines.get("ParsingException").intValue());
 	}
 	
 	@Test
 	void SourceCodeParserLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\SourceCodeParser.java");
 		HashMap<String,Integer> numberLines = LOCClass.getClassLOC(f);
-		assertEquals(1371, numberLines.get("SourceCodeParser").intValue());
-		assertEquals(14, numberLines.get("SourceCodeParser.OpcodeWrapper").intValue());
-		assertEquals(13, numberLines.get("SourceCodeParser.LabeledInstructions").intValue());
+		assertEquals(1300, numberLines.get("SourceCodeParser").intValue());
+		assertEquals(12, numberLines.get("SourceCodeParser.OpcodeWrapper").intValue());
+		assertEquals(10, numberLines.get("SourceCodeParser.LabeledInstructions").intValue());
 	}
 	
 	@Test

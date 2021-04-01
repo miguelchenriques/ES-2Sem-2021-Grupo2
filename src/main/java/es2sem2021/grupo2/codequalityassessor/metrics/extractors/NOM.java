@@ -10,8 +10,6 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.ConstructorDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.utils.Pair; 
 
@@ -66,16 +64,5 @@ public class NOM {
 	        int methods = n.getMethods().size()  + n.getConstructors().size();
 	        collector.add(new Pair<String, Integer>(n.getNameAsString(), methods));
 	    }
-	}
-	
-	public static int countMethods(ClassOrInterfaceDeclaration n) {
-		int methods = 0;
-		for(MethodDeclaration method : n.getMethods()) {
-			methods++;
-		}
-		for(ConstructorDeclaration constructor : n.getConstructors()) {
-			methods++;
-		}
-		return methods;
 	}
 }
