@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +15,6 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import com.github.javaparser.metamodel.ConstructorDeclarationMetaModel;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
@@ -36,22 +34,7 @@ public class LOC_method {
 			MethodNameCollector methodName = new MethodNameCollector();
 			methodName.visit(compilationUnit, methods);				
 			
-			
-//			System.out.println("CONST SIZE: " + constructors.size());
-//			
 			constructors.addAll(methods);
-//			
-//			for(Pair<String, Integer> p: constructors)
-//				System.out.println("P: " + p);
-//			
-//			System.out.println("CONST SIZE" + constructors.size());
-			
-			
-//			HashMap<String, Integer> teste = getResults(constructors);
-//			Set<String> set =  teste.keySet();
-//			for(String s: set){
-//				System.out.println(s);
-//			}
 			
 			return getResults(constructors);
 		} catch (FileNotFoundException | ParseProblemException e) {	
@@ -89,10 +72,8 @@ public class LOC_method {
 	    public void visit(ConstructorDeclaration n, List<Pair<String, Integer>> collector) {
 	        super.visit(n, collector);
 	        String s = n.getDeclarationAsString(false,false,false);
-//	        System.out.println("S ESTE: " + s);
 	        int lines = countLines(LexicalPreservingPrinter.print(n));
 	        collector.add(new Pair<String, Integer>(s, lines));
-//	        System.out.println("COLLECTOR: " + collector);
 	    }
 	}
 	
