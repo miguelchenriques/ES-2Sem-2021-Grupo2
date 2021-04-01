@@ -30,14 +30,15 @@ public class WMCClass {
 			ClassNameCollector className = new ClassNameCollector();
 			className.visit(compilationUnit, classes);
 
-			HashMap<String, Integer> classWMC= new HashMap<String, Integer>();
-			for(String s : classes)
-				classWMC.put(s, 0);
-			
 			String main = cycloMethod.keySet().iterator().next();
 			main=main.substring(0,main.indexOf('.'));
 
-			
+			HashMap<String, Integer> classWMC= new HashMap<String, Integer>();
+			for(String s : classes) {
+				classWMC.put(s, 0);	
+			}
+
+
 			return getResults(classes,main,classWMC,cycloMethod);
 
 		} catch (FileNotFoundException | ParseProblemException e) {
@@ -48,7 +49,9 @@ public class WMCClass {
 	private static HashMap<String, Integer> getResults(ArrayList<String> classes, String main, HashMap<String, Integer> classWMC, HashMap<String, Integer> cycloMethod ) {
 		if (classes.size() < 1)
 			return null;
-		
+
+		HashMap<String, Integer> results = new HashMap<>();
+
 		for(String classString : classes ){
 			for(String s : cycloMethod.keySet()) {
 				String[] c = s.split("\\.");
@@ -56,15 +59,14 @@ public class WMCClass {
 					int count = classWMC.get(classString);
 					if(count==0) {
 						classWMC.put(classString, cycloMethod.get(s));
-					} else {
+					} 
+					if(count!=0){
 						count=count+ cycloMethod.get(s);
 						classWMC.put(classString, count);
-					}
+					}			
 				}
 			}
 		}
-
-		HashMap<String, Integer> results = new HashMap<>();
 
 		for (String s: classWMC.keySet()) {
 			if(s.equals(main))
