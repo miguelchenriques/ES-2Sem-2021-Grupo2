@@ -26,9 +26,12 @@ import com.github.javaparser.utils.Pair;
 public class CYCLO_method {
 
 	/**
+	 * Returns an HashMap with all the methods belonging to the file as keys and their corresponding number of cycles.
+	 * If the file doesn't exist or there is some problem with the parsing it returns null.
 	 * 
-	 * @param f
-	 * @return
+	 * @param f	java file to be parsed
+	 * @return the methods of the file and their number of cycles
+	 * @throws FileNotFoundException or ParseProblemException
 	 */
 	public static HashMap<String, Integer> getMethodCyclo(File f) {
 		try {
@@ -52,9 +55,12 @@ public class CYCLO_method {
 	}
 
 	/**
+	 * Returns an HashMap with all the Methods belonging to the file as keys and their corresponding number of cycles. 
+	 * The HashMap is a conversion of the ArrayList created on MethodNameCollector/ConstructorNameCollector with the methods named correctly.
+	 * Returns null if the ArrayList doesn't have any pair.
 	 * 
-	 * @param methods
-	 * @return
+	 * @param classes ArrayList with all the method names and their corresponding number of cycles
+	 * @return an HashMap with all the results
 	 */
 	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> methods) {
 		if (methods.size()<1) return null;
@@ -104,39 +110,39 @@ public class CYCLO_method {
 
 	public static class Visitor extends VoidVisitorAdapter<List<Node>>{
 		@Override
-		public void visit(ForStmt fs, List<Node> collector) {
-			super.visit(fs, collector);
-			collector.add(fs);
+		public void visit(ForStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.add(stmt);
 		}
 
 		@Override
-		public void visit(ForEachStmt fes, List<Node> collector) {
-			super.visit(fes, collector);
-			collector.add(fes);
+		public void visit(ForEachStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.add(stmt);
 		}
 
 		@Override
-		public void visit(IfStmt is, List<Node> collector) {
-			super.visit(is, collector);
-			collector.add(is);
+		public void visit(IfStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.add(stmt);
 		}
 
 		@Override
-		public void visit(WhileStmt ws, List<Node> collector) {
-			super.visit(ws, collector);
-			collector.add(ws);
+		public void visit(WhileStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.add(stmt);
 		}
 		
 		@Override
-		public void visit(SwitchStmt ss, List<Node> collector) {
-			super.visit(ss, collector);
-			collector.addAll(ss.getEntries());
+		public void visit(SwitchStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.addAll(stmt.getEntries());
 		}
 		
 		@Override
-		public void visit(DoStmt ds, List<Node> collector) {
-			super.visit(ds, collector);
-			collector.add(ds);
+		public void visit(DoStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.add(stmt);
 		}	
 	}	
 }
