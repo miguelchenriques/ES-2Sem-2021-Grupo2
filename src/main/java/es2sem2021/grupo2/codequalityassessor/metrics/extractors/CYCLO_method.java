@@ -1,6 +1,5 @@
 package es2sem2021.grupo2.codequalityassessor.metrics.extractors;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,11 +13,7 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.BinaryExpr;
-import com.github.javaparser.ast.expr.BinaryExpr.Operator;
-import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.DoStmt;
-import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.ForEachStmt;
 import com.github.javaparser.ast.stmt.ForStmt;
 import com.github.javaparser.ast.stmt.IfStmt;
@@ -30,6 +25,14 @@ import com.github.javaparser.utils.Pair;
 
 public class CYCLO_method {
 
+	/**
+	 * Returns an HashMap with all the methods belonging to the file as keys and their corresponding number of cycles.
+	 * If the file doesn't exist or there is some problem with the parsing it returns null.
+	 * 
+	 * @param f	java file to be parsed
+	 * @return the methods of the file and their number of cycles
+	 * @throws FileNotFoundException or ParseProblemException
+	 */
 	public static HashMap<String, Integer> getMethodCyclo(File f) {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
@@ -51,6 +54,14 @@ public class CYCLO_method {
 		}
 	}
 
+	/**
+	 * Returns an HashMap with all the Methods belonging to the file as keys and their corresponding number of cycles. 
+	 * The HashMap is a conversion of the ArrayList created on MethodNameCollector/ConstructorNameCollector with the methods named correctly.
+	 * Returns null if the ArrayList doesn't have any pair.
+	 * 
+	 * @param classes ArrayList with all the method names and their corresponding number of cycles
+	 * @return an HashMap with all the results
+	 */
 	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> methods) {
 		if (methods.size()<1) return null;
 
@@ -62,13 +73,6 @@ public class CYCLO_method {
 		return results;
 	}
 	
-	private static List<Node> getOrsAnds(Expression n) {
-		List<Node> l = new ArrayList<Node>();
-		ExpressionVisitor es = new ExpressionVisitor();
-		es.visit(new ExpressionStmt(n) , l);
-		return l;
-	}
-
 	public static class MethodNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
 		@Override
 		public void visit(MethodDeclaration n, List<Pair<String, Integer>> collector) {
@@ -106,55 +110,39 @@ public class CYCLO_method {
 
 	public static class Visitor extends VoidVisitorAdapter<List<Node>>{
 		@Override
-		public void visit(ForStmt fs, List<Node> collector) {
-			super.visit(fs, collector);
-			collector.add(fs);
+		public void visit(ForStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.add(stmt);
 		}
 
 		@Override
-		public void visit(ForEachStmt fes, List<Node> collector) {
-			super.visit(fes, collector);
-			collector.add(fes);
+		public void visit(ForEachStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.add(stmt);
 		}
 
 		@Override
-		public void visit(IfStmt is, List<Node> collector) {
-			super.visit(is, collector);
-			collector.addAll(getOrsAnds(is.getCondition()));
-			collector.add(is);
+		public void visit(IfStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.add(stmt);
 		}
 
 		@Override
-		public void visit(WhileStmt ws, List<Node> collector) {
-			super.visit(ws, collector);
-			collector.addAll(getOrsAnds(ws.getCondition()));
-			collector.add(ws);
+		public void visit(WhileStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.add(stmt);
 		}
 		
 		@Override
-		public void visit(SwitchStmt ss, List<Node> collector) {
-			super.visit(ss, collector);
-			collector.addAll(ss.getEntries());
-			collector.add(ss);
+		public void visit(SwitchStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.addAll(stmt.getEntries());
 		}
 		
 		@Override
-		public void visit(DoStmt ds, List<Node> collector) {
-			super.visit(ds, collector);
-			collector.add(ds);
+		public void visit(DoStmt stmt, List<Node> collector) {
+			super.visit(stmt, collector);
+			collector.add(stmt);
 		}	
-	}
-	
-	private static class ExpressionVisitor extends VoidVisitorAdapter<List<Node>> {
-
-		@Override
-		public void visit(BinaryExpr be, List<Node> collector) {
-			super.visit(be, collector);
-			if(be.getOperator() == Operator.OR || be.getOperator() == Operator.AND) {
-				collector.add(be);
-			}
-		}
-		
-	}
-	
+	}	
 }
