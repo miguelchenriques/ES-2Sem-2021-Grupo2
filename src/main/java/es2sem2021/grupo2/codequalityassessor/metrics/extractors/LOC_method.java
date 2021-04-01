@@ -36,22 +36,7 @@ public class LOC_method {
 			MethodNameCollector methodName = new MethodNameCollector();
 			methodName.visit(compilationUnit, methods);				
 			
-			
-//			System.out.println("CONST SIZE: " + constructors.size());
-//			
 			constructors.addAll(methods);
-//			
-//			for(Pair<String, Integer> p: constructors)
-//				System.out.println("P: " + p);
-//			
-//			System.out.println("CONST SIZE" + constructors.size());
-			
-			
-//			HashMap<String, Integer> teste = getResults(constructors);
-//			Set<String> set =  teste.keySet();
-//			for(String s: set){
-//				System.out.println(s);
-//			}
 			
 			return getResults(constructors);
 		} catch (FileNotFoundException | ParseProblemException e) {	
@@ -89,10 +74,8 @@ public class LOC_method {
 	    public void visit(ConstructorDeclaration n, List<Pair<String, Integer>> collector) {
 	        super.visit(n, collector);
 	        String s = n.getDeclarationAsString(false,false,false);
-//	        System.out.println("S ESTE: " + s);
 	        int lines = countLines(LexicalPreservingPrinter.print(n));
 	        collector.add(new Pair<String, Integer>(s, lines));
-//	        System.out.println("COLLECTOR: " + collector);
 	    }
 	}
 	

@@ -9,31 +9,14 @@ import java.util.List;
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.utils.Pair; 
 
 public class NOM {
-	/*private static class MethodNameCollector extends VoidVisitorAdapter<List<String>> {			
-		@Override
-		public void visit(MethodDeclaration md, List<String> collector) {
-			super.visit(md, collector);
-			collector.add(md.getDeclarationAsString());
-		}
-	}
-	
-	private static class ConstructorNameCollector extends VoidVisitorAdapter<List<String>> {			
-		@Override
-		public void visit(ConstructorDeclaration md, List<String> collector) {
-			super.visit(md, collector);
-			collector.add(md.getDeclarationAsString());
-		}
-	}*/
+
 	/**
 	 * Returns an HashMap with all the classes belonging to the file as keys and their corresponding number of methods.
 	 * If the file doesn't exist or there is some problem with the parsing it returns null.
@@ -85,38 +68,14 @@ public class NOM {
 	    }
 	}
 	
-	/*public static int nom(String filepath){
-		int res=0;
-		try {
-			CompilationUnit compilationUnit = StaticJavaParser.parse(new File(filepath));
-			List<String> methodNames = new ArrayList<>();
-			VoidVisitor<List<String>> methodNameCollector = new MethodNameCollector();
-			VoidVisitor<List<String>> constructorNameCollector = new ConstructorNameCollector();
-			methodNameCollector.visit(compilationUnit, methodNames);
-			constructorNameCollector.visit(compilationUnit, methodNames);
-			int innerMethods=0;
-			//VoidVisitor<List<String>> innerMethodNameCollector = new MethodNameCollector();
-			///VoidVisitor<List<String>> innerConstructorNameCollector = new ConstructorNameCollector();
-			for(TypeDeclaration type : compilationUnit.getTypes()) {
-		        List<BodyDeclaration> members = type.getMembers();
-		        for(BodyDeclaration member : members) {
-		        	if(member.isClassOrInterfaceDeclaration()) {
-		        		for(MethodDeclaration method : member.asClassOrInterfaceDeclaration().getMethods()) {
-		        			innerMethods++;
-		        		}
-		        		for(ConstructorDeclaration constructor : member.asClassOrInterfaceDeclaration().getConstructors()) {
-		        			innerMethods++;
-		        		}
-		            }
-	                
-		        }
-		    }
-			res=methodNames.size()-innerMethods;;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public static int countMethods(ClassOrInterfaceDeclaration n) {
+		int methods = 0;
+		for(MethodDeclaration method : n.getMethods()) {
+			methods++;
 		}
-		return res;
-
-	}*/
+		for(ConstructorDeclaration constructor : n.getConstructors()) {
+			methods++;
+		}
+		return methods;
+	}
 }
