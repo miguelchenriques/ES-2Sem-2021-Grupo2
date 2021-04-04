@@ -21,8 +21,8 @@ public class LOC_methodTest {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\SourceCodeParser.java");
 		HashMap<String,Integer> numberLines = LOC_method.getLOCMethod(f);
 		assertEquals(20, numberLines.get("SourceCodeParser.preprocessConstantValues()").intValue());
-		assertEquals(523, numberLines.get("SourceCodeParser.parseMethodInstructions(Method)").intValue());
-		assertEquals(79, numberLines.get("SourceCodeParser.parseInnerClasses()").intValue());
+		assertEquals(513, numberLines.get("SourceCodeParser.parseMethodInstructions(Method)").intValue());
+		assertEquals(73, numberLines.get("SourceCodeParser.parseInnerClasses()").intValue());
 	}
 	
 	@Test
