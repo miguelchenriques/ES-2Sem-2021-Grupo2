@@ -100,10 +100,8 @@ public class LOC_method {
 	    public void visit(ConstructorDeclaration n, List<Pair<String, Integer>> collector) {
 	        super.visit(n, collector);
 	        String s = n.getDeclarationAsString(false,false,false);
-//	        System.out.println("S ESTE: " + s);
 	        int lines = countLines(LexicalPreservingPrinter.print(n));
 	        collector.add(new Pair<String, Integer>(s, lines));
-//	        System.out.println("COLLECTOR: " + collector);
 	    }
 	}
 	
