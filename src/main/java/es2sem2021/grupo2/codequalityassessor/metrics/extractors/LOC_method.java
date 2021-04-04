@@ -46,17 +46,8 @@ public class LOC_method {
 			ArrayList<Pair<String, Integer>> methods = new ArrayList<>();
 			MethodNameCollector methodName = new MethodNameCollector();
 			methodName.visit(compilationUnit, methods);				
-			
-			
-//			System.out.println("CONST SIZE: " + constructors.size());
-//			
+					
 			constructors.addAll(methods);
-//			
-//			for(Pair<String, Integer> p: constructors)
-//				System.out.println("P: " + p);
-//			
-//			System.out.println("CONST SIZE" + constructors.size());
-			
 			
 			HashMap<String, Integer> teste = getResults(constructors);
 			Set<String> set =  teste.keySet();
