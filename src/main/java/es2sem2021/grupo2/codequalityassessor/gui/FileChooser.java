@@ -18,9 +18,6 @@ public class FileChooser extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	FileChooser(){
-		
-	}
 	
 	static JLabel label = new JLabel();
 	

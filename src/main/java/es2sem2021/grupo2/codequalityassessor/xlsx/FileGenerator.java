@@ -1,6 +1,7 @@
 package es2sem2021.grupo2.codequalityassessor.xlsx;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,11 +41,8 @@ public class FileGenerator {
 		
 		List<Method> methods = new ArrayList<>();
 		
-		for (File f: folder.listFiles()) {
-			methods.addAll(MetricsExtractor.extract(f));
-		}
+		parseFolders(this.folder,methods);
 		
-
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(fileName);
 
@@ -80,5 +78,15 @@ public class FileGenerator {
 		System.out.println(fileName.concat("_metrics.xlsx"));
 		workbook.write(fileOut);
 		fileOut.close();
+	}
+	
+	void parseFolders(File folder, List<Method> methods) throws FileNotFoundException {
+		for (File f: folder.listFiles()) {
+			//System.out.println(f.getName());
+			if(f.isDirectory())
+				parseFolders(f,methods);
+			else
+				methods.addAll(MetricsExtractor.extract(f));
+		}
 	}
 }

@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.PackageDeclaration;
@@ -38,19 +39,28 @@ public class MetricsExtractor {
 		
 		HashMap<String, Integer> locClass = LOCClass.getClassLOC(f);
 		HashMap<String, Integer> locMethod = LOC_method.getLOCMethod(f);
-		HashMap<String, Integer> cycloMehod = CYCLO_method.getMethodCyclo(f);
+		HashMap<String, Integer> cycloMethod = CYCLO_method.getMethodCyclo(f);
 		HashMap<String, Integer> nom = NOM.getClassNOM(f);
 		HashMap<String, Integer> wmcClass = WMCClass.getClassWMC(f);
 		
-		String mainClass = getMainClass(locClass.keySet());
-		
-		for (String method: locMethod.keySet()) {
-			Pair<String, String> methodPair = getMethodPair(method);
-			String className = methodPair.a;
-			String methodDeclaration = methodPair.b;
+		if(locClass!=null) {
+			String mainClass = getMainClass(locClass.keySet());
+			if(nom!=null && locMethod==null) {
+				methods.add(new Method (packageName,mainClass,mainClass+"()",0,locClass.get(mainClass),0,0,0));
+			}
+			if(locMethod!=null && cycloMethod!= null && nom!=null && wmcClass!=null) {
+				for (String method: locMethod.keySet()) {
+				Pair<String, String> methodPair = getMethodPair(method);
+				String className = methodPair.a;
+				String methodDeclaration = methodPair.b;
+				if(!mainClass.equals(className)) {
+					className=mainClass + "." + className;
+				}	
+				methods.add(new Method( packageName, className, methodDeclaration, nom.get(className), locClass.get(className),wmcClass.get(className) , locMethod.get(method), cycloMethod.get(method)));
+				}				
+			}			
 		}
-		
-		methods.add(new Method( packageName, "Fill", "Main", 10, 11, 12, 14, 15));
+		//methods.add(new Method( packageName, "Fill", "Main", 10, 11, 12, 14, 15));
 		return methods;
 	}
 	
@@ -82,7 +92,7 @@ public class MetricsExtractor {
 	private static Pair<String, String> getMethodPair(String method) {
 		// Pattern para verificar se existe um ponto entre nomes por ex: Class.Methodo(Tipo, int)
 		// Pattern falha se for depois dos parenteses por ex: Construtor(Tipo.OutroTipo, int, String)
-		Pattern patternStart = Pattern.compile("^[a-z0-9]*\\.[a-z0-9]*", Pattern.CASE_INSENSITIVE);
+		Pattern patternStart = Pattern.compile("^[a-z0-9\\_]*\\.[a-z0-9]*", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = patternStart.matcher(method);
 		
 		if (matcher.find()) {
@@ -104,13 +114,20 @@ public class MetricsExtractor {
 	 * @return   the package name
 	 * @throws FileNotFoundException
 	 */
-	private static String getPackage(File f) throws FileNotFoundException {
-		CompilationUnit compilationUnit = StaticJavaParser.parse(f);
-		Optional<PackageDeclaration> packageDeclaration = compilationUnit.getPackageDeclaration();
+	private static String getPackage(File f){
+		CompilationUnit compilationUnit;
+		try {
+			compilationUnit = StaticJavaParser.parse(f);
+			Optional<PackageDeclaration> packageDeclaration = compilationUnit.getPackageDeclaration();
+			if (packageDeclaration.isEmpty()) return "";
+			return packageDeclaration.get().getNameAsString();
+		} catch (FileNotFoundException | ParseProblemException e) {
+			// TODO Auto-generated catch block
+			return "";
+		}
 		
-		if (packageDeclaration.isEmpty()) return "";
 		
-		return packageDeclaration.get().getNameAsString();
+
 	}
 	
 }
