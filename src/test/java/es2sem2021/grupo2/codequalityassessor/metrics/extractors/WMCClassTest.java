@@ -24,7 +24,6 @@ class WMCClassTest {
 		HashMap<String,Integer> numberCyclo = WMCClass.getClassWMC(f);
 		assertEquals(334, numberCyclo.get("SourceCodeParser").intValue());
 		assertEquals(2, numberCyclo.get("SourceCodeParser.OpcodeWrapper").intValue());
-		System.out.println(numberCyclo);
 		assertEquals(1, numberCyclo.get("SourceCodeParser.LabeledInstructions").intValue());
 	}
 	
