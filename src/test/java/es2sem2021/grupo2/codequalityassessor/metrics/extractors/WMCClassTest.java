@@ -14,16 +14,17 @@ class WMCClassTest {
 	void ParsingExceptionLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\ParsingException.java");
 		HashMap<String,Integer> numberCyclo = WMCClass.getClassWMC(f);
-		assertEquals(5, numberCyclo.get("ParsingException").intValue());
+		System.out.println(numberCyclo.keySet());
+		assertEquals(13, numberCyclo.get("ParsingException").intValue());
 	}
 	
 	@Test
 	void SourceCodeParserLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\SourceCodeParser.java");
 		HashMap<String,Integer> numberCyclo = WMCClass.getClassWMC(f);
-		assertEquals(278, numberCyclo.get("SourceCodeParser").intValue());
-		assertEquals(0, numberCyclo.get("SourceCodeParser.OpcodeWrapper").intValue());
-		assertEquals(0, numberCyclo.get("SourceCodeParser.LabeledInstructions").intValue());
+		assertEquals(334, numberCyclo.get("SourceCodeParser").intValue());
+		assertEquals(2, numberCyclo.get("SourceCodeParser.OpcodeWrapper").intValue());
+		assertEquals(1, numberCyclo.get("SourceCodeParser.LabeledInstructions").intValue());
 	}
 	
 	@Test

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,55 +18,73 @@ import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinte
 import com.github.javaparser.utils.Pair;
 
 public class WMCClass {
-	
+
 	public static HashMap<String, Integer> getClassWMC(File f) {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
 			LexicalPreservingPrinter.setup(compilationUnit);
-			
-			ArrayList<Pair<String, Integer>> classes = new ArrayList<>();
+
+			HashMap<String, Integer> cycloMethod = CYCLO_method.getMethodCyclo(f);
+
+			ArrayList<String> classes = new ArrayList<>();
 			ClassNameCollector className = new ClassNameCollector();
 			className.visit(compilationUnit, classes);
-			
-			return getResults(classes);
+
+			String main = cycloMethod.keySet().iterator().next();
+			main=main.substring(0,main.indexOf('.'));
+
+			HashMap<String, Integer> classWMC= new HashMap<String, Integer>();
+			for(String s : classes) {
+				classWMC.put(s, 0);	
+			}
+
+
+			return getResults(classes,main,classWMC,cycloMethod);
+
 		} catch (FileNotFoundException | ParseProblemException e) {
 			return null;
 		}
 	}
-	
-	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> classes) {
-		if (classes.size()<1) return null;
-		
-		Pair<String, Integer> main = classes.remove(classes.size()-1);
+
+	private static HashMap<String, Integer> getResults(ArrayList<String> classes, String main, HashMap<String, Integer> classWMC, HashMap<String, Integer> cycloMethod ) {
+		if (classes.size() < 1)
+			return null;
+
 		HashMap<String, Integer> results = new HashMap<>();
-		
-		results.put(main.a, main.b);
-		for (Pair<String, Integer> pair: classes) {
-			results.put(main.a+ "." + pair.a, pair.b);
+
+		for(String classString : classes ){
+			for(String s : cycloMethod.keySet()) {
+				String[] c = s.split("\\.");
+				if(c[0].equals(classString)) {
+					int count = classWMC.get(classString);
+					if(count==0) {
+						classWMC.put(classString, cycloMethod.get(s));
+					} 
+					if(count!=0){
+						count=count+ cycloMethod.get(s);
+						classWMC.put(classString, count);
+					}			
+				}
+			}
+		}
+
+		for (String s: classWMC.keySet()) {
+			if(s.equals(main))
+				results.put(s,classWMC.get(s));
+			if(!s.equals(main))
+				results.put(main + "." + s,classWMC.get(s));
 		}
 		return results;
 	}
-	
-	public static class ClassNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
-	    @Override
-	    public void visit(ClassOrInterfaceDeclaration n, List<Pair<String, Integer>> collector) {
-	        super.visit(n, collector);
-	        int lines = countCyclo(LexicalPreservingPrinter.print(n));
-	        collector.add(new Pair<String, Integer>(n.getNameAsString(), lines));
-	    }
-	}
-	
-	private static int countCyclo(String code) {
-		String[] lines = code.split("\r\n");
-		int count = 0;
-		Pattern pattern = Pattern.compile("((if|while|for)\\s*)|(case\\s*)", Pattern.CASE_INSENSITIVE);
-		for (String l: lines) {
-			Matcher matcher = pattern.matcher(l);
-			if (matcher.find()) {
-				count++;
-			}
+
+
+	public static class ClassNameCollector extends VoidVisitorAdapter<List<String>> {
+		@Override
+		public void visit(ClassOrInterfaceDeclaration n, List<String> collector) {
+			super.visit(n, collector);
+
+			collector.add(n.getNameAsString());
 		}
-		
-		return count;
 	}
+
 }

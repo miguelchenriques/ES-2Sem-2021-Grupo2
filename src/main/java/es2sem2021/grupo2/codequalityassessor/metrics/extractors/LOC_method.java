@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -18,7 +17,6 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import com.github.javaparser.metamodel.ConstructorDeclarationMetaModel;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
@@ -46,14 +44,8 @@ public class LOC_method {
 			ArrayList<Pair<String, Integer>> methods = new ArrayList<>();
 			MethodNameCollector methodName = new MethodNameCollector();
 			methodName.visit(compilationUnit, methods);				
-					
-			constructors.addAll(methods);
 			
-			HashMap<String, Integer> teste = getResults(constructors);
-			Set<String> set =  teste.keySet();
-			for(String s: set){
-				System.out.println(s);
-			}
+			constructors.addAll(methods);
 			
 			return getResults(constructors);
 		} catch (FileNotFoundException | ParseProblemException e) {	
