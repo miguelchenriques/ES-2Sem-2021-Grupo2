@@ -3,10 +3,12 @@ package es2sem2021.grupo2.codequalityassessor.metrics.extractors;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
@@ -19,7 +21,16 @@ import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinte
 import com.github.javaparser.utils.Pair;
 
 
-public class LOC_method {
+public class LOC_method {	  
+	 
+	/**
+	 *Returns the names of every method and constructor in the file with it's corresponding lines of code. The name of the
+	 *The name of the methods returns with the following format: "ClassName.MethodName(Parameters)"
+	 *The name of the constructors returns with the following format: "ConstructorName(Parameters)"
+	 *
+	 * @param f		java file to count methods lines of code
+	 * @return		hashmap with the method name and the lines of code
+	*/
 	public static HashMap<String, Integer> getLOCMethod(File f) {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
@@ -42,6 +53,15 @@ public class LOC_method {
 		}
 	}
 	
+	
+	/**
+	 * Transforms a List of pairs (methodName, lines of code) to an hashmap where the methodName is stored as a key to
+	 * it's lines of code
+	 * 
+	 * @param classes	list of pairs methodName,LOC
+	 * @return			Hashmap with methodName as key to it's LOC
+	 */
+	
 	private static HashMap<String, Integer> getResults(ArrayList<Pair<String, Integer>> methods) {
 		if (methods.size()<1) return null;
 		
@@ -49,7 +69,7 @@ public class LOC_method {
 		
 		for (Pair<String, Integer> pair: methods) {
 			results.put(pair.a, pair.b);
-		}
+		} 
 		return results;
 	}
 	
@@ -77,18 +97,15 @@ public class LOC_method {
 	    }
 	}
 	
+	/**
+	 * Returns the number of lines of code, counting comments but not blank lines
+	 * 
+	 * @param classCode		the full method code
+	 * @return				the lines of code number
+	 */
 	private static int countLines(String code) {
-		String[] lines = code.split("\r\n");
-	
-		int lastLine = 0;
-		Pattern patternEnd = Pattern.compile("^\\s*\\}$", Pattern.CASE_INSENSITIVE);
-		for (int i=lines.length-1; i>0; i--) {
-		    Matcher matcher = patternEnd.matcher(lines[i]);
-			if (matcher.find()) {
-				lastLine = i + 1;
-				break;
-			}
-		}
-		return lastLine;
+		List<String> lines = Arrays.asList(code.split("\r\n"));
+		lines = lines.stream().filter(l -> !l.equals("")).collect(Collectors.toList());
+		return lines.size();
 	}
 }
