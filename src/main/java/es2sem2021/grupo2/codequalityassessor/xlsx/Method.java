@@ -1,5 +1,7 @@
 package es2sem2021.grupo2.codequalityassessor.xlsx;
 
+import es2sem2021.grupo2.codequalityassessor.rules.Constants;
+
 public class Method {
 
 	public String m_package;
@@ -8,10 +10,8 @@ public class Method {
 	public int nom_class;
 	public int loc_class;
 	public int wmc_class;
-	public boolean is_God_Class;
 	public int loc_method;
 	public int cyclo_method;
-	public boolean is_Long_Method;
 
 	public Method(String packageName, String className, String method, int nOM_class, int lOC_class,
 			int wMC_class, int lOC_method, int cYCLO_method) {
@@ -23,7 +23,22 @@ public class Method {
 		wmc_class = wMC_class;
 		loc_method = lOC_method;
 		cyclo_method = cYCLO_method;
-		//this.is_God_Class = is_God_Class;
-		//this.is_Long_Method = is_Long_Method;
+	}
+	
+	public int getMetric(String metric) throws IllegalArgumentException {
+		switch (metric) {
+		case Constants.LOC_CLASS: 
+			return loc_class;
+		case Constants.CYCLO_METHOD:
+			return cyclo_method;
+		case Constants.LOC_METHOD:
+			return loc_method;
+		case Constants.NOM:
+			return nom_class;
+		case Constants.WMC_CLASS:
+			return wmc_class;
+		default:
+			throw new IllegalArgumentException();
+		}
 	}
 }

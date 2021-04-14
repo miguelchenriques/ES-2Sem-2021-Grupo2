@@ -29,7 +29,7 @@ public class FileGenerator {
 	}
 
 	private static String[] columns = { "MethodID", "Package", "Class", "Method", "NOM_class", "LOC_class", "WMC_class",
-			"is_God_Class", "LOC_method", "CYCLO_method", "is_Long_Method" };
+			"LOC_method", "CYCLO_method" };
 
 	/**
 	 * Creates the xlsx file with all the methods and metrics from the files in the selected folder
@@ -64,10 +64,8 @@ public class FileGenerator {
 			row.createCell(4).setCellValue(method.nom_class);
 			row.createCell(5).setCellValue(method.loc_class);
 			row.createCell(6).setCellValue(method.wmc_class);
-			row.createCell(7).setCellValue(method.is_God_Class);
-			row.createCell(8).setCellValue(method.loc_method);
-			row.createCell(9).setCellValue(method.cyclo_method);
-			row.createCell(10).setCellValue(method.is_Long_Method);
+			row.createCell(7).setCellValue(method.loc_method);
+			row.createCell(8).setCellValue(method.cyclo_method);
 		}
 
 		for (int i = 0; i < columns.length; i++) {

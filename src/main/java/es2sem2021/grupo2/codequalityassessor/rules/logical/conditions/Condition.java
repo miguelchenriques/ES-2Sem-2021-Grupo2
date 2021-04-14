@@ -1,6 +1,8 @@
-package es2sem2021.grupo2.codequalityassessor.rules;
+package es2sem2021.grupo2.codequalityassessor.rules.logical.conditions;
 
-public class Condition {
+import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
+
+public class Condition implements LogicalCondition {
 	private String metricName;
 	private Operand operand;
 	private int value;
@@ -12,14 +14,15 @@ public class Condition {
 	}
 	
 	/**
-	 * Asserts if the passed value is valid for the condition.
-	 * Ex: If the condition is GREATER 10 and the passed value is 5 the it will be false,
-	 * but if the passed value is 11 then it will be true.
+	 * Asserts if the passed method is valid for the condition.
+	 * Ex: If the condition is nom GREATER 10 and the passed method nom is 5 then it will be false,
+	 * but if the value is 11 then it will be true.
 	 * 
-	 * @param value	the value to assert if it passes the condition
-	 * @return		assertion result
+	 * @param method	the method to assert if it passes the condition
+	 * @return			assertion result
 	 */
-	public boolean assertCondition(int value) {
+	@Override
+	public boolean assertCondition(Method method) {
 		//TODO: Verificar se passa a condição
 		return true;
 	}
