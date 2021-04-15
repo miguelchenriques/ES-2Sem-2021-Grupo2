@@ -14,6 +14,7 @@ public class App {
 
 	private JFrame frame;
 	private PanelExtrair panel_extrair;
+	private PanelVisualizar panel_visualizar;
 
 	/**
 	 * Launch the application.
@@ -48,7 +49,7 @@ public class App {
 		frame.getContentPane().setLayout(null);
 		
 		panel_extrair = new PanelExtrair();
-		
+		panel_visualizar = new PanelVisualizar();
 		
 		JPanel menuPane = new JPanel();
 		menuPane.setBackground(Color.GRAY);
@@ -64,7 +65,7 @@ public class App {
 			}
 		});
 		extrairMetricasPane.setBackground(Color.LIGHT_GRAY);
-		extrairMetricasPane.setBounds(6, 123, 144, 50);
+		extrairMetricasPane.setBounds(6, 121, 150, 50);
 		menuPane.add(extrairMetricasPane);
 		extrairMetricasPane.setLayout(null);
 		
@@ -72,16 +73,21 @@ public class App {
 		lblNewLabel.setBounds(22, 16, 99, 16);
 		extrairMetricasPane.add(lblNewLabel);
 		
-		JPanel visualizarMetricasPAne = new JPanel();
-		visualizarMetricasPAne.setBackground(Color.LIGHT_GRAY);
-		visualizarMetricasPAne.setBounds(6, 185, 144, 50);
-		menuPane.add(visualizarMetricasPAne);
-		visualizarMetricasPAne.setLayout(null);
+		JPanel visualizarMetricasPane = new JPanel();
+		visualizarMetricasPane.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(panel_visualizar);
+			}
+		});
+		visualizarMetricasPane.setBackground(Color.LIGHT_GRAY);
+		visualizarMetricasPane.setBounds(6, 183, 150, 50);
+		menuPane.add(visualizarMetricasPane);
+		visualizarMetricasPane.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Visualizar métricas");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(6, 17, 132, 16);
-		visualizarMetricasPAne.add(lblNewLabel_1);
+		visualizarMetricasPane.add(lblNewLabel_1);
 		
 		JPanel contentPane = new JPanel();
 		contentPane.setBounds(161, 0, 449, 405);
@@ -89,10 +95,12 @@ public class App {
 		contentPane.setLayout(null);
 		
 		contentPane.add(panel_extrair);
+		contentPane.add(panel_visualizar);
 	}
 	
 	public void menuClicked(JPanel panel) {
 		panel_extrair.setVisible(false);
+		panel_visualizar.setVisible(false);
 		
 		panel.setVisible(true);
 	}
