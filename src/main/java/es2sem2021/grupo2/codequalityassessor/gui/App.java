@@ -3,11 +3,8 @@ package es2sem2021.grupo2.codequalityassessor.gui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -60,6 +57,12 @@ public class App {
 		menuPane.setLayout(null);
 		
 		JPanel extrairMetricasPane = new JPanel();
+		extrairMetricasPane.setName("extrair");
+		extrairMetricasPane.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(panel_extrair);
+			}
+		});
 		extrairMetricasPane.setBackground(Color.LIGHT_GRAY);
 		extrairMetricasPane.setBounds(6, 123, 144, 50);
 		menuPane.add(extrairMetricasPane);
@@ -86,7 +89,12 @@ public class App {
 		contentPane.setLayout(null);
 		
 		contentPane.add(panel_extrair);
-		
-		
 	}
+	
+	public void menuClicked(JPanel panel) {
+		panel_extrair.setVisible(false);
+		
+		panel.setVisible(true);
+	}
+	
 }
