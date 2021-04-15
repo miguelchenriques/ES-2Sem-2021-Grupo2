@@ -13,8 +13,8 @@ import javax.swing.JLabel;
 public class App {
 
 	private JFrame frame;
-	private PanelExtrair panel_extrair;
-	private PanelVisualizar panel_visualizar;
+	private ExtractPanel extract_panel;
+	private VisualizePanel visualize_panel;
 
 	/**
 	 * Launch the application.
@@ -48,8 +48,8 @@ public class App {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		panel_extrair = new PanelExtrair();
-		panel_visualizar = new PanelVisualizar();
+		extract_panel = new ExtractPanel();
+		visualize_panel = new VisualizePanel();
 		
 		JPanel menuPane = new JPanel();
 		menuPane.setBackground(Color.GRAY);
@@ -57,50 +57,49 @@ public class App {
 		frame.getContentPane().add(menuPane);
 		menuPane.setLayout(null);
 		
-		JPanel extrairMetricasPane = new JPanel();
-		extrairMetricasPane.setName("extrair");
-		extrairMetricasPane.addMouseListener(new MouseAdapter(){
+		JPanel extractMetricsPane = new JPanel();
+		extractMetricsPane.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
-				menuClicked(panel_extrair);
+				menuClicked(extract_panel);
 			}
 		});
-		extrairMetricasPane.setBackground(Color.LIGHT_GRAY);
-		extrairMetricasPane.setBounds(6, 121, 150, 50);
-		menuPane.add(extrairMetricasPane);
-		extrairMetricasPane.setLayout(null);
+		extractMetricsPane.setBackground(Color.LIGHT_GRAY);
+		extractMetricsPane.setBounds(6, 121, 150, 50);
+		menuPane.add(extractMetricsPane);
+		extractMetricsPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Extrair métricas");
+		JLabel lblNewLabel = new JLabel("Extract metrics");
 		lblNewLabel.setBounds(22, 16, 99, 16);
-		extrairMetricasPane.add(lblNewLabel);
+		extractMetricsPane.add(lblNewLabel);
 		
-		JPanel visualizarMetricasPane = new JPanel();
-		visualizarMetricasPane.addMouseListener(new MouseAdapter(){
+		JPanel visualizeMetricsPane = new JPanel();
+		visualizeMetricsPane.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
-				menuClicked(panel_visualizar);
+				menuClicked(visualize_panel);
 			}
 		});
-		visualizarMetricasPane.setBackground(Color.LIGHT_GRAY);
-		visualizarMetricasPane.setBounds(6, 183, 150, 50);
-		menuPane.add(visualizarMetricasPane);
-		visualizarMetricasPane.setLayout(null);
+		visualizeMetricsPane.setBackground(Color.LIGHT_GRAY);
+		visualizeMetricsPane.setBounds(6, 183, 150, 50);
+		menuPane.add(visualizeMetricsPane);
+		visualizeMetricsPane.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Visualizar métricas");
+		JLabel lblNewLabel_1 = new JLabel("Visualize Metrics");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(6, 17, 132, 16);
-		visualizarMetricasPane.add(lblNewLabel_1);
+		visualizeMetricsPane.add(lblNewLabel_1);
 		
 		JPanel contentPane = new JPanel();
 		contentPane.setBounds(161, 0, 449, 405);
 		frame.getContentPane().add(contentPane);
 		contentPane.setLayout(null);
 		
-		contentPane.add(panel_extrair);
-		contentPane.add(panel_visualizar);
+		contentPane.add(extract_panel);
+		contentPane.add(visualize_panel);
 	}
 	
 	public void menuClicked(JPanel panel) {
-		panel_extrair.setVisible(false);
-		panel_visualizar.setVisible(false);
+		extract_panel.setVisible(false);
+		visualize_panel.setVisible(false);
 		
 		panel.setVisible(true);
 	}

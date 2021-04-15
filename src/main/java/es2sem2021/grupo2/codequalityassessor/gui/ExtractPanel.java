@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-public class PanelExtrair extends JPanel {
+public class ExtractPanel extends JPanel {
 
 	/**
 	 * 
@@ -27,7 +27,7 @@ public class PanelExtrair extends JPanel {
 
 	JLabel label = new JLabel("New label");
 
-	public PanelExtrair() {
+	public ExtractPanel() {
 		setBounds(0, 0, 449, 405);
 		setLayout(null);
 		setVisible(false);
@@ -38,7 +38,7 @@ public class PanelExtrair extends JPanel {
 		panel.setLayout(null);
 
 		JButton openButton = new JButton("Choose File");
-		openButton.setBounds(157, 125, 117, 29);
+		openButton.setBounds(157, 152, 117, 29);
 		panel.add(openButton);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(65, 193, 306, 51);
@@ -59,7 +59,7 @@ public class PanelExtrair extends JPanel {
 
     			if (r == JFileChooser.APPROVE_OPTION) {
     				// set the label to the path of the selected directory
-    				label.setText("File: " + j.getSelectedFile().getAbsolutePath() + " generated.");
+    				label.setText("File: " + j.getSelectedFile().getName() + " generated.");
     				label.setVisible(true);
     				FileGenerator fileGenerator = new FileGenerator(j.getSelectedFile());
     				try {

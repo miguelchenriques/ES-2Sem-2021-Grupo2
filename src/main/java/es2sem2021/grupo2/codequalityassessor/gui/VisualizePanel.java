@@ -20,7 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class PanelVisualizar extends JPanel {
+public class VisualizePanel extends JPanel {
 
 	/**
 	 * 
@@ -36,7 +36,7 @@ public class PanelVisualizar extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelVisualizar() {
+	public VisualizePanel() {
 		setBounds(0, 0, 449, 405);
 		setLayout(null);
 		setVisible(false);
@@ -67,7 +67,7 @@ public class PanelVisualizar extends JPanel {
 		add(fileName);
 		fileName.setVisible(false);
 
-		JButton chooseFile = new JButton("Importar ficheiro");
+		JButton chooseFile = new JButton("Import File");
 		chooseFile.setBounds(133, 56, 169, 29);
 		add(chooseFile);
 
