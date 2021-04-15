@@ -119,7 +119,8 @@ public class MetricsExtractor {
 		try {
 			compilationUnit = StaticJavaParser.parse(f);
 			Optional<PackageDeclaration> packageDeclaration = compilationUnit.getPackageDeclaration();
-			if (packageDeclaration.isEmpty()) return "";
+			/*if (packageDeclaration.isEmpty()) return "";*/
+			if (packageDeclaration.isPresent()) return "";
 			return packageDeclaration.get().getNameAsString();
 		} catch (FileNotFoundException | ParseProblemException e) {
 			// TODO Auto-generated catch block
