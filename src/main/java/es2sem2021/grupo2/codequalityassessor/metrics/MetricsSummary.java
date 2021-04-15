@@ -1,10 +1,8 @@
 package es2sem2021.grupo2.codequalityassessor.metrics;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
