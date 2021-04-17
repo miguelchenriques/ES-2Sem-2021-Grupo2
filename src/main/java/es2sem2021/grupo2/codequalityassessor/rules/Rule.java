@@ -1,23 +1,18 @@
 package es2sem2021.grupo2.codequalityassessor.rules;
 
-import es2sem2021.grupo2.codequalityassessor.rules.logical.conditions.LogicalCondition;
 import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
 public class Rule {
 	
 	private String name, conditions;
-	//Representa a raiz da arvore da regra
-	private LogicalCondition root;
 	
-	
-	public Rule(String name, String conditions, LogicalCondition root) {
+	public Rule(String name, String conditions) {
 		this.name = name;
 		this.conditions = conditions;
-		this.root = root;
 	}
 	
 	public boolean assertRule(Method method) {
-		return root.assertCondition(method);
+		return false;
 	}
 	
 	public String getName() {
@@ -29,8 +24,7 @@ public class Rule {
 	}
 
 	public void setConditions(String conditions) throws IllegalArgumentException {
-		LogicalCondition newRoot = RuleParser.parseRuleCondition(conditions);
-		this.root = newRoot;
+		if (!RuleParser.validateConditionSyntax(conditions)) throw new IllegalArgumentException();
 		this.conditions = conditions;
 	}
 
