@@ -24,8 +24,6 @@ public class Rule {
 				throw new IllegalArgumentException("sintaxe nao valida :(");
 		this.name = name;
 		this.conditions = conditions;
-
-		
 	}
 	
 	

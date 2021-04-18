@@ -21,8 +21,7 @@ public class RuleTest {
 		boolean b = r.assertRule(m); 	
 		boolean b2 = r.assertRule(m2);
 		System.out.println(b);
-		System.out.println(b2);
-		
+		System.out.println(b2);	
 	}
 	
 	
