@@ -5,9 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
@@ -23,56 +20,53 @@ public class WMCClass {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
 			LexicalPreservingPrinter.setup(compilationUnit);
-
 			HashMap<String, Integer> cycloMethod = CYCLO_method.getMethodCyclo(f);
-
+			if (cycloMethod == null) return null;
 			ArrayList<String> classes = new ArrayList<>();
 			ClassNameCollector className = new ClassNameCollector();
 			className.visit(compilationUnit, classes);
-
-			String main = cycloMethod.keySet().iterator().next();
-			main=main.substring(0,main.indexOf('.'));
-
-			HashMap<String, Integer> classWMC= new HashMap<String, Integer>();
-			for(String s : classes) {
-				classWMC.put(s, 0);	
-			}
+			
 
 
-			return getResults(classes,main,classWMC,cycloMethod);
+			return getResults(getPair(classes,cycloMethod));
 
 		} catch (FileNotFoundException | ParseProblemException e) {
 			return null;
 		}
 	}
 
-	private static HashMap<String, Integer> getResults(ArrayList<String> classes, String main, HashMap<String, Integer> classWMC, HashMap<String, Integer> cycloMethod ) {
+	private static ArrayList<Pair<String, Integer>> getPair(ArrayList<String> classes, HashMap<String, Integer> cycloMethod ) {
 		if (classes.size() < 1)
 			return null;
-
-		HashMap<String, Integer> results = new HashMap<>();
+		
+		ArrayList<Pair<String, Integer>> results = new ArrayList<>();
 
 		for(String classString : classes ){
-			for(String s : cycloMethod.keySet()) {
-				String[] c = s.split("\\.");
+			int count=0;
+			for(String s : cycloMethod.keySet()) {	
+				String[] c;
+				if(s.indexOf(".")!=-1 && s.indexOf(".")<s.indexOf("("))
+					c = s.split("\\.");
+				else
+					c = s.split("\\(");
 				if(c[0].equals(classString)) {
-					int count = classWMC.get(classString);
-					if(count==0) {
-						classWMC.put(classString, cycloMethod.get(s));
-					} 
-					if(count!=0){
-						count=count+ cycloMethod.get(s);
-						classWMC.put(classString, count);
-					}			
+					count += cycloMethod.get(s);			
 				}
 			}
+			results.add(new Pair<String,Integer>(classString,count));
 		}
-
-		for (String s: classWMC.keySet()) {
-			if(s.equals(main))
-				results.put(s,classWMC.get(s));
-			if(!s.equals(main))
-				results.put(main + "." + s,classWMC.get(s));
+		return results;
+	}
+	
+	private static HashMap<String,Integer> getResults(ArrayList<Pair<String,Integer>> classes){
+		if (classes.size()<1) return null;
+		
+		Pair<String, Integer> main = classes.remove(classes.size()-1);
+		HashMap<String, Integer> results = new HashMap<>();
+		
+		results.put(main.a, main.b);
+		for (Pair<String, Integer> pair: classes) {
+			results.put(main.a+ "." + pair.a, pair.b);
 		}
 		return results;
 	}

@@ -55,7 +55,7 @@ public class MetricsExtractor {
 				String methodDeclaration = methodPair.b;
 				if(!mainClass.equals(className)) {
 					className=mainClass + "." + className;
-				}	
+				}
 				methods.add(new Method( packageName, className, methodDeclaration, nom.get(className), locClass.get(className),wmcClass.get(className) , locMethod.get(method), cycloMethod.get(method)));
 				}				
 			}			
@@ -119,8 +119,7 @@ public class MetricsExtractor {
 		try {
 			compilationUnit = StaticJavaParser.parse(f);
 			Optional<PackageDeclaration> packageDeclaration = compilationUnit.getPackageDeclaration();
-			/*if (packageDeclaration.isEmpty()) return "";*/
-			if (packageDeclaration.isPresent()) return "";
+			if (!packageDeclaration.isPresent()) return "";
 			return packageDeclaration.get().getNameAsString();
 		} catch (FileNotFoundException | ParseProblemException e) {
 			// TODO Auto-generated catch block

@@ -101,8 +101,7 @@ public class CYCLO_method {
 			v.visit(n, l);
 						
 			String s = n.getDeclarationAsString(false,false,false);
-			String className = ((ClassOrInterfaceDeclaration)n.getParentNode().get()).getNameAsString();
-			s = className + "." + s;
+
 
 			collector.add(new Pair<String, Integer>(s, l.size()+1));
 		}
