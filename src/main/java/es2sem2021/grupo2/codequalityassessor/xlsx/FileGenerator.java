@@ -42,6 +42,7 @@ public class FileGenerator {
 		List<Method> methods = new ArrayList<>();
 		
 		parseFolders(this.folder,methods);
+		System.out.println(methods);
 		
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(fileName);
@@ -78,7 +79,7 @@ public class FileGenerator {
 		fileOut.close();
 	}
 	
-	void parseFolders(File folder, List<Method> methods) throws FileNotFoundException {
+	static void parseFolders(File folder, List<Method> methods) throws FileNotFoundException {
 		for (File f: folder.listFiles()) {
 			//System.out.println(f.getName());
 			if(f.isDirectory())
