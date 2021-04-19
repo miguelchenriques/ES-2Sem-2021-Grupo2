@@ -28,7 +28,8 @@ public class FileGenerator {
 		this.fileName = folder.getName();
 	}
 
-	private static String[] columns = { "MethodID", "Package", "Class", "Method", "NOM_class", "LOC_class", "WMC_class", "LOC_method", "CYCLO_method"};
+	private static String[] columns = { "MethodID", "Package", "Class", "Method", "NOM_class", "LOC_class", "WMC_class",
+			"LOC_method", "CYCLO_method" };
 
 	/**
 	 * Creates the xlsx file with all the methods and metrics from the files in the selected folder
