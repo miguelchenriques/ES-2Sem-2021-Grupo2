@@ -62,12 +62,14 @@ public class WMCClass {
 		if (classes.size()<1) return null;
 		
 		Pair<String, Integer> main = classes.remove(classes.size()-1);
+		System.out.println(main.a);
 		HashMap<String, Integer> results = new HashMap<>();
 		
-		results.put(main.a, main.b);
 		for (Pair<String, Integer> pair: classes) {
 			results.put(main.a+ "." + pair.a, pair.b);
+			main= new Pair<String,Integer>(main.a,main.b+ pair.b); 
 		}
+		results.put(main.a,main.b);
 		return results;
 	}
 
