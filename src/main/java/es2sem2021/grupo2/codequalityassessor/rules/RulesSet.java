@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 public class RulesSet {
 
-	HashMap<String,Rule> rules = new HashMap<String,Rule>();
+	static HashMap<String,Rule> rules = new HashMap<String,Rule>();
 
-	public boolean addRule(String name, String conditions) {
+	public static boolean addRule(String name, String conditions) {
 		try {
 			Rule r = new Rule(name,conditions);
 			if(rules.get(name) != null)
@@ -19,7 +19,7 @@ public class RulesSet {
 		}
 	}
 
-	public boolean changeRule(String name, String conditions) {
+	public static boolean changeRule(String name, String conditions) {
 		try {
 			Rule r = new Rule(name,conditions);
 			if(rules.get(name) == null)
@@ -31,7 +31,7 @@ public class RulesSet {
 		}
 	}
 
-	public boolean deleteRule(String name) {
+	public static boolean deleteRule(String name) {
 		if(rules.get(name) == null)
 			return false;
 		rules.remove(name);
