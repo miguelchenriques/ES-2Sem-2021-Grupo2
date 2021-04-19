@@ -37,7 +37,7 @@ public class VisualizePanel extends JPanel {
 	 * Create the panel.
 	 */
 	public VisualizePanel() {
-		setBounds(0, 0, 449, 405);
+		setBounds(0, 0, 650, 483);
 		setLayout(null);
 		setVisible(false);
 
