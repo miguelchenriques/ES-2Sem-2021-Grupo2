@@ -19,6 +19,10 @@ public class RulesSet {
 		}
 	}
 
+	public static HashMap<String, Rule> getRules() {
+		return rules;
+	}
+
 	public static boolean changeRule(String name, String conditions) {
 		try {
 			Rule r = new Rule(name,conditions);

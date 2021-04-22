@@ -28,7 +28,7 @@ public class ExtractPanel extends JPanel {
 	JLabel label = new JLabel("New label");
 
 	public ExtractPanel() {
-		setBounds(0, 0, 449, 405);
+		setBounds(0, 0, 650, 483);
 		setLayout(null);
 		setVisible(false);
 

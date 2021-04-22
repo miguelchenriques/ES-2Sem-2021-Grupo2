@@ -15,6 +15,7 @@ public class App {
 	private JFrame frame;
 	private ExtractPanel extract_panel;
 	private VisualizePanel visualize_panel;
+	private RulesPanel rules_panel;
 
 	/**
 	 * Launch the application.
@@ -44,16 +45,17 @@ public class App {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 610, 433);
+		frame.setBounds(100, 100, 812, 483);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		extract_panel = new ExtractPanel();
 		visualize_panel = new VisualizePanel();
+		rules_panel = new RulesPanel();
 		
 		JPanel menuPane = new JPanel();
 		menuPane.setBackground(Color.GRAY);
-		menuPane.setBounds(0, 0, 162, 405);
+		menuPane.setBounds(0, 0, 162, 483);
 		frame.getContentPane().add(menuPane);
 		menuPane.setLayout(null);
 		
@@ -88,20 +90,37 @@ public class App {
 		lblNewLabel_1.setBounds(6, 17, 132, 16);
 		visualizeMetricsPane.add(lblNewLabel_1);
 		
+		JPanel rulesPane = new JPanel();
+		rulesPane.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(rules_panel);
+			}
+		});
+		rulesPane.setLayout(null);
+		rulesPane.setBackground(Color.LIGHT_GRAY);
+		rulesPane.setBounds(6, 245, 150, 50);
+		menuPane.add(rulesPane);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Use/Set Rules");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setBounds(6, 17, 132, 16);
+		rulesPane.add(lblNewLabel_1_1);
+		
 		JPanel contentPane = new JPanel();
-		contentPane.setBounds(161, 0, 449, 405);
+		contentPane.setBounds(161, 0, 650, 483);
 		frame.getContentPane().add(contentPane);
 		contentPane.setLayout(null);
 		
 		contentPane.add(extract_panel);
 		contentPane.add(visualize_panel);
+		contentPane.add(rules_panel);
 	}
 	
 	public void menuClicked(JPanel panel) {
 		extract_panel.setVisible(false);
 		visualize_panel.setVisible(false);
+		rules_panel.setVisible(false);
 		
 		panel.setVisible(true);
 	}
-	
 }
