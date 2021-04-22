@@ -6,6 +6,7 @@ import static es2sem2021.grupo2.codequalityassessor.rules.Constants.LOC_METHOD;
 import static es2sem2021.grupo2.codequalityassessor.rules.Constants.NOM;
 import static es2sem2021.grupo2.codequalityassessor.rules.Constants.WMC_CLASS;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -15,8 +16,12 @@ import org.mvel2.MVEL;
 
 import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
-public class Rule {
+public class Rule implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5618173094709221790L;
 	private String name, conditions;
 	
 	public Rule(String name, String conditions) throws IllegalArgumentException { //verificar o conditions antes de criar

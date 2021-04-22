@@ -98,9 +98,7 @@ public class RulesPanel extends JPanel {
 		scrollPane.setBounds(6, 139, 638, 260);
 		add(scrollPane);
 
-		RulesSet.addRule("is_God", "LOC_Method >= 45 And ( CYCLO_Method < 10 OR WMC_Class = 3 )");
-		RulesSet.addRule("is_Long", "LOC_Method >= 45 And ( CYCLO_Method < 10 OR WMC_Class = 3 )");
-		RulesSet.addRule("Test", "LOC_Method >= 45 And ( CYCLO_Method < 10 OR WMC_Class = 3 )");
+		RulesSet.loadFromFile();
 		updateRules();
 		
 		
