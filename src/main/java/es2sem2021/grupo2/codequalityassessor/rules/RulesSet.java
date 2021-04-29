@@ -14,6 +14,23 @@ public class RulesSet {
 
 	static HashMap<String,Rule> rules = new HashMap<String,Rule>();
 
+	/**
+	 * Adds mandatory rules into the hashmap
+	 */
+	public static void importMandatoryRules() {
+		addRule("is_long_method", "");
+		addRule("is_god_class", "");
+	}
+	
+	
+	/**
+	 * Returns a boolean
+	 * If the adding process is successful returns true if not returns false
+	 * 
+	 * @param name-Rule name (string), conditions-Rule Condition
+	 * @return true/false
+	 * @throws IllegalArgumentException
+	 */
 	public static boolean addRule(String name, String conditions) {
 		try {
 			Rule r = new Rule(name,conditions);
@@ -27,10 +44,26 @@ public class RulesSet {
 		}
 	}
 
+	/**
+	 * Returns a boolean
+	 * If the adding process is successful returns true if not returns false
+	 * 
+	 * @param name-Rule name (string), conditions-Rule Condition
+	 * @return true/false
+	 * @throws IllegalArgumentException
+	 */
 	public static HashMap<String, Rule> getRules() {
 		return rules;
 	}
 
+	/**
+	 * Returns a boolean
+	 * If the changing process is successful returns true if not returns false
+	 * 
+	 * @param name-Rule name (string), conditions-Rule Condition
+	 * @return true/false
+	 * @throws IllegalArgumentException
+	 */
 	public static boolean changeRule(String name, String conditions) {
 		try {
 			Rule r = new Rule(name,conditions);
@@ -44,6 +77,13 @@ public class RulesSet {
 		}
 	}
 
+	/**
+	 * Returns a boolean
+	 * If the deleting process is successful returns true if not returns false
+	 * 
+	 * @param name-Rule name (string)
+	 * @return true/false
+	 */
 	public static boolean deleteRule(String name) {
 		if(rules.get(name) == null)
 			return false;
@@ -52,6 +92,9 @@ public class RulesSet {
 		return true;
 	}
 	
+	/**
+	 * Saves the rules into a file
+	 */
 	public static void saveToFile() {
 		try {
 			FileOutputStream f = new FileOutputStream(new File("rules"));
@@ -66,6 +109,9 @@ public class RulesSet {
 		}
 	}
 	
+	/**
+	 * Loads the rules from a file
+	 */
 	@SuppressWarnings("unchecked")
 	public static void loadFromFile() {
 		try {
