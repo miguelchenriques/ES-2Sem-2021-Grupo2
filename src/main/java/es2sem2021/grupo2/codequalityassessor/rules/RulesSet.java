@@ -18,8 +18,8 @@ public class RulesSet {
 	 * Adds mandatory rules into the hashmap
 	 */
 	public static void importMandatoryRules() {
-		addRule("is_long_method", "");
-		addRule("is_god_class", "");
+		addRule("is_long_method", "0");
+		addRule("is_god_class", "0");
 	}
 	
 	
