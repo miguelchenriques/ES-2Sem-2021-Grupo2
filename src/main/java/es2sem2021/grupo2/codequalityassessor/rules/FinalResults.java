@@ -1,5 +1,6 @@
 package es2sem2021.grupo2.codequalityassessor.rules;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -11,7 +12,7 @@ public class FinalResults {
 	
 	static ArrayList<RuleResults> finalresults = new ArrayList<>();
 	
-	public static ArrayList<RuleResults> getRulesResults(ArrayList<Method> methods){
+	public static ArrayList<RuleResults> getRulesResults(List<Method> methods){
 		finalresults.clear();
 		
 		HashMap<String, Rule> rulesSet = RulesSet.getRules();
