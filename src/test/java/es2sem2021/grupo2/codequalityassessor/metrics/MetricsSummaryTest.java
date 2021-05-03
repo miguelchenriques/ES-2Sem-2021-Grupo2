@@ -17,11 +17,11 @@ class MetricsSummaryTest {
 		File f = new File("compiler_metrics.xlsx");
 		Workbook workbook = WorkbookFactory.create(f);
 		MetricsSummary metricsSummary = new MetricsSummary(workbook);
-		assertEquals(metricsSummary.getNumberOfClasses(),9);
-		assertEquals(metricsSummary.getNumberOfPackages(),1);
-		assertEquals(metricsSummary.getTotalLinesOfCode(),2585);
-		assertEquals(metricsSummary.getTotalNumberOfMethods(),110);
-		assertEquals(metricsSummary.getMethods().size(),110);
+		assertEquals(11, metricsSummary.getNumberOfClasses());
+		assertEquals(1, metricsSummary.getNumberOfPackages());
+		assertEquals(2421, metricsSummary.getTotalLinesOfCode());
+		assertEquals(112, metricsSummary.getTotalNumberOfMethods());
+		assertEquals(112, metricsSummary.getMethods().size());
 	}
 	
 	@Test
@@ -29,8 +29,8 @@ class MetricsSummaryTest {
 		File f = new File("jasml_metrics.xlsx");
 		Workbook workbook = WorkbookFactory.create(f);
 		MetricsSummary metricsSummary = new MetricsSummary(workbook);
-		assertEquals(metricsSummary.getNumberOfClasses(),49);
-		assertEquals(metricsSummary.getNumberOfPackages(),4);
+		assertEquals(51, metricsSummary.getNumberOfClasses());
+		assertEquals(4, metricsSummary.getNumberOfPackages());
 	}
 	
 	@Test
