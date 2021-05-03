@@ -71,6 +71,14 @@ public class ExtractPanel extends JPanel {
     					// TODO Auto-generated catch block
     					i.printStackTrace();
     				}
+    				
+    				CodeSmellsTableGenerator generator= new CodeSmellsTableGenerator(j.getSelectedFile());
+    				try {
+						generator.main();
+					} catch (InvalidFormatException | IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
     			}
                 
             }
