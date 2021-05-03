@@ -2,7 +2,6 @@ package es2sem2021.grupo2.codequalityassessor.rules;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,15 +12,6 @@ import java.util.HashMap;
 public class RulesSet {
 
 	static HashMap<String,Rule> rules = new HashMap<String,Rule>();
-
-	/**
-	 * Adds mandatory rules into the hashmap
-	 */
-	public static void importMandatoryRules() {
-		addRule("is_long_method", "0");
-		addRule("is_god_class", "0");
-	}
-	
 	
 	/**
 	 * Returns a boolean
