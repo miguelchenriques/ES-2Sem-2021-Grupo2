@@ -42,13 +42,13 @@ public class QualityEvaluation {
 			int godClassIndex = -1;
 			int longMethodIndex = -1;
 			for (int i=firstRow.getFirstCellNum(); i<firstRow.getLastCellNum();i++) {
-				if(firstRow.getCell(i).getStringCellValue().equals("Package")) 
+				if(firstRow.getCell(i).getStringCellValue().equals("class")) 
 					classIndex = i;
-				if(firstRow.getCell(i).getStringCellValue().equals("Class")) 
+				if(firstRow.getCell(i).getStringCellValue().equals("method")) 
 					methodIndex = i;
-				if(firstRow.getCell(i).getStringCellValue().equals("Method")) 
+				if(firstRow.getCell(i).getStringCellValue().equals("is_God_Class")) 
 					godClassIndex = i;
-				if(firstRow.getCell(i).getStringCellValue().equals("NOM_class")) 
+				if(firstRow.getCell(i).getStringCellValue().equals("is_Long_Method")) 
 					longMethodIndex = i;
 			}
 			if(classIndex == -1 || methodIndex == -1 || godClassIndex == -1 || longMethodIndex == -1) 
