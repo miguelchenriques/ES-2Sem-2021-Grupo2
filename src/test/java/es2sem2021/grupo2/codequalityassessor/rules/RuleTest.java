@@ -1,5 +1,6 @@
 package es2sem2021.grupo2.codequalityassessor.rules;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -20,8 +21,8 @@ public class RuleTest {
 		
 		boolean b = r.assertRule(m); 	
 		boolean b2 = r.assertRule(m2);
-		System.out.println(b);
-		System.out.println(b2);	
+		assertTrue(b);
+		assertEquals(false,b2);
 	}
 	
 	
