@@ -17,7 +17,7 @@ public class Method {
 			int wMC_class, int lOC_method, int cYCLO_method) {
 		m_package = packageName;
 		m_class = className;
-		m_method = method;
+		m_method = method.replaceAll(" ", "");
 		nom_class = nOM_class;
 		loc_class = lOC_class;
 		wmc_class = wMC_class;
