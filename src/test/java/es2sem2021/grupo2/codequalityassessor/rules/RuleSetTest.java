@@ -5,13 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 public class RuleSetTest {
-
-	@Test
-	void testGodClasseLongMethod() {
-		RulesSet.rules.clear();
-		RulesSet.importMandatoryRules();
-		assertEquals(2, RulesSet.rules.size());
-	}
 	
 	@Test
 	void testAddRule() {
