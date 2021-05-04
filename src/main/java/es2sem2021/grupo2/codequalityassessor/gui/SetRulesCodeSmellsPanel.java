@@ -1,6 +1,8 @@
 package es2sem2021.grupo2.codequalityassessor.gui;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +26,12 @@ import es2sem2021.grupo2.codequalityassessor.rules.RuleResults;
 import es2sem2021.grupo2.codequalityassessor.rules.RulesSet;
 import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
-public class SetRulesCodeSmellsPanel extends JPanel {
+public class SetRulesCodeSmellsPanel extends JPanel implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Create the panel.
 	 */
@@ -52,32 +58,58 @@ public class SetRulesCodeSmellsPanel extends JPanel {
 		
 		updateCodeSmells();
 		
+		/*Action change = new AbstractAction()
+		{
+		    public void actionPerformed(ActionEvent e)
+		    {
+		    	JTable table = (JTable)e.getSource();
+		        int modelRow = Integer.valueOf( e.getActionCommand() );
+		        String codeSmell = table.getModel().getValueAt(modelRow, 0).toString();
+		        String ruleName = table.getModel().getValueAt(modelRow, 1).toString();
+		        Rule rule = RulesSet.getRules().get(ruleName);
+		        CodeSmells.addRuleToCodeSmell(codeSmell, rule);
+		        System.out.println(CodeSmells.getCodeSmells());
+		    }
+		};
+		
+		ButtonColumn changeButton = new ButtonColumn(table, change, 1);
+		changeButton.setMnemonic(KeyEvent.VK_D);*/
+		
 	}
 	
-	Action change = new AbstractAction()
-	{
-	    public void actionPerformed(ActionEvent e)
-	    {
-	    	JTable table = (JTable)e.getSource();
-	        int modelRow = Integer.valueOf( e.getActionCommand() );
-	        String s = table.getModel().getValueAt(modelRow, 1).toString();
-	    }
-	};
+	public void actionPerformed(ActionEvent e) {
+		JComboBox cb = (JComboBox)e.getSource();
+		String ruleName = (String)cb.getSelectedItem();
+        Rule rule = RulesSet.getRules().get(ruleName);
+        int modelRow = Integer.valueOf( table.getEditingRow() );
+		String codeSmell = table.getModel().getValueAt(1, 0).toString();
+        CodeSmells.addRuleToCodeSmell(codeSmell, rule);
+        System.out.println(CodeSmells.getCodeSmells());
+        
+    }
+	
 	
 	private void updateCodeSmells() {
 		CodeSmells.importMandatoryCodeSmells();
-		HashMap<String, Rule> codeSmells = CodeSmells.getCodesmells();
+		HashMap<String, Rule> codeSmells = CodeSmells.getCodeSmells();
 		model.getDataVector().removeAllElements();
 		revalidate();
 		for (Map.Entry<String, Rule> entry : codeSmells.entrySet()) {
+			String codeSmell = entry.getKey();
+			Rule rule = entry.getValue();
+			String ruleName;
+			if(rule == null) ruleName = "";
+			else ruleName = rule.getName();
 			JComboBox<String> comboBox = new JComboBox<>();
+			comboBox.addActionListener(this);
 			HashMap<String, Rule> rules = RulesSet.getRules();
-			for (Map.Entry<String, Rule> rule : rules.entrySet()) {
-				comboBox.addItem(rule.getKey());
+			for (Map.Entry<String, Rule> r : rules.entrySet()) {
+				comboBox.addItem(r.getKey());
 				TableColumn column = table.getColumnModel().getColumn(1);
 				column.setCellEditor(new DefaultCellEditor(comboBox));
 			}
-			model.addRow(new Object[] { entry.getKey(), entry.getValue().getConditions()});
+			model.addRow(new Object[] {codeSmell , ruleName});
 		}
 	}
+
 }
