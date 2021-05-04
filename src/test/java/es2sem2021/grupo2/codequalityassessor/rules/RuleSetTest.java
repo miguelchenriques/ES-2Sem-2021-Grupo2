@@ -8,7 +8,7 @@ public class RuleSetTest {
 	
 	@Test
 	void testAddRule() {
-		RulesSet.rules.clear();
+		RulesSet.getRules().clear();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And ( CYCLO_Method < 10 OR WMC_Class = 3 )");
 		assertEquals(true, add1);
 		boolean add2 = RulesSet.addRule("Grande", "LOC_Method >= 45 And ( CYCLO_Method < 10 OR WMC_Class = 3 )");
@@ -19,7 +19,7 @@ public class RuleSetTest {
 	
 	@Test
 	void testChangeRule() {
-		RulesSet.rules.clear();
+		RulesSet.getRules().clear();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And ( CYCLO_Method < 10 OR WMC_Class = 3 )");
 		assertEquals(true, add1);
 		
@@ -33,7 +33,7 @@ public class RuleSetTest {
 	
 	@Test
 	void testDeleteRule() {
-		RulesSet.rules.clear();
+		RulesSet.getRules().clear();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And ( CYCLO_Method < 10 OR WMC_Class = 3 )");
 		assertEquals(true, add1);
 		
