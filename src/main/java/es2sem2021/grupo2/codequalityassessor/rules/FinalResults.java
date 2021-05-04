@@ -22,7 +22,7 @@ public class FinalResults {
 			HashMap<String,Boolean> results = new HashMap<String,Boolean>();
 			for(Method m: methods) {
 				Boolean result = r.assertRule(m);
-				results.put(m.m_method, result);
+				results.put(m.m_class+"."+m.m_method, result);
 			}
 			finalresults.put(s,results);
 		}
