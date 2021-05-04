@@ -23,7 +23,7 @@ public class FinalResults {
 			for(Method m: methods) {
 				Rule rule = rulesSet.get(s);
 				Boolean result = rule.assertRule(m);
-				ruleresults.methodsresults.add(new RuleMethod(m,result));
+				ruleresults.methodsresults.add(new RuleMethod(m,result));			
 			}
 			finalresults.add(ruleresults);
 		}
