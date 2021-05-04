@@ -20,9 +20,11 @@ public class FinalResults {
 		for(String s: codesmells) {
 			Rule r = codeSmellsSet.get(s);
 			HashMap<String,Boolean> results = new HashMap<String,Boolean>();
-			for(Method m: methods) {
-				Boolean result = r.assertRule(m);
-				results.put(m.m_class+"."+m.m_method, result);
+			if(r != null) {
+				for(Method m: methods) {
+					Boolean result = r.assertRule(m);
+					results.put(m.m_class+"."+m.m_method, result);
+				}
 			}
 			finalresults.put(s,results);
 		}

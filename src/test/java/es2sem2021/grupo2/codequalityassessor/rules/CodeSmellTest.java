@@ -8,15 +8,15 @@ public class CodeSmellTest {
 	
 	@Test
 	void testGodClasseLongMethod() {
-		CodeSmells.codesmells.clear();
+		CodeSmells.getCodeSmells().clear();
 		CodeSmells.importMandatoryCodeSmells();
-		assertEquals(2, CodeSmells.codesmells.size());
+		assertEquals(2, CodeSmells.getCodeSmells().size());
 	}	
 	
 	@Test
 	void testAddRuleToCodeSmell() {
-		RulesSet.rules.clear();
-		CodeSmells.codesmells.clear();
+		RulesSet.getRules().clear();
+		CodeSmells.getCodeSmells().clear();
 		CodeSmells.importMandatoryCodeSmells();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And CYCLO_Method < 10");
 		assertEquals(true, add1);
@@ -26,8 +26,8 @@ public class CodeSmellTest {
 	
 	@Test
 	void testFailAddRuleToCodeSmell() {
-		RulesSet.rules.clear();
-		CodeSmells.codesmells.clear();
+		RulesSet.getRules().clear();
+		CodeSmells.getCodeSmells().clear();
 		CodeSmells.importMandatoryCodeSmells();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And ( CYCLO_Method < 10 OR WMC_Class = 3 )");
 		assertEquals(true, add1);
@@ -37,8 +37,8 @@ public class CodeSmellTest {
 	
 	@Test
 	void testDeleteRuleToCodeSmell() {
-		RulesSet.rules.clear();
-		CodeSmells.codesmells.clear();
+		RulesSet.getRules().clear();
+		CodeSmells.getCodeSmells().clear();
 		CodeSmells.importMandatoryCodeSmells();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And CYCLO_Method < 10");
 		assertEquals(true, add1);
@@ -50,8 +50,8 @@ public class CodeSmellTest {
 	
 	@Test
 	void testFailDeleteRuleToCodeSmell() {
-		RulesSet.rules.clear();
-		CodeSmells.codesmells.clear();
+		RulesSet.getRules().clear();
+		CodeSmells.getCodeSmells().clear();
 		CodeSmells.importMandatoryCodeSmells();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And CYCLO_Method < 10");
 		assertEquals(true, add1);
