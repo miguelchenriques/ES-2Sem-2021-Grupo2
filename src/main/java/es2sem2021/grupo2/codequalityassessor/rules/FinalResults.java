@@ -15,13 +15,15 @@ public class FinalResults {
 	public static ArrayList<RuleResults> getRulesResults(List<Method> methods){
 		finalresults.clear();
 		
-		HashMap<String, Rule> rulesSet = RulesSet.getRules();
-		Set<String> rules = rulesSet.keySet();
+		HashMap<String, Rule> rulesSet = CodeSmells.getCodeSmells();
+		HashMap<String, Rule> codeSmellsSet = CodeSmells.getCodeSmells();
+		Set<String> codesmells = codeSmellsSet.keySet();
 		
-		for(String s: rules) {
-			RuleResults ruleresults = new RuleResults(s);
+		for(String s: codesmells) {
+			Rule r = codeSmellsSet.get(s);
+			RuleResults ruleresults = new RuleResults(s,r.getName());
 			for(Method m: methods) {
-				Rule rule = rulesSet.get(s);
+				Rule rule = rulesSet.get(r.getName());
 				Boolean result = rule.assertRule(m);
 				ruleresults.methodsresults.add(new RuleMethod(m,result));			
 			}

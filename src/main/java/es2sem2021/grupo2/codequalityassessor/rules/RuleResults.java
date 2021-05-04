@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 public class RuleResults {
 
+	public String codeSmell;
 	public String rule;
 	public ArrayList<RuleMethod> methodsresults;
 	
-	RuleResults(String rule){
+	RuleResults(String codeSmell, String rule){
+		this.codeSmell=codeSmell;
 		this.rule=rule;
 		methodsresults = new ArrayList<RuleMethod>();
 	}
