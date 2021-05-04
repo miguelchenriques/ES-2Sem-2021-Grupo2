@@ -9,7 +9,7 @@ import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
 public class FinalResults {
 	
-	static HashMap<String,HashMap<String,Boolean>> finalresults = new HashMap<String,HashMap<String,Boolean>>();
+	private static HashMap<String,HashMap<String,Boolean>> finalresults = new HashMap<String,HashMap<String,Boolean>>();
 	
 	public static HashMap<String,HashMap<String,Boolean>> getRulesResults(List<Method> methods){
 		finalresults.clear();
