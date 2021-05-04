@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class RulesSet {
 
-	static HashMap<String,Rule> rules = new HashMap<String,Rule>();
+	private static HashMap<String,Rule> rules = new HashMap<String,Rule>();
 	
 	/**
 	 * Returns a boolean
