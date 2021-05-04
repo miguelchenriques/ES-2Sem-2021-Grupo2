@@ -3,7 +3,7 @@ package es2sem2021.grupo2.codequalityassessor.rules;
 import java.util.HashMap;
 
 public class CodeSmells {
-	static HashMap<String,Rule> codesmells = new HashMap<>();
+	private static HashMap<String,Rule> codesmells = new HashMap<>();
 
 	public static void importMandatoryCodeSmells() {
 		codesmells.put("is_Long_Method", null);
