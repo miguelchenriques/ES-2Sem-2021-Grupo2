@@ -34,7 +34,7 @@ public class Method {
 			return cyclo_method;
 		case Constants.LOC_METHOD:
 			return loc_method;
-		case Constants.NOM:
+		case Constants.NOM_CLASS:
 			return nom_class;
 		case Constants.WMC_CLASS:
 			return wmc_class;

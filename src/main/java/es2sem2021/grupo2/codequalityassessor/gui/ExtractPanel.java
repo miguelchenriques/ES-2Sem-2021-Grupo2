@@ -10,6 +10,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
+import es2sem2021.grupo2.codequalityassessor.xlsx.CodeSmellsTableGenerator;
 import es2sem2021.grupo2.codequalityassessor.xlsx.FileGenerator;
 import javax.swing.JLabel;
 import javax.swing.JButton;

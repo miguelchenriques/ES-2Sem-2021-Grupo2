@@ -131,6 +131,7 @@ public class App {
 		codeSmellsPane.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
 				menuClicked(set_rules_code_smells_panel);
+				set_rules_code_smells_panel.update();
 			}
 		});
 		codeSmellsPane.setLayout(null);

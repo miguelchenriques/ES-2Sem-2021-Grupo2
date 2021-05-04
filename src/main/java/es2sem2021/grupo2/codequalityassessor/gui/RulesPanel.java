@@ -39,7 +39,7 @@ public class RulesPanel extends JPanel {
 	public RulesPanel() {
 		setBounds(0, 0, 650, 483);
 		setLayout(null);
-		
+
 		errorMsg = new JLabel("New label");
 		errorMsg.setHorizontalAlignment(SwingConstants.CENTER);
 		errorMsg.setForeground(Color.RED);
@@ -72,23 +72,34 @@ public class RulesPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				errorMsg.setVisible(false);
-				if(RulesSet.addRule(ruleName.getText(), ruleCondition.getText()) == false) {
+				if (RulesSet.addRule(ruleName.getText(), ruleCondition.getText()) == false) {
 					errorMsg.setText("Please enter a valid logic condition!");
 					errorMsg.setVisible(true);
 				}
 				updateRules();
-				
+
 			}
 		});
 		add(addRule);
 
 		JTable table = new JTable();
 		String[] columnNames = { "Rule Name", "Rule Condition", "", "" };
-		model = new DefaultTableModel();
+		model = new DefaultTableModel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				if(column < 2) return false;
+				return true;
+			}
+		};
 		model.setColumnIdentifiers(columnNames);
 		table.setModel(model);
 		table.getColumnModel().getColumn(1).setPreferredWidth(500);
-		//table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor());
+		// table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor());
 		// table.setPreferredScrollableViewportSize(new Dimension(500, 200));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -100,41 +111,48 @@ public class RulesPanel extends JPanel {
 
 		RulesSet.loadFromFile();
 		updateRules();
-		
-		
-		Action delete = new AbstractAction()
-		{
-		    public void actionPerformed(ActionEvent e)
-		    {
-		        JTable table = (JTable)e.getSource();
-		        int modelRow = Integer.valueOf( e.getActionCommand() );
-		        RulesSet.deleteRule(table.getModel().getValueAt(modelRow, 0).toString());
-		        updateRules();
-		    }
+
+		Action delete = new AbstractAction() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				JTable table = (JTable) e.getSource();
+				int modelRow = Integer.valueOf(e.getActionCommand());
+				RulesSet.deleteRule(table.getModel().getValueAt(modelRow, 0).toString());
+				updateRules();
+			}
 		};
-		
-		Action change = new AbstractAction()
-		{
-		    public void actionPerformed(ActionEvent e)
-		    {
-		    	errorMsg.setVisible(false);
-		    	JTable table = (JTable)e.getSource();
-		        int modelRow = Integer.valueOf( e.getActionCommand() );
-		        if(RulesSet.changeRule(table.getModel().getValueAt(modelRow, 0).toString(), ruleCondition.getText()) == false) {
-		        	errorMsg.setText("Please enter a valid condition!");
-		        	errorMsg.setVisible(true);
-		        }
-		        updateRules();
-		    }
+
+		Action change = new AbstractAction() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				errorMsg.setVisible(false);
+				JTable table = (JTable) e.getSource();
+				int modelRow = Integer.valueOf(e.getActionCommand());
+				if (RulesSet.changeRule(table.getModel().getValueAt(modelRow, 0).toString(),
+						ruleCondition.getText()) == false) {
+					errorMsg.setText("Please enter a valid condition!");
+					errorMsg.setVisible(true);
+				}
+				updateRules();
+			}
 		};
-		 
+
 		ButtonColumn deleteButton = new ButtonColumn(table, delete, 2);
 		deleteButton.setMnemonic(KeyEvent.VK_D);
-		
+
 		ButtonColumn changeButton = new ButtonColumn(table, change, 3);
 		changeButton.setMnemonic(KeyEvent.VK_D);
 
 	}
+
 	private void updateRules() {
 		HashMap<String, Rule> rules = RulesSet.getRules();
 		model.getDataVector().removeAllElements();

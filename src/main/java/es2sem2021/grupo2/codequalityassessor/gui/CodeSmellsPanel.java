@@ -32,7 +32,13 @@ public class CodeSmellsPanel extends JPanel {
 		setBounds(0, 0, 650, 483);
 		setLayout(null);
 
-		model = new DefaultTableModel();
+		model = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// all cells false
+				return false;
+			}
+		};
 		table = new JTable();
 		table.setModel(model);
 
