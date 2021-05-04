@@ -45,15 +45,9 @@ public class QualityEvaluation {
 			folder = new File("testFiles" + File.separator + "src" + File.separator + "com" + File.separator + "jasml");
 			List<Method> methods = new ArrayList<>();
 			FileGenerator.parseFolders(folder,methods);
-			System.out.println(methods.size());
 			HashMap<String,HashMap<String,Boolean>> codeSmells = FinalResults.getRulesResults(methods);
 			HashMap<String,Boolean> godClass = codeSmells.get("is_God_Class");
 			HashMap<String,Boolean> longMethod = codeSmells.get("is_Long_Method");
-			System.out.println(longMethod.size());
-			for(Method m : methods) {
-				if(!longMethod.containsKey(m.m_method))
-					System.out.println(m.m_method);
-			}
 			file = new FileInputStream(new File("Code_Smells.xlsx"));
 			workbook = new XSSFWorkbook(file);
 			Sheet sheet = workbook.getSheetAt(0);
@@ -82,26 +76,27 @@ public class QualityEvaluation {
 				Row row = rowIterator.next();
 				String className = row.getCell(classIndex).getStringCellValue();
 				String methodName = row.getCell(methodIndex).getStringCellValue();
-				if(godClass.get(methodName)!=null && row.getCell(godClassIndex).getCellType() == Cell.CELL_TYPE_BOOLEAN) {
+				String key = className + "." + methodName;
+				if(godClass.get(key)!=null && row.getCell(godClassIndex).getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 					Boolean godClassValue = row.getCell(godClassIndex).getBooleanCellValue();
-					if(!truePositivesGC.contains(className) && godClassValue && godClass.get(methodName))
+					if(!truePositivesGC.contains(className) && godClassValue && godClass.get(key))
 						truePositivesGC.add(className);
-					if(!trueNegativesGC.contains(className) && !godClassValue && !godClass.get(methodName))
+					if(!trueNegativesGC.contains(className) && !godClassValue && !godClass.get(key))
 						trueNegativesGC.add(className);
-					if(!falsePositivesGC.contains(className) && !godClassValue && godClass.get(methodName))
+					if(!falsePositivesGC.contains(className) && !godClassValue && godClass.get(key))
 						falsePositivesGC.add(className);
-					if(!falseNegativesGC.contains(className) && godClassValue && !godClass.get(methodName))
+					if(!falseNegativesGC.contains(className) && godClassValue && !godClass.get(key))
 						falseNegativesGC.add(className);
 				}
-				if(longMethod.get(methodName)!=null && row.getCell(longMethodIndex).getCellType() == Cell.CELL_TYPE_BOOLEAN) {
+				if(longMethod.get(key)!=null && row.getCell(longMethodIndex).getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 					Boolean longMethodValue = row.getCell(longMethodIndex).getBooleanCellValue();
-					if(!truePositivesLM.contains(methodName) && longMethodValue && longMethod.get(methodName))
+					if(longMethodValue && longMethod.get(key))
 						truePositivesLM.add(methodName);
-					if(!trueNegativesLM.contains(methodName) && !longMethodValue && !longMethod.get(methodName))
+					if(!longMethodValue && !longMethod.get(key))
 						trueNegativesLM.add(methodName);	
-					if(!falsePositivesLM.contains(methodName) && !longMethodValue && longMethod.get(methodName))
+					if(!longMethodValue && longMethod.get(key))
 						falsePositivesLM.add(methodName);	
-					if(!falseNegativesLM.contains(methodName) && longMethodValue && !longMethod.get(methodName))
+					if(longMethodValue && !longMethod.get(key))
 						falseNegativesLM.add(methodName);
 				}
 			}

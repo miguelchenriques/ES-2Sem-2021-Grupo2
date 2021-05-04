@@ -7,25 +7,23 @@ import org.junit.jupiter.api.Test;
 class QualityEvaluationTest {
 
 	@Test
-	void qualityEvaluationTest() {
-		RulesSet.rules.clear();
-		CodeSmells.codesmells.clear();
+	void qualityEvaluationTest() { 
+		RulesSet.getRules().clear();
+		CodeSmells.getCodeSmells().clear();
 		CodeSmells.importMandatoryCodeSmells();
 		RulesSet.addRule("GCTest", "WMC_Class > 50 OR NOM_Class > 10");
 		RulesSet.addRule("LMTest", "LOC_Method > 50 AND CYCLO_Method > 10");
-		CodeSmells.codesmells.put("is_Long_Method",RulesSet.rules.get("LMTest"));
-		CodeSmells.codesmells.put("is_God_Class",RulesSet.rules.get("GCTest"));
-		System.out.println(CodeSmells.codesmells.get("is_Long_Method").getName());
+		CodeSmells.getCodeSmells().put("is_Long_Method",RulesSet.getRules().get("LMTest"));
+		CodeSmells.getCodeSmells().put("is_God_Class",RulesSet.getRules().get("GCTest"));
 		QualityEvaluation qe = new QualityEvaluation();
-		System.out.println(qe.getGodClassTruePositives());
-		System.out.println(qe.getGodClassTrueNegatives());
-		System.out.println(qe.getGodClassFalsePositives());
-		System.out.println(qe.getGodClassFalseNegatives());
-		System.out.println(qe.getLongMethodTruePositives());
-		System.out.println(qe.getLongMethodTrueNegatives());
-		System.out.println(qe.getLongMethodFalsePositives());
-		System.out.println(qe.getLongMethodFalseNegatives());
-		
+		assertEquals(qe.getGodClassTruePositives(),2);
+		assertEquals(qe.getGodClassTrueNegatives(),40);
+		assertEquals(qe.getGodClassFalsePositives(),4);
+		assertEquals(qe.getGodClassFalseNegatives(),0);
+		assertEquals(qe.getLongMethodTruePositives(),18);
+		assertEquals(qe.getLongMethodTrueNegatives(),215);
+		assertEquals(qe.getLongMethodFalsePositives(),1);
+		assertEquals(qe.getLongMethodFalseNegatives(),6);
 	}
 
 }
