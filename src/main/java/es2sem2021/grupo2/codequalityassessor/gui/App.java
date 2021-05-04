@@ -16,6 +16,7 @@ public class App {
 	private ExtractPanel extract_panel;
 	private VisualizePanel visualize_panel;
 	private RulesPanel rules_panel;
+	private CodeSmellsPanel codesmells_panel;
 
 	/**
 	 * Launch the application.
@@ -52,6 +53,7 @@ public class App {
 		extract_panel = new ExtractPanel();
 		visualize_panel = new VisualizePanel();
 		rules_panel = new RulesPanel();
+		codesmells_panel = new CodeSmellsPanel();
 		
 		JPanel menuPane = new JPanel();
 		menuPane.setBackground(Color.GRAY);
@@ -106,6 +108,22 @@ public class App {
 		lblNewLabel_1_1.setBounds(6, 17, 132, 16);
 		rulesPane.add(lblNewLabel_1_1);
 		
+		JPanel visualizeCodeSmellsPane = new JPanel();
+		visualizeCodeSmellsPane.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(codesmells_panel);
+			}
+		});
+		visualizeCodeSmellsPane.setLayout(null);
+		visualizeCodeSmellsPane.setBackground(Color.LIGHT_GRAY);
+		visualizeCodeSmellsPane.setBounds(6, 306, 150, 50);
+		menuPane.add(visualizeCodeSmellsPane);
+		
+		JLabel lblVisualizeCodeSmells = new JLabel("Visualize Code Smells");
+		lblVisualizeCodeSmells.setHorizontalAlignment(SwingConstants.CENTER);
+		lblVisualizeCodeSmells.setBounds(0, 16, 150, 16);
+		visualizeCodeSmellsPane.add(lblVisualizeCodeSmells);
+		
 		JPanel contentPane = new JPanel();
 		contentPane.setBounds(161, 0, 650, 483);
 		frame.getContentPane().add(contentPane);
@@ -114,13 +132,16 @@ public class App {
 		contentPane.add(extract_panel);
 		contentPane.add(visualize_panel);
 		contentPane.add(rules_panel);
+		contentPane.add(codesmells_panel);
 	}
 	
 	public void menuClicked(JPanel panel) {
 		extract_panel.setVisible(false);
 		visualize_panel.setVisible(false);
 		rules_panel.setVisible(false);
+		codesmells_panel.setVisible(false);
 		
 		panel.setVisible(true);
 	}
+	
 }
