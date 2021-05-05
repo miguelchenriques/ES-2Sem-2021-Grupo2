@@ -161,8 +161,4 @@ public class Rule implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getRuleCode() {
-		return "SE (" + conditions + ") ENTAO" + name;
-	}
 }

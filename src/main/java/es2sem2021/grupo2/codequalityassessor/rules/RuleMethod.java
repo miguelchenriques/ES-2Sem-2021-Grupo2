@@ -7,7 +7,7 @@ public class RuleMethod {
 	public Method method;
 	public Boolean result;
 	
-	RuleMethod(Method method, Boolean result){
+	public RuleMethod(Method method, Boolean result){
 		this.method=method;
 		this.result=result;
 	}

@@ -13,16 +13,27 @@ public class Method {
 	public int loc_method;
 	public int cyclo_method;
 
-	public Method(String packageName, String className, String method, int nOM_class, int lOC_class,
-			int wMC_class, int lOC_method, int cYCLO_method) {
+	/**
+	 * 
+	 * @param packageName
+	 * @param className
+	 * @param method
+	 * @param NOM
+	 * @param LOC_Class
+	 * @param WMC_Class
+	 * @param LOC_Method
+	 * @param CYCLO_Method
+	 */
+	public Method(String packageName, String className, String method, int NOM, int LOC_Class,
+			int WMC_Class, int LOC_Method, int CYCLO_Method) {
 		m_package = packageName;
 		m_class = className;
 		m_method = method;
-		nom_class = nOM_class;
-		loc_class = lOC_class;
-		wmc_class = wMC_class;
-		loc_method = lOC_method;
-		cyclo_method = cYCLO_method;
+		nom_class = NOM;
+		loc_class = LOC_Class;
+		wmc_class = WMC_Class;
+		loc_method = LOC_Method;
+		cyclo_method = CYCLO_Method;
 	}
 	
 	
