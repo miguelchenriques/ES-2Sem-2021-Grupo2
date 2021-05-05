@@ -1,4 +1,4 @@
-package es2sem2021.grupo2.codequalityassessor.gui;
+package es2sem2021.grupo2.codequalityassessor.xlsx;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,10 +11,10 @@ import java.util.Map;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
+import es2sem2021.grupo2.codequalityassessor.gui.CodeSmellsPanel;
 import es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor;
 import es2sem2021.grupo2.codequalityassessor.rules.Rule;
 import es2sem2021.grupo2.codequalityassessor.rules.RulesSet;
-import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
 public class CodeSmellsTableGenerator {
 	private String[] columnNames;
