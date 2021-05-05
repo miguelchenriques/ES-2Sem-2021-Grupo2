@@ -18,6 +18,11 @@ import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
 public class Rule implements Serializable {
 	
+	@Override
+	public String toString() {
+		return "Rule [name=" + name + ", conditions=" + conditions + "]";
+	}
+
 	/**
 	 * 
 	 */

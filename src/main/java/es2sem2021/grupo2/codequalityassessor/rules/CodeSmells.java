@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class CodeSmells {
 	private static HashMap<String,Rule> codesmells = new HashMap<>();
 
+
 	public static void importMandatoryCodeSmells() {
 		codesmells.put("is_Long_Method", null);
 		codesmells.put("is_God_Class", null);
