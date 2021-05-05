@@ -79,7 +79,7 @@ public class FileGenerator {
 		fileOut.close();
 	}
 	
-	static void parseFolders(File folder, List<Method> methods) throws FileNotFoundException {
+	public static void parseFolders(File folder, List<Method> methods) throws FileNotFoundException {
 		for (File f: folder.listFiles()) {
 			//System.out.println(f.getName());
 			if(f.isDirectory())

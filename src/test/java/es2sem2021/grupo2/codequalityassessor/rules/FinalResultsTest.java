@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -23,13 +23,13 @@ public class FinalResultsTest {
 		try {
 			List<Method> methods = MetricsExtractor.extract(f);
 			assertNotNull(methods);
-			RulesSet.rules.clear();
+			RulesSet.getRules().clear();
+			CodeSmells.getCodeSmells().clear();
+			CodeSmells.importMandatoryCodeSmells();
 			RulesSet.addRule("Teste", "LOC_Method >= 5");
-			ArrayList<RuleResults> ruleResults = FinalResults.getRulesResults(methods);
-			System.out.println(ruleResults.get(0).getMethodsresults().get(5).getMethod());
-			System.out.println(ruleResults.get(0).getMethodsresults().get(5).getResult());
-			assertEquals(1,ruleResults.size());
-			System.out.println();
+			CodeSmells.addRuleToCodeSmell("is_Long_Method", RulesSet.getRules().get("Teste"));
+			HashMap<String,HashMap<String,Boolean>> ruleResults = FinalResults.getRulesResults(methods);
+			assertEquals(2,ruleResults.size());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
