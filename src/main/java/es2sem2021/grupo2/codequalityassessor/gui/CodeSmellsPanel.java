@@ -96,7 +96,7 @@ public class CodeSmellsPanel extends JPanel {
 
 //		for (int i = 0; i < methods.size(); i++) { 
 //			Method method = methods.get(i);
-//			model.addRow(new Object[] { method.m_class, method.m_method});
+//			model.addRow(new Object[] { method.m_class, method.m_method}); 
 //			for (int j = 0; j < ruleResults.size(); j++) {
 //				model.setValueAt(ruleResults.get(j).getMethodsresults().get(i).getResult(),i ,j+2);
 //			}
