@@ -19,6 +19,7 @@ public class App {
 	private RulesPanel rules_panel;
 	private CodeSmellsPanel codesmells_panel;
 	private SetRulesCodeSmellsPanel set_rules_code_smells_panel;
+	private QualityEvaluationPanel quality_evaluation_panel;
 
 	/**
 	 * Launch the application.
@@ -57,6 +58,7 @@ public class App {
 		rules_panel = new RulesPanel();
 		codesmells_panel = new CodeSmellsPanel();
 		set_rules_code_smells_panel = new SetRulesCodeSmellsPanel();
+		quality_evaluation_panel = new QualityEvaluationPanel();
 		
 		JPanel menuPane = new JPanel();
 		menuPane.setBackground(Color.GRAY);
@@ -71,11 +73,12 @@ public class App {
 			}
 		});
 		extractMetricsPane.setBackground(Color.LIGHT_GRAY);
-		extractMetricsPane.setBounds(6, 71, 150, 50);
+		extractMetricsPane.setBounds(6, 42, 150, 50);
 		menuPane.add(extractMetricsPane);
 		extractMetricsPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Extract metrics");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(22, 16, 99, 16);
 		extractMetricsPane.add(lblNewLabel);
 		
@@ -86,7 +89,7 @@ public class App {
 			}
 		});
 		visualizeMetricsPane.setBackground(Color.LIGHT_GRAY);
-		visualizeMetricsPane.setBounds(6, 133, 150, 50);
+		visualizeMetricsPane.setBounds(6, 103, 150, 50);
 		menuPane.add(visualizeMetricsPane);
 		visualizeMetricsPane.setLayout(null);
 		
@@ -103,7 +106,7 @@ public class App {
 		});
 		rulesPane.setLayout(null);
 		rulesPane.setBackground(Color.LIGHT_GRAY);
-		rulesPane.setBounds(6, 195, 150, 50);
+		rulesPane.setBounds(6, 164, 150, 50);
 		menuPane.add(rulesPane);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Add/View Rules");
@@ -119,7 +122,7 @@ public class App {
 		});
 		visualizeCodeSmellsPane.setLayout(null);
 		visualizeCodeSmellsPane.setBackground(Color.LIGHT_GRAY);
-		visualizeCodeSmellsPane.setBounds(6, 319, 150, 50);
+		visualizeCodeSmellsPane.setBounds(6, 286, 150, 50);
 		menuPane.add(visualizeCodeSmellsPane);
 		
 		JLabel lblVisualizeCodeSmells = new JLabel("Visualize Code Smells");
@@ -136,7 +139,7 @@ public class App {
 		});
 		codeSmellsPane.setLayout(null);
 		codeSmellsPane.setBackground(Color.LIGHT_GRAY);
-		codeSmellsPane.setBounds(6, 257, 150, 50);
+		codeSmellsPane.setBounds(6, 225, 150, 50);
 		menuPane.add(codeSmellsPane);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Set Rules for Code Smells");
@@ -144,6 +147,30 @@ public class App {
 		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1_1.setBounds(6, 6, 138, 38);
 		codeSmellsPane.add(lblNewLabel_1_1_1);
+		
+		JPanel visualizeCodeSmellsPane_1 = new JPanel();
+		visualizeCodeSmellsPane_1.setLayout(null);
+		visualizeCodeSmellsPane_1.setBackground(Color.LIGHT_GRAY);
+		visualizeCodeSmellsPane_1.setBounds(6, 347, 150, 50);
+		menuPane.add(visualizeCodeSmellsPane_1);	
+		
+		JLabel lblQualityEvaluation_1 = new JLabel("Visualize Quality Evaluation");
+		lblQualityEvaluation_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblQualityEvaluation_1.setBounds(0, 16, 150, 16);
+		visualizeCodeSmellsPane_1.add(lblQualityEvaluation_1);
+		
+		JPanel visualizeQualityEvaluationPane_1 = new JPanel();
+		visualizeCodeSmellsPane.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                menuClicked(quality_evaluation_panel);
+            }
+        });
+		visualizeQualityEvaluationPane_1.setLayout(null);
+		visualizeQualityEvaluationPane_1.setBackground(Color.LIGHT_GRAY);
+		visualizeQualityEvaluationPane_1.setBounds(6, 347, 150, 50);
+		menuPane.add(visualizeQualityEvaluationPane_1);
+		
+		
 		
 		JPanel contentPane = new JPanel();
 		contentPane.setBounds(161, 0, 650, 483);
@@ -163,6 +190,7 @@ public class App {
 		rules_panel.setVisible(false);
 		codesmells_panel.setVisible(false);
 		set_rules_code_smells_panel.setVisible(false);
+		quality_evaluation_panel.setVisible(false);
 		
 		panel.setVisible(true);
 	}
