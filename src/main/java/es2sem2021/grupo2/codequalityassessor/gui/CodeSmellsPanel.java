@@ -123,6 +123,6 @@ public class CodeSmellsPanel extends JPanel {
 			}
 		}
 
-		table.setModel(model);
+		table.setModel(model); 
 	}
 }

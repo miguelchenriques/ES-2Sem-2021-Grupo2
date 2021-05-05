@@ -38,7 +38,7 @@ public class CodeSmellsTableGenerator {
 			if(f.isDirectory())
 				parseFolders(f,methods);
 			else
-				methods.addAll(MetricsExtractor.extract(f)); 
+				methods.addAll(MetricsExtractor.extract(f));  
 		}
 	}
 
