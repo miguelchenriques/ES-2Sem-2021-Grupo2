@@ -1,5 +1,6 @@
 package es2sem2021.grupo2.codequalityassessor.metrics;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,6 +15,14 @@ public class MetricsSummary {
 	private ArrayList<String> packages = new ArrayList<>();
 	private ArrayList<String> classes = new ArrayList<>();
 	private int totalLOC = 0;
+	
+	/**
+	 * Constructor of the MetricsSummary class, that gets all the metrics from an xlsx file
+	 * If the workbook's first sheet doesn't have any rows or the rows don't have all the correct metrics' names it returns an IllegalArgumentException
+	 * 
+	 * @param workbook workbook that has the metrics to be summarized 
+	 * @throws IllegalArgumentException
+	 */
 	
 	public MetricsSummary(Workbook workbook) {
 		Sheet sheet = workbook.getSheetAt(0);

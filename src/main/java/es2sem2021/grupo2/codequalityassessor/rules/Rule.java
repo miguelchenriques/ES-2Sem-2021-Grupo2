@@ -3,7 +3,7 @@ package es2sem2021.grupo2.codequalityassessor.rules;
 import static es2sem2021.grupo2.codequalityassessor.rules.Constants.CYCLO_METHOD;
 import static es2sem2021.grupo2.codequalityassessor.rules.Constants.LOC_CLASS;
 import static es2sem2021.grupo2.codequalityassessor.rules.Constants.LOC_METHOD;
-import static es2sem2021.grupo2.codequalityassessor.rules.Constants.NOM;
+import static es2sem2021.grupo2.codequalityassessor.rules.Constants.NOM_CLASS;
 import static es2sem2021.grupo2.codequalityassessor.rules.Constants.WMC_CLASS;
 
 import java.io.Serializable;
@@ -18,6 +18,11 @@ import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
 public class Rule implements Serializable {
 	
+	@Override
+	public String toString() {
+		return "Rule [name=" + name + ", conditions=" + conditions + "]";
+	}
+
 	/**
 	 * 
 	 */
@@ -120,7 +125,7 @@ public class Rule implements Serializable {
 	
 	public static boolean validateConditionSyntax(String conditionCode) {
 		//TODO: Validate completly the condition
-		List<String> validMetrics = Arrays.asList(CYCLO_METHOD, LOC_CLASS, LOC_METHOD, NOM, WMC_CLASS);
+		List<String> validMetrics = Arrays.asList(CYCLO_METHOD, LOC_CLASS, LOC_METHOD, NOM_CLASS, WMC_CLASS);
 		List<String> keywords = Arrays.asList("and", "or", "(", ")", ">", "<", ">=", "<=", "=");
 
 		// metricName pattern

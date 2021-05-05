@@ -28,12 +28,8 @@ public class Method {
 			int WMC_Class, int LOC_Method, int CYCLO_Method) {
 		m_package = packageName;
 		m_class = className;
-		m_method = method;
-		nom_class = NOM;
-		loc_class = LOC_Class;
-		wmc_class = WMC_Class;
-		loc_method = LOC_Method;
-		cyclo_method = CYCLO_Method;
+		m_method = method.replaceAll(" ", "");
+
 	}
 	
 	/**
@@ -52,7 +48,7 @@ public class Method {
 			return cyclo_method;
 		case Constants.LOC_METHOD:
 			return loc_method;
-		case Constants.NOM:
+		case Constants.NOM_CLASS:
 			return nom_class;
 		case Constants.WMC_CLASS:
 			return wmc_class;

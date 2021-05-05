@@ -29,7 +29,7 @@ public class FileGenerator {
 		this.fileName = folder.getName();
 	}
 
-	private static String[] columns = { "MethodID", "Package", "Class", "Method", Constants.NOM, Constants.LOC_CLASS,
+	private static String[] columns = { "MethodID", "Package", "Class", "Method", Constants.NOM_CLASS, Constants.LOC_CLASS,
 			Constants.WMC_CLASS, Constants.LOC_METHOD, Constants.CYCLO_METHOD};
 
 	/**
@@ -87,7 +87,7 @@ public class FileGenerator {
 	 * @param methods	list that will contain the methods found in the java files
 	 * @throws FileNotFoundException
 	 */
-	static void parseFolders(File folder, List<Method> methods) throws FileNotFoundException {
+	public static void parseFolders(File folder, List<Method> methods) throws FileNotFoundException {
 		for (File f: folder.listFiles()) {
 			if(f.isDirectory())
 				parseFolders(f,methods);

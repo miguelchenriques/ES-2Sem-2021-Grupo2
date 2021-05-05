@@ -1,5 +1,6 @@
 package es2sem2021.grupo2.codequalityassessor.rules;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
