@@ -1,5 +1,8 @@
 package es2sem2021.grupo2.codequalityassessor.rules;
 
+/**
+ *	Constants used in the project 
+ */
 public class Constants {
 
 	public static final String LOC_METHOD = "LOC_Method";

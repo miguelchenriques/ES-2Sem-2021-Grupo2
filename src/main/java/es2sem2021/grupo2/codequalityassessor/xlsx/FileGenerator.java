@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor;
+import es2sem2021.grupo2.codequalityassessor.rules.Constants;
 
 
 
@@ -28,8 +29,8 @@ public class FileGenerator {
 		this.fileName = folder.getName();
 	}
 
-	private static String[] columns = { "MethodID", "Package", "Class", "Method", "NOM_class", "LOC_class", "WMC_class",
-			"LOC_method", "CYCLO_method" };
+	private static String[] columns = { "MethodID", "Package", "Class", "Method", Constants.NOM, Constants.LOC_CLASS,
+			Constants.WMC_CLASS, Constants.LOC_METHOD, Constants.CYCLO_METHOD};
 
 	/**
 	 * Creates the xlsx file with all the methods and metrics from the files in the selected folder
@@ -42,7 +43,6 @@ public class FileGenerator {
 		List<Method> methods = new ArrayList<>();
 		
 		parseFolders(this.folder,methods);
-		System.out.println(methods);
 		
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(fileName);
@@ -74,14 +74,21 @@ public class FileGenerator {
 		}
 
 		FileOutputStream fileOut = new FileOutputStream(fileName.concat("_metrics.xlsx"));
-		System.out.println(fileName.concat("_metrics.xlsx"));
 		workbook.write(fileOut);
 		fileOut.close();
 	}
 	
+	/**
+	 * 
+	 * Parses the folders inside the directory folder and modifies the methods list to contain all the methods inside
+	 * the java files
+	 * 
+	 * @param folder	parent folder with all the subfolders and java files
+	 * @param methods	list that will contain the methods found in the java files
+	 * @throws FileNotFoundException
+	 */
 	static void parseFolders(File folder, List<Method> methods) throws FileNotFoundException {
 		for (File f: folder.listFiles()) {
-			//System.out.println(f.getName());
 			if(f.isDirectory())
 				parseFolders(f,methods);
 			else

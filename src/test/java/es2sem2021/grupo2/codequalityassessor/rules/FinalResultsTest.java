@@ -28,11 +28,8 @@ public class FinalResultsTest {
 			RulesSet.rules.clear();
 			RulesSet.addRule("Teste", "LOC_Method >= 5");
 			ArrayList<RuleResults> ruleResults = FinalResults.getRulesResults(methods);
-			System.out.println(ruleResults.get(0).getMethodsresults().get(5).getMethod());
-			System.out.println(ruleResults.get(0).getMethodsresults().get(5).getResult());
 			assertEquals(1,ruleResults.size());
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -2,6 +2,11 @@ package es2sem2021.grupo2.codequalityassessor.rules;
 
 import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
+/**
+ *
+ * 	Object that stores a method and the result when asserted to a given Rule
+ *
+ */
 public class RuleMethod {
 	
 	public Method method;

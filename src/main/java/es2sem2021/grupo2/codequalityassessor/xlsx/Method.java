@@ -36,7 +36,14 @@ public class Method {
 		cyclo_method = CYCLO_Method;
 	}
 	
-	
+	/**
+	 * 
+	 * Returns the metric whose name corresponds to the passed string
+	 * 
+	 * @param metric	name
+	 * @return			value from the metric
+	 * @throws IllegalArgumentException	if the name doesn't correspond to any metric 
+	 */
 	public int getMetric(String metric) throws IllegalArgumentException {
 		switch (metric) {
 		case Constants.LOC_CLASS: 

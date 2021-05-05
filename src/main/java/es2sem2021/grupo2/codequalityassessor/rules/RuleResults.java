@@ -2,6 +2,12 @@ package es2sem2021.grupo2.codequalityassessor.rules;
 
 import java.util.ArrayList;
 
+/**
+ *	
+ *	Object that stores the rule and an array of objects of type RuleMethod that stores the method and
+ *	the result when asserted to the rule
+ *
+ */
 public class RuleResults {
 
 	public String rule;
