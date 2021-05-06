@@ -30,7 +30,7 @@ public class Rule implements Serializable {
 	private String name, conditions;
 	
 	public Rule(String name, String conditions) throws IllegalArgumentException { //verificar o conditions antes de criar
-		if(!validateConditionSyntax(conditions) && (conditions.contains("Method") || conditions.contains("Class")))
+		if(!validateConditionSyntax(conditions))
 				throw new IllegalArgumentException("sintaxe nao valida :(");
 		this.name = name;
 		this.conditions = conditions;
@@ -123,21 +123,34 @@ public class Rule implements Serializable {
 		Pattern metricName = Pattern.compile("^[a-z][a-z_]*$", Pattern.CASE_INSENSITIVE);
 
 		// Splits the conditions
+		int logical = 0;
+		int metrics = 0;
+		int integers = 0;
 		for (String element : Arrays.asList(conditionCode.split(" "))) {
 			
-			if (keywords.contains(element.toLowerCase())) continue;
+			if (keywords.contains(element.toLowerCase())) {
+				logical++;
+				continue;
+			} 
 			
 			if (metricName.matcher(element).matches()) {
 				if (!validMetrics.contains(element))
 					return false;
+				metrics++;
 				continue;
 			}
 			
-			if (isInteger(element))
+			if (isInteger(element)) {
+				integers++;
 				continue;
+			}
 			
 			return false;
 		}
+		
+		if(logical==0 || metrics==0 || integers==0)
+			return false;
+			
 		return true;
 	}
 
