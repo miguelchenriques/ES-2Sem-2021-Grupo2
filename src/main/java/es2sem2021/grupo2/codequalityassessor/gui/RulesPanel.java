@@ -77,7 +77,6 @@ public class RulesPanel extends JPanel {
 					errorMsg.setVisible(true);
 				}
 				updateRules();
-
 			}
 		});
 		add(addRule);

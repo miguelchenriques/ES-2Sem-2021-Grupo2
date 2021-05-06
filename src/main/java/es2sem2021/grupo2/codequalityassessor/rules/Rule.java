@@ -17,7 +17,8 @@ import org.mvel2.MVEL;
 import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
 public class Rule implements Serializable {
-	
+
+
 	@Override
 	public String toString() {
 		return "Rule [name=" + name + ", conditions=" + conditions + "]";
@@ -28,15 +29,15 @@ public class Rule implements Serializable {
 	 */
 	private static final long serialVersionUID = -5618173094709221790L;
 	private String name, conditions;
-	
+
 	public Rule(String name, String conditions) throws IllegalArgumentException { //verificar o conditions antes de criar
-		if(!validateConditionSyntax(conditions) && (conditions.contains("Method") || conditions.contains("Class")))
-				throw new IllegalArgumentException("sintaxe nao valida :(");
+		if(!validateConditionSyntax(conditions))
+			throw new IllegalArgumentException("sintaxe nao valida");
 		this.name = name;
 		this.conditions = conditions;
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * Evaluates if the method meets the rule's conditions
@@ -44,32 +45,32 @@ public class Rule implements Serializable {
 	 * @param method		method that is going to be evaluated 
 	 * @return				true if method meets the conditions, false otherwise
 	 */
-	
+
 	public boolean assertRule(Method method) {
-		
+
 		String rule = this.conditions;
-		
+
 		Pattern p = Pattern.compile("[A-Za-z_]*\s(>|<|=|>=|<=)\\s[0-9]*");
 		Matcher matcher = p.matcher(this.conditions);
-		
+
 		while (matcher.find()) {
 			int start = matcher.start();
 			int end = matcher.end();
 			String match = this.conditions.substring(start, end);
 			String[] condition = match.split(" ");
 			boolean value = assertCondition(method, condition);
-			
+
 			String valueString = value ? "true": "false";
-			
+
 			rule = rule.replaceAll(match, valueString);
-			
+
 		}
 		rule = rule.toLowerCase().replaceAll("and", "&&");
 		rule = rule.replaceAll("or", "||");
-		
+
 		return (boolean) MVEL.eval(rule);
 	}
-	
+
 	/**
 	 * 
 	 * Evaluates if the condition is true in the given method
@@ -78,15 +79,15 @@ public class Rule implements Serializable {
 	 * 		  condition		condition that is going to be compared with the method
 	 * @return				true if the comparison is true, false otherwise
 	 */
-	
+
 	private boolean assertCondition(Method m, String[] condition) {
 		String metric = condition[0];
 		String comp = condition[1];
 		int value = Integer.parseInt(condition[2]);
-		
+
 		return compare(m.getMetric(metric), comp, value);
 	}
-	
+
 	private boolean compare(int metric, String comp, int value) {
 		switch (comp) {
 		case ">":
@@ -105,7 +106,7 @@ public class Rule implements Serializable {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * Validates the syntax from the conditions code
@@ -113,8 +114,9 @@ public class Rule implements Serializable {
 	 * @param conditionCode	the code that specifies the condition
 	 * @return				true if it has a valid syntax, false otherwise
 	 */
-	
+
 	public static boolean validateConditionSyntax(String conditionCode) {
+
 		//TODO: Validate completly the condition
 		List<String> validMetrics = Arrays.asList(CYCLO_METHOD, LOC_CLASS, LOC_METHOD, NOM_CLASS, WMC_CLASS);
 		List<String> keywords = Arrays.asList("and", "or", "(", ")", ">", "<", ">=", "<=", "=");
@@ -122,35 +124,97 @@ public class Rule implements Serializable {
 		// metricName pattern
 		Pattern metricName = Pattern.compile("^[a-z][a-z_]*$", Pattern.CASE_INSENSITIVE);
 
+		String[] conditions = conditionCode.split(" ");
+		if(conditions.length < 3)
+			return false;
+		
 		// Splits the conditions
-		int logical = 0;
-		int metrics = 0;
-		int integers = 0;
-		for (String element : Arrays.asList(conditionCode.split(" "))) {
-			
-			if (keywords.contains(element.toLowerCase())) {
-				logical++;
-				continue;
-			} 
-			
+		for (String element : Arrays.asList(conditions)) {
+		
+			if (keywords.contains(element.toLowerCase()))
+				continue; 
+
 			if (metricName.matcher(element).matches()) {
 				if (!validMetrics.contains(element))
 					return false;
-				metrics++;
 				continue;
 			}
-			
-			if (isInteger(element)) {
-				integers++;
+
+			if (isInteger(element))
 				continue;
-			}
-			
+
 			return false;
 		}
-		
-		if(logical==0 || metrics==0 || integers==0)
+
+		String[] condition = conditionCode.split(" ");
+		int abreParenteses = 0;
+		int fechaParenteses = 0;
+		int andOr = 0;
+		int logical = 0;
+		int metrics = 0;
+		int integers = 0;
+
+		for (int i = 0; i < condition.length; i++) {
+
+			if(i==0 && !(condition[i].equals("(") || validMetrics.contains(condition[i])))
+				return false;
+
+			switch(condition[i].toLowerCase()) {
+			case "(": abreParenteses++;
+			if(i>0 && !(condition[i-1].equals("(") || condition[i-1].equals("and") || condition[i-1].equals("or")))
+				return false;
+			break;
+			case ")": fechaParenteses++; 
+			if(i>0 && !(condition[i-1].equals(")") || isInteger(condition[i-1])))
+				return false;
+			break;
+			case "and": andOr++;
+			if(i>0 && !(condition[i-1].equals(")") || isInteger(condition[i-1])))
+				return false;
+			break;
+			case "or": andOr++; 
+			if(i>0 && !(condition[i-1].equals(")") || isInteger(condition[i-1])))
+				return false;
+			break;
+			case ">": logical++;
+			if(i>0 && !(validMetrics.contains(condition[i-1])))
+				return false;
+			break;
+			case "<": logical++;
+			if(i>0 && !(validMetrics.contains(condition[i-1])))
+				return false;
+			break;
+			case ">=": logical++;
+			if(i>0 && !(validMetrics.contains(condition[i-1])))
+				return false;
+			break;
+			case "<=": logical++;
+			if(i>0 && !(validMetrics.contains(condition[i-1])))
+				return false;
+			break;
+			case "=": logical++;
+			if(i>0 && !(validMetrics.contains(condition[i-1])))
+				return false;
+			break;
+			default:
+				if(validMetrics.contains(condition[i])) {
+					metrics++;
+					if(i>0 && !(condition[i-1].equals("(") || condition[i-1].equals("and") || condition[i-1].equals("or")))
+						return false;
+				}
+				if(isInteger(condition[i])) {
+					integers++;
+					if(i>0 && !(condition[i-1].equals("<") || condition[i-1].equals(">") || condition[i-1].equals("<=") 
+							|| condition[i-1].equals(">=") || condition[i-1].equals("=")))
+						return false;
+				}
+				return false;
+			}
+		}
+
+		if((logical != integers) || (logical != metrics) || (abreParenteses != fechaParenteses))
 			return false;
-			
+
 		return true;
 	}
 
@@ -162,11 +226,11 @@ public class Rule implements Serializable {
 			return false;
 		}
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getConditions() {
 		return conditions;
 	}

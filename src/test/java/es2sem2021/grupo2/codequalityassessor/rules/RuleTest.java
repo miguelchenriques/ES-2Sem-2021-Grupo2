@@ -32,7 +32,7 @@ public class RuleTest {
 	    	Rule r = new Rule("ola","wwwww >= 45 and ( Ceee < 10 or WMCeeee = 3 )");	    	    	
 	    });
 
-	    String expectedMessage = "sintaxe nao valida :(";
+	    String expectedMessage = "sintaxe nao valida";
 	    String actualMessage = exception.getMessage();
 
 	    assertTrue(actualMessage.contains(expectedMessage));
