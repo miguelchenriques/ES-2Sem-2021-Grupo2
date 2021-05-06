@@ -18,6 +18,11 @@ import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
 public class Rule implements Serializable {
 	
+	@Override
+	public String toString() {
+		return "Rule [name=" + name + ", conditions=" + conditions + "]";
+	}
+
 	/**
 	 * 
 	 */
@@ -25,7 +30,7 @@ public class Rule implements Serializable {
 	private String name, conditions;
 	
 	public Rule(String name, String conditions) throws IllegalArgumentException { //verificar o conditions antes de criar
-		if(!validateConditionSyntax(conditions))
+		if(!validateConditionSyntax(conditions) && (conditions.contains("Method") || conditions.contains("Class")))
 				throw new IllegalArgumentException("sintaxe nao valida :(");
 		this.name = name;
 		this.conditions = conditions;
