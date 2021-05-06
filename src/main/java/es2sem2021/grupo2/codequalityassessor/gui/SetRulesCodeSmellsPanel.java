@@ -67,6 +67,7 @@ public class SetRulesCodeSmellsPanel extends JPanel {
         	   if(CodeSmells.addRuleToCodeSmell(codeSmell, rule) == false) {
         		   errorLabel.setVisible(true);
         	   };
+        	   System.out.println(CodeSmells.getCodeSmells());
         	   }
            });
 		changeCS.setBounds(188, 384, 187, 29);
