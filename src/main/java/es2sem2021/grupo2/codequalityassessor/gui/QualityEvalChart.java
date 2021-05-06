@@ -36,10 +36,10 @@ public class QualityEvalChart extends ApplicationFrame{
       private CategoryDataset createDataset( ) {
          final String GC = "is_God_Class";        
          final String LM = "is_Long_Method";              
-         final String VP = "Verdadeiro Positivo";        
-         final String VN = "Verdadeiro Negativo";        
-         final String FP = "Falsos Positivo";        
-         final String FN = "Falsos Negativos";        
+         final String VP = "TP";        
+         final String VN = "TN";        
+         final String FP = "FP";        
+         final String FN = "FN";        
          
          
          try{
