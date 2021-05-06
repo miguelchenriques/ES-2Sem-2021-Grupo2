@@ -124,13 +124,9 @@ public class Rule implements Serializable {
 		// metricName pattern
 		Pattern metricName = Pattern.compile("^[a-z][a-z_]*$", Pattern.CASE_INSENSITIVE);
 
-		System.out.println("Vou tentar validar");
-
 		String[] conditions = conditionCode.split(" ");
 		if(conditions.length < 3)
 			return false;
-
-		System.out.println("É maior que 3");
 
 		// Splits the conditions
 		for (String element : Arrays.asList(conditions)) {
@@ -157,89 +153,73 @@ public class Rule implements Serializable {
 		int metrics = 0;
 		int integers = 0;
 
-		System.out.println("Sintaxe ok...");
 		for (int i = 0; i < condition.length; i++) {
 
 			if(i==0 && !(condition[i].equals("(") || validMetrics.contains(condition[i]))) {
-				System.out.println("Falhei no" + i);
 				return false;
 			}
 
 			switch(condition[i].toLowerCase()) {
-			case "(": abreParenteses++;
-			if(i>0 && !(condition[i-1].equals("(") || condition[i-1].toLowerCase().equals("and") || condition[i-1].toLowerCase().equals("or"))) {
-				System.out.println("abre parenteses" + i);
-				return false;
-			}
-			break;
-			case ")": fechaParenteses++; 
-			if(i>0 && !(condition[i-1].equals(")") || isInteger(condition[i-1]))) {
-				System.out.println("fecha parenteses" + i);
-				return false;
-			}
-			break;
+			case "(":
+				abreParenteses++;
+				if(i>0 && !(condition[i-1].equals("(") || condition[i-1].toLowerCase().equals("and") 
+						|| condition[i-1].toLowerCase().equals("or"))) 
+					return false;
+				break;
+			case ")": 
+				fechaParenteses++; 
+				if(i>0 && !(condition[i-1].equals(")") || isInteger(condition[i-1])))
+					return false;
+				break;
 			case "and": 
-			if(i>0 && !(condition[i-1].equals(")") || isInteger(condition[i-1]))) {
-				System.out.println("and" + i);
-				return false;
-			}
-			break;
+				if(i>0 && !(condition[i-1].equals(")") || isInteger(condition[i-1]))) 
+					return false;
+				break;
 			case "or":
-			if(i>0 && !(condition[i-1].equals(")") || isInteger(condition[i-1]))) {
-				System.out.println("or" + i);
-				return false;
-			}
-			break;
-			case ">": logical++;
-			if(i>0 && !(validMetrics.contains(condition[i-1]))) {
-				System.out.println(">" + i);
-				return false;
-			}
-			break;
-			case "<": logical++;
-			if(i>0 && !(validMetrics.contains(condition[i-1]))) {
-				System.out.println("<" + i);
-				return false;
-			}
-			break;
-			case ">=": logical++;
-			if(i>0 && !(validMetrics.contains(condition[i-1]))) {
-				System.out.println(">=" + i);
-				return false;
-			}
-			break;
-			case "<=": logical++;
-			if(i>0 && !(validMetrics.contains(condition[i-1]))) {
-				System.out.println("<=" + i);
-				return false;
-			}
-			break;
-			case "=": logical++;
-			if(i>0 && !(validMetrics.contains(condition[i-1]))) {
-				System.out.println("=" + i);
-				return false;
-			}
-			break;
+				if(i>0 && !(condition[i-1].equals(")") || isInteger(condition[i-1]))) 
+					return false;
+				break;
+			case ">": 
+				logical++;
+				if(i>0 && !(validMetrics.contains(condition[i-1]))) 
+					return false;
+				break;
+			case "<": 
+				logical++;
+				if(i>0 && !(validMetrics.contains(condition[i-1]))) 
+					return false;
+				break;
+			case ">=": 
+				logical++;
+				if(i>0 && !(validMetrics.contains(condition[i-1])))
+					return false;
+				break;
+			case "<=": 
+				logical++;
+				if(i>0 && !(validMetrics.contains(condition[i-1])))
+					return false;
+				break;
+			case "=": 
+				logical++;
+				if(i>0 && !(validMetrics.contains(condition[i-1])))
+					return false;
+				break;
 			default:
 				if(validMetrics.contains(condition[i])) {
 					metrics++;
-					if(i>0 && !(condition[i-1].equals("(") || condition[i-1].toLowerCase().equals("and") || condition[i-1].toLowerCase().equals("or"))) {
-						System.out.println("metricas" + i);
+					if(i>0 && !(condition[i-1].equals("(") || condition[i-1].toLowerCase().equals("and") 
+							|| condition[i-1].toLowerCase().equals("or")))
 						return false;
-					}
 					break;
 				}
 				if(isInteger(condition[i])) {
 					integers++;
 					if(i>0 && !(condition[i-1].equals("<") || condition[i-1].equals(">") || condition[i-1].equals("<=") 
-							|| condition[i-1].equals(">=") || condition[i-1].equals("="))) {
-						System.out.println("inteiros"+i);
+							|| condition[i-1].equals(">=") || condition[i-1].equals("="))) 
 						return false;
-					}
 					break;
 				}
 				if(i==0) continue;
-				System.out.println("Não fiz pão"+i);
 				return false;
 			}
 		}
