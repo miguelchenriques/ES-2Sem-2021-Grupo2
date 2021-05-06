@@ -160,7 +160,7 @@ public class App {
 		visualizeCodeSmellsPane_1.add(lblQualityEvaluation_1);
 		
 		JPanel visualizeQualityEvaluationPane_1 = new JPanel();
-		visualizeCodeSmellsPane.addMouseListener(new MouseAdapter(){
+		visualizeQualityEvaluationPane_1.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 menuClicked(quality_evaluation_panel);
             }
@@ -182,6 +182,7 @@ public class App {
 		contentPane.add(rules_panel);
 		contentPane.add(codesmells_panel);
 		contentPane.add(set_rules_code_smells_panel);
+		contentPane.add(quality_evaluation_panel);
 	}
 	
 	public void menuClicked(JPanel panel) {
