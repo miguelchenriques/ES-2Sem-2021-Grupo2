@@ -29,9 +29,6 @@ public class CodeSmells {
 		return true;
 	}
 	
-	public static void addCodeSmell(String codeSmell) {
-		codesmells.put(codeSmell, null);
-	}
 	
 	/**
 	 * Returns a boolean

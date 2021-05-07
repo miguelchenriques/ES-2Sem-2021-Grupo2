@@ -51,20 +51,33 @@ public class WMCClass {
 		ArrayList<Pair<String, Integer>> results = new ArrayList<>();
 
 		for(String classString : classes ){
-			int count=0;
-			for(String s : cycloMethod.keySet()) {	
-				String[] c;
-				if(s.indexOf(".")!=-1 && s.indexOf(".")<s.indexOf("("))
-					c = s.split("\\.");
-				else
-					c = s.split("\\(");
-				if(c[0].equals(classString)) {
-					count += cycloMethod.get(s);			
-				}
-			}
+			int count = sumClassCyclos(cycloMethod, classString);
 			results.add(new Pair<String,Integer>(classString,count));
 		}
 		return results;
+	}
+
+	/**
+	 * 
+	 * Sums the cyclomatic complexity of a class functions
+	 * 
+	 * @param cycloMethod	hash map that contains the functions' cyclomatic complexities
+	 * @param classString	class name
+	 * @return				the class wmc
+	 */
+	private static int sumClassCyclos(HashMap<String, Integer> cycloMethod, String classString) {
+		int count=0;
+		for(String s : cycloMethod.keySet()) {	
+			String[] c;
+			if(s.indexOf(".")!=-1 && s.indexOf(".")<s.indexOf("("))
+				c = s.split("\\.");
+			else
+				c = s.split("\\(");
+			if(c[0].equals(classString)) {
+				count += cycloMethod.get(s);			
+			}
+		}
+		return count;
 	}
 	
 	

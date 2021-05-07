@@ -1,7 +1,5 @@
 package es2sem2021.grupo2.codequalityassessor.gui;
 
-import java.io.FileNotFoundException;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -14,6 +12,7 @@ import es2sem2021.grupo2.codequalityassessor.rules.QualityEvaluation;
 
 public class QualityEvalChart extends ApplicationFrame{
 
+	private static final long serialVersionUID = 1L;
 	private DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 	
 	 public QualityEvalChart( String applicationTitle , String chartTitle ) {

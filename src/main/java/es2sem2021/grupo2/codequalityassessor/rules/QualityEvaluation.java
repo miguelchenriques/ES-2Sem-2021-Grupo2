@@ -2,7 +2,6 @@ package es2sem2021.grupo2.codequalityassessor.rules;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +14,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor;
 import es2sem2021.grupo2.codequalityassessor.xlsx.FileGenerator;
 import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
