@@ -28,6 +28,11 @@ public class CodeSmellsPanel extends JPanel {
 		setVisible(false);
 
 		model = new DefaultTableModel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// all cells false
