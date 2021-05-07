@@ -12,29 +12,17 @@ import org.junit.jupiter.api.Test;
 
 class FileGeneratorTest {
 
-	
-	void init() {
-		
-	}
-	
 	@Test
-	void parseFolder() {
-		
-		try {
-			List<Method> methods = new ArrayList<>();
-			File folder = new File("testFiles/src/parseFolderTest");
-			FileGenerator.parseFolders(folder,methods);
-			List<Method> methods1 = new ArrayList<>();
-			methods1.add(new Method("","ParsingException", "getMessage()", 2, 1,1,0,1));
-			methods1.add(new Method("","ParsingException", "ParsingException(int, int, int, String)", 2, 1,1,0,0));
-			methods1.add(new Method("","GrammerException", "GrammerException(int, int, int, String)", 2, 1,0,0,0));
-			methods1.add(new Method("","GrammerException", "GrammerException(int, String)", 2, 1,0,0,0));
-			assertEquals(methods1, methods);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	void parseFolder() throws FileNotFoundException {
+		List<Method> methods = new ArrayList<>();
+		File folder = new File("testFiles/src/parseFolderTest");
+		FileGenerator.parseFolders(folder, methods);
+		List<Method> methods1 = new ArrayList<>();
+		methods1.add(new Method("parseFolderTest", "ParsingException", "getMessage()", 2, 29, 7, 20, 6));
+		methods1.add(new Method("parseFolderTest", "ParsingException", "ParsingException(int, int, int, String)", 2, 29, 7, 6, 1));
+		methods1.add(new Method("parseFolderTest.pasta", "GrammerException", "GrammerException(int, int, int, String)", 2, 8, 2, 3, 1));
+		methods1.add(new Method("parseFolderTest.pasta", "GrammerException", "GrammerException(int, String)", 2, 8, 2, 3, 1));
+		assertEquals(methods1, methods);
 	}
 
 }

@@ -31,7 +31,6 @@ public class FinalResultsTest {
 			HashMap<String,HashMap<String,Boolean>> ruleResults = FinalResults.getRulesResults(methods);
 			assertEquals(2,ruleResults.size());
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

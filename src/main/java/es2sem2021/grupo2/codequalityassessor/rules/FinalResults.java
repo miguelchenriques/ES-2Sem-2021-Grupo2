@@ -11,6 +11,13 @@ public class FinalResults {
 	
 	private static HashMap<String,HashMap<String,Boolean>> finalresults = new HashMap<String,HashMap<String,Boolean>>();
 	
+	
+	/**
+	 * Returns a hashmap with the results of the evaluation of the codesmells
+	 *
+	 * @param methods  list of methods to evaluate	
+	 * @return hashmap with results
+	*/
 	public static HashMap<String,HashMap<String,Boolean>> getRulesResults(List<Method> methods){
 		finalresults.clear();
 
@@ -20,7 +27,7 @@ public class FinalResults {
 		for(String s: codesmells) {
 			Rule r = codeSmellsSet.get(s);
 			HashMap<String,Boolean> results = new HashMap<String,Boolean>();
-			if(r != null && methods != null) {
+			if(r != null) {
 				for(Method m: methods) {
 					Boolean result = r.assertRule(m);
 					results.put(m.m_class+"."+m.m_method, result);

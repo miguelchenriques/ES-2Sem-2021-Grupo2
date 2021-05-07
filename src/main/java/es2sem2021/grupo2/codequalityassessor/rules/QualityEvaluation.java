@@ -75,7 +75,7 @@ public class QualityEvaluation {
 			while (rowIterator.hasNext()) {
 				Row row = rowIterator.next();
 				String className = row.getCell(classIndex).getStringCellValue();
-				String methodName = row.getCell(methodIndex).getStringCellValue();
+				String methodName = row.getCell(methodIndex).getStringCellValue().replaceAll(" ", "");
 				String key = className + "." + methodName;
 				if(godClass.get(key)!=null && row.getCell(godClassIndex).getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 					Boolean godClassValue = row.getCell(godClassIndex).getBooleanCellValue();

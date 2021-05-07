@@ -105,7 +105,9 @@ public class LOC_method {
 	 */
 	private static int countLines(String code) {
 		List<String> lines = Arrays.asList(code.split("\r\n"));
-		lines = lines.stream().filter(l -> !l.equals("")).collect(Collectors.toList());
-		return lines.size();
+		return (int) lines.stream()
+				.map(l -> l.replaceAll("\t", ""))
+				.filter(l -> !l.equals(""))
+				.count();
 	}
 }

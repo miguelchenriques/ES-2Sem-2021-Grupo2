@@ -16,6 +16,15 @@ import com.github.javaparser.utils.Pair;
 
 public class WMCClass {
 
+	//TODO: Add javadocs
+	/***
+	 * 
+	 * Returns a hashmap with all the classes names present in the file f as keys and an integer representing the sum of
+	 * cyclomatic complexity of the class' methods
+	 * 
+	 * @param f	java file to be parsed
+	 * @return	the classes and the sum of its method's cyclomatic complexity
+	 */
 	public static HashMap<String, Integer> getClassWMC(File f) {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
@@ -58,6 +67,14 @@ public class WMCClass {
 		return results;
 	}
 	
+	
+	/***
+	 * 
+	 * Transforms an array of pairs (class, wmc) to an hashmap where inner classes names are defined as Outter.Inner
+	 * 
+	 * @param classes	array of pairs (classes, wmc)
+	 * @return			hashmap with the class name as key and it's wmc
+	 */
 	private static HashMap<String,Integer> getResults(ArrayList<Pair<String,Integer>> classes){
 		if (classes.size()<1) return null;
 		

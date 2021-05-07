@@ -14,7 +14,7 @@ class LOCClassTest {
 	void ParsingExceptionLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\ParsingException.java");
 		HashMap<String,Integer> numberLines = LOCClass.getClassLOC(f);
-		assertEquals(45, numberLines.get("ParsingException").intValue());
+		assertEquals(44, numberLines.get("ParsingException").intValue());
 	}
 	
 	@Test

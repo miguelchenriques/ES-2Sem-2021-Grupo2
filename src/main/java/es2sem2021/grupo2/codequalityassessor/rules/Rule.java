@@ -29,7 +29,16 @@ public class Rule implements Serializable {
 	 */
 	private static final long serialVersionUID = -5618173094709221790L;
 	private String name, conditions;
-
+	
+	/**
+	 * 
+	 * Constructs a rule with the given name and condition, throws IllegalArgumentException if the condition has an
+	 * invalid syntax
+	 * 
+	 * @param name
+	 * @param conditions
+	 * @throws IllegalArgumentException
+	 */
 	public Rule(String name, String conditions) throws IllegalArgumentException { //verificar o conditions antes de criar
 		if(!validateConditionSyntax(conditions))
 			throw new IllegalArgumentException("sintaxe nao valida");
@@ -254,9 +263,5 @@ public class Rule implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getRuleCode() {
-		return "SE (" + conditions + ") ENTAO" + name;
 	}
 }
