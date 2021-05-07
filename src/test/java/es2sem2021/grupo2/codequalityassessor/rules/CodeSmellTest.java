@@ -8,16 +8,14 @@ public class CodeSmellTest {
 	
 	@Test
 	void testGodClasseLongMethod() {
-		CodeSmells.getCodeSmells().clear();
-		CodeSmells.importMandatoryCodeSmells();
+		CodeSmells.loadFromFile();
 		assertEquals(2, CodeSmells.getCodeSmells().size());
 	}	
 	
 	@Test
 	void testAddRuleToCodeSmell() {
 		RulesSet.getRules().clear();
-		CodeSmells.getCodeSmells().clear();
-		CodeSmells.importMandatoryCodeSmells();
+		CodeSmells.loadFromFile();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And CYCLO_Method < 10");
 		assertEquals(true, add1);
 		boolean add2 = CodeSmells.addRuleToCodeSmell("is_Long_Method", RulesSet.getRules().get("Grande"));
@@ -27,8 +25,7 @@ public class CodeSmellTest {
 	@Test
 	void testFailAddRuleToCodeSmell() {
 		RulesSet.getRules().clear();
-		CodeSmells.getCodeSmells().clear();
-		CodeSmells.importMandatoryCodeSmells();
+		CodeSmells.loadFromFile();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And ( CYCLO_Method < 10 OR WMC_Class = 3 )");
 		assertEquals(true, add1);
 		boolean add2 = CodeSmells.addRuleToCodeSmell("is_Long_Method", RulesSet.getRules().get("Grande"));
@@ -38,8 +35,7 @@ public class CodeSmellTest {
 	@Test
 	void testDeleteRuleToCodeSmell() {
 		RulesSet.getRules().clear();
-		CodeSmells.getCodeSmells().clear();
-		CodeSmells.importMandatoryCodeSmells();
+		CodeSmells.loadFromFile();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And CYCLO_Method < 10");
 		assertEquals(true, add1);
 		boolean add2 = CodeSmells.addRuleToCodeSmell("nome", RulesSet.getRules().get("Grande"));
@@ -51,8 +47,7 @@ public class CodeSmellTest {
 	@Test
 	void testFailDeleteRuleToCodeSmell() {
 		RulesSet.getRules().clear();
-		CodeSmells.getCodeSmells().clear();
-		CodeSmells.importMandatoryCodeSmells();
+		CodeSmells.loadFromFile();
 		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And CYCLO_Method < 10");
 		assertEquals(true, add1);
 		boolean add2 = CodeSmells.addRuleToCodeSmell("is_Long_Method", RulesSet.getRules().get("Grande"));

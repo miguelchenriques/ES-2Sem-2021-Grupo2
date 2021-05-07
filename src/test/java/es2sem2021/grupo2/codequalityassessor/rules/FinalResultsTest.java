@@ -24,8 +24,7 @@ public class FinalResultsTest {
 			List<Method> methods = MetricsExtractor.extract(f);
 			assertNotNull(methods);
 			RulesSet.getRules().clear();
-			CodeSmells.getCodeSmells().clear();
-			CodeSmells.importMandatoryCodeSmells();
+			CodeSmells.loadFromFile();
 			RulesSet.addRule("Teste", "LOC_Method >= 5");
 			CodeSmells.addRuleToCodeSmell("is_Long_Method", RulesSet.getRules().get("Teste"));
 			HashMap<String,HashMap<String,Boolean>> ruleResults = FinalResults.getRulesResults(methods);
