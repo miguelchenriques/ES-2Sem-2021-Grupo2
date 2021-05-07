@@ -36,7 +36,6 @@ public class CodeSmellsPanel extends JPanel {
 
 		table = new JTable();
 		table.setModel(model);
-
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
