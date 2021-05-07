@@ -32,15 +32,15 @@ public class ExtractPanel extends JPanel {
 		setVisible(false);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 449, 405);
+		panel.setBounds(0, 0, 650, 483);
 		add(panel);
 		panel.setLayout(null);
 
 		JButton openButton = new JButton("Choose File");
-		openButton.setBounds(157, 152, 117, 29);
+		openButton.setBounds(230, 151, 190, 71);
 		panel.add(openButton);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setBounds(65, 193, 306, 51);
+		label.setBounds(172, 262, 306, 51);
 		label.setVisible(false);
 		panel.add(label);
 		

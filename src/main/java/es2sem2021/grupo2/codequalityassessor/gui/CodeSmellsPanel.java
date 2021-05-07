@@ -25,6 +25,7 @@ public class CodeSmellsPanel extends JPanel {
 	public CodeSmellsPanel() {
 		setBounds(0, 0, 650, 483);
 		setLayout(null);
+		setVisible(false);
 
 		model = new DefaultTableModel() {
 			@Override
@@ -51,7 +52,7 @@ public class CodeSmellsPanel extends JPanel {
 				updateColunms(FileGenerator.getMethods());
 			}
 		});
-		refreshButton.setBounds(0, 0, 130, 50);
+		refreshButton.setBounds(260, 6, 130, 39);
 		add(refreshButton);
 		
 	}

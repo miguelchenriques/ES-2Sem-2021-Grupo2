@@ -42,33 +42,33 @@ public class VisualizePanel extends JPanel {
 		setVisible(false);
 
 		n_packages = new JLabel("New label");
-		n_packages.setBounds(283, 183, 61, 16);
+		n_packages.setBounds(379, 246, 61, 16);
 		add(n_packages);
 		n_packages.setVisible(false);
 
 		n_classes = new JLabel("New label");
-		n_classes.setBounds(283, 211, 61, 16);
+		n_classes.setBounds(379, 274, 61, 16);
 		add(n_classes);
 		n_classes.setVisible(false);
 
 		n_methods = new JLabel("New label");
-		n_methods.setBounds(283, 239, 61, 16);
+		n_methods.setBounds(379, 302, 61, 16);
 		add(n_methods);
 		n_methods.setVisible(false);
 
 		n_lines = new JLabel("New label");
-		n_lines.setBounds(283, 267, 61, 16);
+		n_lines.setBounds(379, 330, 61, 16);
 		add(n_lines);
 		n_lines.setVisible(false);
 		
 		fileName = new JLabel("File ...");
 		fileName.setHorizontalAlignment(SwingConstants.CENTER);
-		fileName.setBounds(54, 114, 357, 35);
+		fileName.setBounds(146, 160, 357, 35);
 		add(fileName);
 		fileName.setVisible(false);
 
 		JButton chooseFile = new JButton("Import File");
-		chooseFile.setBounds(133, 56, 169, 29);
+		chooseFile.setBounds(231, 91, 190, 46);
 		add(chooseFile);
 
 		chooseFile.addMouseListener(new MouseAdapter() {
@@ -114,19 +114,19 @@ public class VisualizePanel extends JPanel {
 		});
 
 		JLabel lblNewLabel = new JLabel("Number of Packages:");
-		lblNewLabel.setBounds(72, 183, 140, 16);
+		lblNewLabel.setBounds(168, 246, 140, 16);
 		add(lblNewLabel);
 
 		JLabel lblNumberOfClasses = new JLabel("Number of Classes:");
-		lblNumberOfClasses.setBounds(72, 211, 140, 16);
+		lblNumberOfClasses.setBounds(168, 274, 140, 16);
 		add(lblNumberOfClasses);
 
 		JLabel lblNumberOfMethods = new JLabel("Number of Methods:");
-		lblNumberOfMethods.setBounds(72, 239, 140, 16);
+		lblNumberOfMethods.setBounds(168, 302, 140, 16);
 		add(lblNumberOfMethods);
 
 		JLabel lblNumberOfLines = new JLabel("Number of Lines Of Code:");
-		lblNumberOfLines.setBounds(72, 267, 180, 16);
+		lblNumberOfLines.setBounds(168, 330, 180, 16);
 		add(lblNumberOfLines);
 		
 

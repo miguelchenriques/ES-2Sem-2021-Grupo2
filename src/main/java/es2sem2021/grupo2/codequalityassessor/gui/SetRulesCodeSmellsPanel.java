@@ -29,27 +29,29 @@ public class SetRulesCodeSmellsPanel extends JPanel {
 	private JComboBox<String> codeSmellCB;
 	private JComboBox<String> ruleCB;
 	private JLabel errorLabel;
+	private JLabel successLabel;
 	
 	public SetRulesCodeSmellsPanel() {
 		setBounds(0, 0, 650, 483);
 		setLayout(null);
+		setVisible(false);
 		
 		codeSmellCB = new JComboBox<String>();
-		codeSmellCB.setBounds(202, 142, 153, 27);
+		codeSmellCB.setBounds(248, 117, 153, 27);
 		add(codeSmellCB);
 		
 		ruleCB = new JComboBox<String>();
-		ruleCB.setBounds(202, 268, 153, 27);
+		ruleCB.setBounds(248, 224, 153, 27);
 		add(ruleCB);
 		
 		JLabel lblNewLabel = new JLabel("Code Smell");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(224, 114, 107, 16);
+		lblNewLabel.setBounds(271, 89, 107, 16);
 		add(lblNewLabel);
 		
 		JLabel lblRule = new JLabel("Rule");
 		lblRule.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRule.setBounds(224, 240, 107, 16);
+		lblRule.setBounds(271, 196, 107, 16);
 		add(lblRule);
 		
 		JButton changeCS = new JButton("Change Code Smell");
@@ -57,6 +59,7 @@ public class SetRulesCodeSmellsPanel extends JPanel {
            @Override
             public void mouseClicked(MouseEvent e) {
         	   errorLabel.setVisible(false);
+        	   successLabel.setVisible(false);
         	   if(ruleCB.getSelectedItem().toString() == "") {
         		   errorLabel.setVisible(true);
         		   return;
@@ -66,19 +69,25 @@ public class SetRulesCodeSmellsPanel extends JPanel {
         	   Rule rule = RulesSet.getRules().get(ruleName);
         	   if(CodeSmells.addRuleToCodeSmell(codeSmell, rule) == false) {
         		   errorLabel.setVisible(true);
-        	   };
-        	   System.out.println(CodeSmells.getCodeSmells());
+        	   }else successLabel.setVisible(true);
         	   }
            });
-		changeCS.setBounds(188, 384, 187, 29);
+		changeCS.setBounds(205, 313, 240, 44);
 		add(changeCS);
 		
 		errorLabel = new JLabel("You must enter a valid rule for that code smell");
 		errorLabel.setForeground(Color.RED);
-		errorLabel.setBounds(128, 355, 305, 16);
+		errorLabel.setBounds(172, 394, 305, 16);
 		errorLabel.setVisible(false);
 		add(errorLabel);
 		
+		successLabel = new JLabel("Code smell updated with success");
+		successLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		successLabel.setBounds(179, 394, 292, 16);
+		successLabel.setVisible(false);
+		add(successLabel);
+		
+		CodeSmells.importMandatoryCodeSmells();
 		update();
 		
 	}
@@ -86,7 +95,6 @@ public class SetRulesCodeSmellsPanel extends JPanel {
 	public void update(){
 		codeSmellCB.removeAllItems();
 		ruleCB.removeAllItems();
-		CodeSmells.importMandatoryCodeSmells();
 		HashMap<String, Rule> codeSmells = CodeSmells.getCodeSmells();
 		for (Map.Entry<String, Rule> c : codeSmells.entrySet()) {
 			codeSmellCB.addItem(c.getKey());
@@ -97,5 +105,4 @@ public class SetRulesCodeSmellsPanel extends JPanel {
 			ruleCB.addItem(rule.getKey());
 		}
 	}
-
 }
