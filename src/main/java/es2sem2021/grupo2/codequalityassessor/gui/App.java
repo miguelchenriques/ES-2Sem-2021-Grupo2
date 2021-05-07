@@ -155,12 +155,13 @@ public class App {
 		menuPane.add(visualizeCodeSmellsPane_1);	
 		
 		JLabel lblQualityEvaluation_1 = new JLabel("Visualize Quality Evaluation");
+		lblQualityEvaluation_1.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		lblQualityEvaluation_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblQualityEvaluation_1.setBounds(0, 16, 150, 16);
+		lblQualityEvaluation_1.setBounds(0, 6, 150, 38);
 		visualizeCodeSmellsPane_1.add(lblQualityEvaluation_1);
 		
 		JPanel visualizeQualityEvaluationPane_1 = new JPanel();
-		visualizeCodeSmellsPane.addMouseListener(new MouseAdapter(){
+		visualizeQualityEvaluationPane_1.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 menuClicked(quality_evaluation_panel);
             }
@@ -173,7 +174,7 @@ public class App {
 		
 		
 		JPanel contentPane = new JPanel();
-		contentPane.setBounds(161, 0, 650, 483);
+		contentPane.setBounds(161, 0, 650, 455);
 		frame.getContentPane().add(contentPane);
 		contentPane.setLayout(null);
 		
@@ -182,6 +183,19 @@ public class App {
 		contentPane.add(rules_panel);
 		contentPane.add(codesmells_panel);
 		contentPane.add(set_rules_code_smells_panel);
+		contentPane.add(quality_evaluation_panel);
+		
+		JLabel lblNewLabel_2 = new JLabel("Welcome to the Code Evaluation App");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setFont(new Font("SF Pro", Font.PLAIN, 20));
+		lblNewLabel_2.setBounds(116, 122, 417, 58);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Click a menu to interact");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("SF Pro", Font.PLAIN, 16));
+		lblNewLabel_3.setBounds(189, 250, 272, 16);
+		contentPane.add(lblNewLabel_3);
 	}
 	
 	public void menuClicked(JPanel panel) {

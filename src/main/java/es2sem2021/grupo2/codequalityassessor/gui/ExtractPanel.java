@@ -9,8 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileSystemView;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-
-import es2sem2021.grupo2.codequalityassessor.xlsx.CodeSmellsTableGenerator;
 import es2sem2021.grupo2.codequalityassessor.xlsx.FileGenerator;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -34,15 +32,15 @@ public class ExtractPanel extends JPanel {
 		setVisible(false);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 449, 405);
+		panel.setBounds(0, 0, 650, 483);
 		add(panel);
 		panel.setLayout(null);
 
 		JButton openButton = new JButton("Choose File");
-		openButton.setBounds(157, 152, 117, 29);
+		openButton.setBounds(230, 151, 190, 71);
 		panel.add(openButton);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setBounds(65, 193, 306, 51);
+		label.setBounds(172, 262, 306, 51);
 		label.setVisible(false);
 		panel.add(label);
 		
@@ -73,13 +71,6 @@ public class ExtractPanel extends JPanel {
     					i.printStackTrace();
     				}
     				
-    				CodeSmellsTableGenerator generator= new CodeSmellsTableGenerator(j.getSelectedFile());
-    				try {
-						generator.main();
-					} catch (InvalidFormatException | IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
     			}
                 
             }

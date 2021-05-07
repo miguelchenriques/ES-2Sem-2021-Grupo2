@@ -39,35 +39,36 @@ public class RulesPanel extends JPanel {
 	public RulesPanel() {
 		setBounds(0, 0, 650, 483);
 		setLayout(null);
+		setVisible(false);
 
 		errorMsg = new JLabel("New label");
 		errorMsg.setHorizontalAlignment(SwingConstants.CENTER);
 		errorMsg.setForeground(Color.RED);
-		errorMsg.setBounds(52, 111, 417, 16);
+		errorMsg.setBounds(117, 152, 417, 16);
 		errorMsg.setVisible(false);
 		add(errorMsg);
 
 		ruleName = new JTextField();
-		ruleName.setBounds(52, 38, 130, 26);
+		ruleName.setBounds(24, 66, 152, 43);
 		add(ruleName);
 		ruleName.setColumns(10);
 
 		ruleCondition = new JTextField();
-		ruleCondition.setBounds(226, 38, 130, 26);
+		ruleCondition.setBounds(207, 66, 258, 43);
 		add(ruleCondition);
 		ruleCondition.setColumns(10);
 
 		JLabel ruleNameLabel = new JLabel("Rule Name");
 		ruleNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		ruleNameLabel.setBounds(62, 65, 98, 16);
+		ruleNameLabel.setBounds(50, 44, 98, 16);
 		add(ruleNameLabel);
 
 		JLabel ruleConditionLabel = new JLabel("Rule condition");
-		ruleConditionLabel.setBounds(249, 65, 96, 16);
+		ruleConditionLabel.setBounds(288, 44, 96, 16);
 		add(ruleConditionLabel);
 
 		JButton addRule = new JButton("Add Rule");
-		addRule.setBounds(400, 38, 98, 29);
+		addRule.setBounds(501, 69, 121, 38);
 		addRule.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -77,7 +78,6 @@ public class RulesPanel extends JPanel {
 					errorMsg.setVisible(true);
 				}
 				updateRules();
-
 			}
 		});
 		add(addRule);
@@ -106,7 +106,7 @@ public class RulesPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		table.setFillsViewportHeight(true);
-		scrollPane.setBounds(6, 139, 638, 260);
+		scrollPane.setBounds(6, 192, 638, 263);
 		add(scrollPane);
 
 		RulesSet.loadFromFile();

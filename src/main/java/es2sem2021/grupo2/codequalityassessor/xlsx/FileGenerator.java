@@ -14,12 +14,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import es2sem2021.grupo2.codequalityassessor.gui.CodeSmellsPanel;
 import es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor;
 import es2sem2021.grupo2.codequalityassessor.rules.Constants;
 
 
 
 public class FileGenerator {
+	private static List<Method> methods;
 
 	public String fileName;
 	public File folder;
@@ -40,7 +42,7 @@ public class FileGenerator {
 	 */
 	public void main() throws IOException, InvalidFormatException {
 		
-		List<Method> methods = new ArrayList<>();
+		methods = new ArrayList<>();
 		
 		parseFolders(this.folder,methods);
 		
@@ -76,6 +78,8 @@ public class FileGenerator {
 		FileOutputStream fileOut = new FileOutputStream(fileName.concat("_metrics.xlsx"));
 		workbook.write(fileOut);
 		fileOut.close();
+		
+		CodeSmellsPanel.updateColunms(methods);
 	}
 	
 	/**
@@ -94,5 +98,9 @@ public class FileGenerator {
 			else
 				methods.addAll(MetricsExtractor.extract(f));
 		}
+	}
+	
+	public static List<Method> getMethods(){
+		return methods;
 	}
 }
