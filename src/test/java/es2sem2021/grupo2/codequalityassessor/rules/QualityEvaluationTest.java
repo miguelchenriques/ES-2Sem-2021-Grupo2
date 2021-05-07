@@ -10,7 +10,7 @@ class QualityEvaluationTest {
 	void qualityEvaluationTest() { 
 		RulesSet.getRules().clear();
 		CodeSmells.getCodeSmells().clear();
-		CodeSmells.importMandatoryCodeSmells();
+		CodeSmells.loadFromFile();
 		RulesSet.addRule("GCTest", "WMC_Class > 50 OR NOM_Class > 10");
 		RulesSet.addRule("LMTest", "LOC_Method > 50 AND CYCLO_Method > 10");
 		CodeSmells.getCodeSmells().put("is_Long_Method",RulesSet.getRules().get("LMTest"));

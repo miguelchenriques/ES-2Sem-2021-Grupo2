@@ -1,5 +1,6 @@
 package es2sem2021.grupo2.codequalityassessor.rules;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -57,7 +58,7 @@ public class CodeSmells {
 	 */
 	public static void saveToFile() {
 		try {
-			FileOutputStream f = new FileOutputStream(new File("codesmells"));
+			FileOutputStream f = new FileOutputStream(new File(Constants.CODE_SMELLS_DATA_FILE));
 			ObjectOutputStream o = new ObjectOutputStream(f);
 			
 			o.writeObject(codesmells);
@@ -75,24 +76,29 @@ public class CodeSmells {
 	@SuppressWarnings("unchecked")
 	public static void loadFromFile() {
 		try {
-			FileInputStream f = new FileInputStream(new File("codesmells"));
+			FileInputStream f = new FileInputStream(new File(Constants.CODE_SMELLS_DATA_FILE));
 			ObjectInputStream o = new ObjectInputStream(f);
 			
 			Object in = o.readObject();
-			
+
 			if (in instanceof HashMap) {
 				codesmells = (HashMap<String, Rule>) in;
 			}
 			
+			if(codesmells.get("is_God_Class")==null)
+				codesmells.put("is_God_Class", null);
+			
 			if(codesmells.get("is_Long_Method")==null)
 				codesmells.put("is_Long_Method", null);
 			
-			if(codesmells.get("is_God_Class")==null)
-				codesmells.put("is_God_Class", null);
-				
+
+			
 			o.close();
 			f.close();
 			
+		} catch (EOFException e) {
+			codesmells.put("is_God_Class", null);
+			codesmells.put("is_Long_Method", null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
