@@ -87,7 +87,7 @@ public class RulesSet {
 	 */
 	public static void saveToFile() {
 		try {
-			FileOutputStream f = new FileOutputStream(new File(Constants.RULE_DATA_FILE));
+			FileOutputStream f = new FileOutputStream(new File("rules"));
 			ObjectOutputStream o = new ObjectOutputStream(f);
 			
 			o.writeObject(rules);
@@ -105,7 +105,7 @@ public class RulesSet {
 	@SuppressWarnings("unchecked")
 	public static void loadFromFile() {
 		try {
-			FileInputStream f = new FileInputStream(new File(Constants.RULE_DATA_FILE));
+			FileInputStream f = new FileInputStream(new File("rules"));
 			ObjectInputStream o = new ObjectInputStream(f);
 			
 			Object in = o.readObject();
