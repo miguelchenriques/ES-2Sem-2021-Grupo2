@@ -12,14 +12,6 @@ public class CodeSmells {
 	private static HashMap<String,Rule> codesmells = new HashMap<>();
 
 	/**
-	 * Imports the mandatory codesmells into the hashmap
-	 */
-	public static void importMandatoryCodeSmells() {
-		codesmells.put("is_Long_Method", null);
-		codesmells.put("is_God_Class", null);
-	}
-
-	/**
 	 *Returns a boolean to indicate the result of the method.
 	 *
 	 * @param codesmell - name of the codesmell, rule - Rule to associate to codesmell
@@ -61,7 +53,7 @@ public class CodeSmells {
 	}
 	
 	/**
-	 * Saves the rules into a file
+	 * Saves the codesmells into a file
 	 */
 	public static void saveToFile() {
 		try {
@@ -78,7 +70,7 @@ public class CodeSmells {
 	}
 	
 	/**
-	 * Loads the rules from a file
+	 * Loads the codesmells from a file
 	 */
 	@SuppressWarnings("unchecked")
 	public static void loadFromFile() {
@@ -91,7 +83,13 @@ public class CodeSmells {
 			if (in instanceof HashMap) {
 				codesmells = (HashMap<String, Rule>) in;
 			}
-
+			
+			if(codesmells.get("is_Long_Method")==null)
+				codesmells.put("is_Long_Method", null);
+			
+			if(codesmells.get("is_God_Class")==null)
+				codesmells.put("is_God_Class", null);
+				
 			o.close();
 			f.close();
 			
