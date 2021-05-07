@@ -87,7 +87,7 @@ public class SetRulesCodeSmellsPanel extends JPanel {
 		successLabel.setVisible(false);
 		add(successLabel);
 		
-		CodeSmells.importMandatoryCodeSmells();
+		CodeSmells.loadFromFile();;
 		update();
 		
 	}
