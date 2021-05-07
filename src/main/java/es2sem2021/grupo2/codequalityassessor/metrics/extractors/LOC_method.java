@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import static es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor.getMethodSignature;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
@@ -75,10 +76,7 @@ public class LOC_method {
 	    @Override
 	    public void visit(MethodDeclaration n, List<Pair<String, Integer>> collector) {
 	        super.visit(n, collector);
-	        String s = n.getDeclarationAsString(false,false,false);
-	        s = s.substring(s.indexOf(" ")+1);
-	        String className = ((ClassOrInterfaceDeclaration)n.getParentNode().get()).getNameAsString();
-	        s = className + "." + s;
+	        String s = getMethodSignature(n);
 	        int lines = countLines(LexicalPreservingPrinter.print(n));
 	        collector.add(new Pair<String, Integer>(s, lines));
 	    }
