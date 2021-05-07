@@ -18,8 +18,8 @@ class QualityEvaluationTest {
 		QualityEvaluation qe = new QualityEvaluation();
 		assertEquals(0,qe.getGodClassTruePositives());
 		assertEquals(44,qe.getGodClassTrueNegatives());
-		assertEquals(0,qe.getGodClassFalsePositives(),4);
-		assertEquals(2,qe.getGodClassFalseNegatives(),0);
+		assertEquals(0,qe.getGodClassFalsePositives());
+		assertEquals(2,qe.getGodClassFalseNegatives());
 		assertEquals(0,qe.getLongMethodTruePositives());
 		assertEquals(216,qe.getLongMethodTrueNegatives());
 		assertEquals(0,qe.getLongMethodFalsePositives());
