@@ -148,18 +148,6 @@ public class App {
 		lblNewLabel_1_1_1.setBounds(6, 6, 138, 38);
 		codeSmellsPane.add(lblNewLabel_1_1_1);
 		
-		JPanel visualizeCodeSmellsPane_1 = new JPanel();
-		visualizeCodeSmellsPane_1.setLayout(null);
-		visualizeCodeSmellsPane_1.setBackground(Color.LIGHT_GRAY);
-		visualizeCodeSmellsPane_1.setBounds(6, 347, 150, 50);
-		menuPane.add(visualizeCodeSmellsPane_1);	
-		
-		JLabel lblQualityEvaluation_1 = new JLabel("Visualize Quality Evaluation");
-		lblQualityEvaluation_1.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
-		lblQualityEvaluation_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblQualityEvaluation_1.setBounds(0, 6, 150, 38);
-		visualizeCodeSmellsPane_1.add(lblQualityEvaluation_1);
-		
 		JPanel visualizeQualityEvaluationPane_1 = new JPanel();
 		visualizeQualityEvaluationPane_1.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
@@ -170,6 +158,12 @@ public class App {
 		visualizeQualityEvaluationPane_1.setBackground(Color.LIGHT_GRAY);
 		visualizeQualityEvaluationPane_1.setBounds(6, 347, 150, 50);
 		menuPane.add(visualizeQualityEvaluationPane_1);
+		
+		JLabel lblQualityEvaluation_1 = new JLabel("Visualize Quality Evaluation");
+		lblQualityEvaluation_1.setBounds(0, 0, 150, 49);
+		visualizeQualityEvaluationPane_1.add(lblQualityEvaluation_1);
+		lblQualityEvaluation_1.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
+		lblQualityEvaluation_1.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		
 		
