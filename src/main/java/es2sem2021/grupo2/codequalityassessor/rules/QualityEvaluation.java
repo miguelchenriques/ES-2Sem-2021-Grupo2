@@ -91,13 +91,13 @@ public class QualityEvaluation {
 				if(longMethod.get(key)!=null && row.getCell(longMethodIndex).getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 					Boolean longMethodValue = row.getCell(longMethodIndex).getBooleanCellValue();
 					if(longMethodValue && longMethod.get(key))
-						truePositivesLM.add(methodName);
+						truePositivesLM.add(key);
 					if(!longMethodValue && !longMethod.get(key))
-						trueNegativesLM.add(methodName);	
+						trueNegativesLM.add(key);	
 					if(!longMethodValue && longMethod.get(key))
-						falsePositivesLM.add(methodName);	
+						falsePositivesLM.add(key);	
 					if(longMethodValue && !longMethod.get(key))
-						falseNegativesLM.add(methodName);
+						falseNegativesLM.add(key);
 				}
 			}
 		} catch (IOException e) {
