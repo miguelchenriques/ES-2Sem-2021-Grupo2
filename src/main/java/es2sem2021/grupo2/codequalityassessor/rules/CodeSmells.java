@@ -28,21 +28,6 @@ public class CodeSmells {
 		saveToFile();
 		return true;
 	}
-
-	/**
-	 *Returns a boolean to indicate the result of the method.
-	 *
-	 * @param codesmell  name of the codesmell		
-	 * @return boolean (true if succeded / false if failed)
-	 */
-	public static boolean deleteRuleToCodeSmell(String codeSmell) {
-		if(codeSmell.equals("is_Long_Method") || codeSmell.equals("is_God_Class") || codeSmell == null)
-			return false;
-
-		codesmells.remove(codeSmell);
-		saveToFile();
-		return true;
-	}
 	
 	public static void addCodeSmell(String codeSmell) {
 		codesmells.put(codeSmell, null);
@@ -72,8 +57,9 @@ public class CodeSmells {
 	 * @return true/false
 	 */
 	public static boolean deleteCodeSmell(String name) {
-		if(codesmells.keySet().contains(name))
+		if(!codesmells.keySet().contains(name) || name.equals("is_Long_Method") || name.equals("is_God_Class"))
 			return false;
+		
 		codesmells.remove(name);
 		saveToFile();
 		return true;
