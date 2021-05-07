@@ -158,9 +158,13 @@ public class RulesPanel extends JPanel {
 		model.getDataVector().removeAllElements();
 		revalidate();
 		for (Map.Entry<String, Rule> entry : rules.entrySet()) {
-			String key = entry.getKey();
-			Rule rule = entry.getValue();
-			model.addRow(new Object[] { key, rule.getConditions(), "Delete", "Change" });
+			addRuleRow(entry);
 		}
+	}
+
+	private void addRuleRow(Map.Entry<String, Rule> entry) {
+		String key = entry.getKey();
+		Rule rule = entry.getValue();
+		model.addRow(new Object[] { key, rule.getConditions(), "Delete", "Change" });
 	}
 }

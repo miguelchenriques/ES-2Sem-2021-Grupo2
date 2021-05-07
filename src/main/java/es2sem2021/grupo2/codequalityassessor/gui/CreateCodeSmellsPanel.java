@@ -131,13 +131,17 @@ public class CreateCodeSmellsPanel extends JPanel {
 		revalidate();
 		
 		for (Map.Entry<String, Rule> entry : codeSmells.entrySet()) {
-			String key = entry.getKey();
+			setCodeSmellsRows(entry);
+			}
+	}
 
-				if (entry.getValue() == null) {
-					model.addRow(new Object[] { key, "", "Delete" });
-				} else {
-					model.addRow(new Object[] { key, entry.getValue().getName(), "Delete" });
-				}
+	private void setCodeSmellsRows(Map.Entry<String, Rule> entry) {
+		String key = entry.getKey();
+
+			if (entry.getValue() == null) {
+				model.addRow(new Object[] { key, "", "Delete" });
+			} else {
+				model.addRow(new Object[] { key, entry.getValue().getName(), "Delete" });
 			}
 	}
 }
