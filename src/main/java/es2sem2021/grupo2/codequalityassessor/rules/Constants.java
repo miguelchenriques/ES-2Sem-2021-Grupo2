@@ -11,5 +11,6 @@ public class Constants {
 	public static final String CYCLO_METHOD = "CYCLO_Method";
 	public static final String WMC_CLASS = "WMC_Class";
 	public static final String RULE_DATA_FILE = "rules.dat";
+	public static final String CODE_SMELLS_DATA_FILE = "codesmells.dat";
 	
 }

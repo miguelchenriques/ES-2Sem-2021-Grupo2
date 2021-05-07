@@ -1,5 +1,6 @@
 package es2sem2021.grupo2.codequalityassessor.rules;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -116,6 +117,8 @@ public class RulesSet {
 
 			o.close();
 			f.close();
+			
+		} catch (EOFException e) {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
