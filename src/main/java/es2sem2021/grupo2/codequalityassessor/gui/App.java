@@ -30,6 +30,7 @@ public class App {
 				try {
 					App window = new App();
 					window.frame.setVisible(true);
+					window.frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
