@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.github.javaparser.ParseProblemException;
@@ -77,7 +78,10 @@ public class LOCClass {
 	 */
 	private static int countLines(String classCode) {
 		List<String> lines = Arrays.asList(classCode.split("\r\n"));
-		lines = lines.stream().filter(l -> !l.equals("")).collect(Collectors.toList());
-		return lines.size();
+		
+		return (int) lines.stream()
+				.map(l -> l.replaceAll("\t", ""))
+				.filter(l -> !l.equals(""))
+				.count();
 	}
 }

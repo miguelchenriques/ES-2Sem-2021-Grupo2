@@ -14,7 +14,6 @@ class WMCClassTest {
 	void ParsingExceptionLines() {
 		File f = new File("testFiles\\src\\com\\jasml\\compiler\\ParsingException.java");
 		HashMap<String,Integer> numberCyclo = WMCClass.getClassWMC(f);
-		System.out.println(numberCyclo.keySet());
 		assertEquals(11, numberCyclo.get("ParsingException").intValue());
 	}
 	

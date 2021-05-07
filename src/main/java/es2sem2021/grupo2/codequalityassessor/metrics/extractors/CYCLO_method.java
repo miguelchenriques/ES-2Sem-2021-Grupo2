@@ -31,7 +31,6 @@ public class CYCLO_method {
 	 * 
 	 * @param f	java file to be parsed
 	 * @return the methods of the file and their number of cycles
-	 * @throws FileNotFoundException or ParseProblemException
 	 */
 	public static HashMap<String, Integer> getMethodCyclo(File f) {
 		try {
