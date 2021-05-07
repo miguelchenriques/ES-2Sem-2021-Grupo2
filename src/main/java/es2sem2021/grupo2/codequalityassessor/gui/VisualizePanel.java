@@ -1,14 +1,5 @@
 package es2sem2021.grupo2.codequalityassessor.gui;
 
-import javax.swing.JPanel;
-import javax.swing.filechooser.FileSystemView;
-
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import es2sem2021.grupo2.codequalityassessor.metrics.MetricsSummary;
-
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
@@ -18,7 +9,14 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileSystemView;
+
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import es2sem2021.grupo2.codequalityassessor.metrics.MetricsSummary;
 
 public class VisualizePanel extends JPanel {
 

@@ -1,6 +1,5 @@
 package es2sem2021.grupo2.codequalityassessor.metrics;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
