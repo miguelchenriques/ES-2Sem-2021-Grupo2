@@ -182,6 +182,7 @@ public class App {
 		contentPane.add(rules_panel);
 		contentPane.add(codesmells_panel);
 		contentPane.add(set_rules_code_smells_panel);
+		contentPane.add(quality_evaluation_panel);
 	}
 	
 	public void menuClicked(JPanel panel) {
