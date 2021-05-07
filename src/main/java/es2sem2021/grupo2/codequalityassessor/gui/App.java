@@ -155,8 +155,9 @@ public class App {
 		menuPane.add(visualizeCodeSmellsPane_1);	
 		
 		JLabel lblQualityEvaluation_1 = new JLabel("Visualize Quality Evaluation");
+		lblQualityEvaluation_1.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		lblQualityEvaluation_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblQualityEvaluation_1.setBounds(0, 16, 150, 16);
+		lblQualityEvaluation_1.setBounds(0, 6, 150, 38);
 		visualizeCodeSmellsPane_1.add(lblQualityEvaluation_1);
 		
 		JPanel visualizeQualityEvaluationPane_1 = new JPanel();
