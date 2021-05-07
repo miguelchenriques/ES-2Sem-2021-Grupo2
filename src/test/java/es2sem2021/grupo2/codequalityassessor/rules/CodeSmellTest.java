@@ -9,7 +9,8 @@ public class CodeSmellTest {
 	@Test
 	void testGodClasseLongMethod() {
 		CodeSmells.loadFromFile();
-		assertEquals(2, CodeSmells.getCodeSmells().size());
+		assertEquals(true, CodeSmells.getCodeSmells().keySet().contains("is_Long_Method"));
+		assertEquals(true, CodeSmells.getCodeSmells().keySet().contains("is_God_Class"));
 	}	
 	
 	@Test
@@ -33,26 +34,34 @@ public class CodeSmellTest {
 	}	
 	
 	@Test
-	void testDeleteRuleToCodeSmell() {
-		RulesSet.getRules().clear();
-		CodeSmells.loadFromFile();
-		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And CYCLO_Method < 10");
-		assertEquals(true, add1);
-		boolean add2 = CodeSmells.addRuleToCodeSmell("nome", RulesSet.getRules().get("Grande"));
-		assertEquals(true, add2);
-		boolean remove = CodeSmells.deleteRuleToCodeSmell("nome");
-		assertEquals(true, remove);
+	void testAddCodeSmell() {
+		CodeSmells.getCodeSmells().clear();
+		boolean add = CodeSmells.addCodeSmell("CodeSmellName");
+		assertEquals(true, add);
 	}
 	
 	@Test
-	void testFailDeleteRuleToCodeSmell() {
-		RulesSet.getRules().clear();
-		CodeSmells.loadFromFile();
-		boolean add1 = RulesSet.addRule("Grande", "LOC_Method >= 45 And CYCLO_Method < 10");
-		assertEquals(true, add1);
-		boolean add2 = CodeSmells.addRuleToCodeSmell("is_Long_Method", RulesSet.getRules().get("Grande"));
-		assertEquals(true, add2);
-		boolean remove = CodeSmells.deleteRuleToCodeSmell("is_Long_Method");
-		assertEquals(false, remove);
+	void testFaillAddCodeSmell() {
+		CodeSmells.getCodeSmells().clear();
+		boolean add = CodeSmells.addCodeSmell("CodeSmellName");
+		assertEquals(true, add);
+		boolean add2 = CodeSmells.addCodeSmell("CodeSmellName");
+		assertEquals(false, add2);
+	}
+	
+	@Test
+	void testDeleteCodeSmell() {
+		CodeSmells.getCodeSmells().clear();	
+		boolean add = CodeSmells.addCodeSmell("CodeSmellName");
+		assertEquals(true, add);
+		boolean delete = CodeSmells.deleteCodeSmell("CodeSmellName");
+		assertEquals(true, delete);
+	}
+	
+	@Test
+	void testFailDeleteCodeSmell() {
+		CodeSmells.getCodeSmells().clear();	
+		boolean delete = CodeSmells.deleteCodeSmell("is_Long_Method");
+		assertEquals(false, delete);
 	}
 }
