@@ -43,6 +43,38 @@ public class CodeSmells {
 		saveToFile();
 		return true;
 	}
+	
+	
+	/**
+	 * Returns a boolean
+	 * If the adding process is successful returns true if not returns false
+	 * 
+	 * @param name-Code Smell name (string)
+	 * @return true/false
+	 * @throws IllegalArgumentException
+	 */
+	public static boolean addCodeSmell(String name) {
+			if(codesmells.keySet().contains(name))
+				return false;
+			codesmells.put(name, null);
+			saveToFile();
+			return true;
+	}
+	
+	/**
+	 * Returns a boolean
+	 * If the deleting process is successful returns true if not returns false
+	 * 
+	 * @param name-CodeSmell name (string)
+	 * @return true/false
+	 */
+	public static boolean deleteCodeSmell(String name) {
+		if(codesmells.keySet().contains(name))
+			return false;
+		codesmells.remove(name);
+		saveToFile();
+		return true;
+	}
 
 	/**
 	 * If the adding process is successful returns true if not returns false
@@ -90,8 +122,6 @@ public class CodeSmells {
 			
 			if(codesmells.get("is_Long_Method")==null)
 				codesmells.put("is_Long_Method", null);
-			
-
 			
 			o.close();
 			f.close();
