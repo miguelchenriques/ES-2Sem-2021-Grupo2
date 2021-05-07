@@ -112,7 +112,7 @@ public class CreateCodeSmellsPanel extends JPanel {
 				if(codeSmell.equals("is_Long_Method") || codeSmell.equals("is_God_Class") )
 					errorLabel.setVisible(true);
 				else errorLabel.setVisible(false);
-				CodeSmells.deleteRuleToCodeSmell(codeSmell);
+				CodeSmells.deleteCodeSmell(codeSmell);
 				updateCodeSmells();
 			}
 		};
