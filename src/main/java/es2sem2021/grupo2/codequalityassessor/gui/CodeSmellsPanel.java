@@ -33,8 +33,7 @@ public class CodeSmellsPanel extends JPanel {
 				return false;
 			}
 		};
-		
-		
+
 		table = new JTable();
 		table.setModel(model);
 
@@ -44,7 +43,7 @@ public class CodeSmellsPanel extends JPanel {
 		table.setFillsViewportHeight(true);
 		scrollPane.setBounds(0, 49, 650, 434);
 		add(scrollPane);
-		
+
 		JButton refreshButton = new JButton("Refresh");
 		refreshButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -53,29 +52,22 @@ public class CodeSmellsPanel extends JPanel {
 		});
 		refreshButton.setBounds(0, 0, 130, 50);
 		add(refreshButton);
-		
+
 	}
 
-	public static void updateColunms( List<Method> methods) {
+	public static void updateColunms(List<Method> methods) {
 		model.getDataVector().removeAllElements();
 		model.setColumnCount(0);
 
 		HashMap<String, HashMap<String, Boolean>> ruleResults = FinalResults.getRulesResults(methods);
 
-//		for (int i = 0; i < methods.size(); i++) { 
-//			Method method = methods.get(i);
-//			model.addRow(new Object[] { method.m_class, method.m_method}); 
-//			for (int j = 0; j < ruleResults.size(); j++) {
-//				model.setValueAt(ruleResults.get(j).getMethodsresults().get(i).getResult(),i ,j+2);
-//			}
-//			
-//		}
-		model.addColumn("Class");
-		model.addColumn("Method");
-
 		int j = 2;
 		for (Map.Entry<String, HashMap<String, Boolean>> entry : ruleResults.entrySet()) {
 			int i = 0;
+			if (j == 2 && !entry.getValue().isEmpty()) {
+				model.addColumn("Class");
+				model.addColumn("Method");
+			}
 
 			if (!entry.getValue().isEmpty()) {
 				model.addColumn(entry.getKey());
@@ -86,11 +78,11 @@ public class CodeSmellsPanel extends JPanel {
 					model.setValueAt(entry1.getValue(), i, j);
 					i++;
 				}
-				j++;
 
 			}
+			j++;
 		}
 
-		table.setModel(model); 
+		table.setModel(model);
 	}
 }
