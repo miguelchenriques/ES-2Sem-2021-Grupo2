@@ -104,7 +104,7 @@ public class RulesPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		table.setFillsViewportHeight(true);
-		scrollPane.setBounds(6, 192, 638, 263);
+		scrollPane.setBounds(10, 179, 638, 265);
 		add(scrollPane);
 
 		RulesSet.loadFromFile();

@@ -155,7 +155,6 @@ public class App {
 		contentPane.add(set_rules_code_smells_panel);
 		contentPane.add(quality_evaluation_panel);
 		contentPane.add(create_code_smells_panel);
-		
 		contentPane.add(createWelcomeLbl());
 		contentPane.add(createClickMenuLbl());
 	}
@@ -266,7 +265,7 @@ public class App {
 	 * @return	centered label with content "Click a menu to interact"
 	 */
 	private JLabel createClickMenuLbl() {
-		JLabel lblClickMenu = new JLabel("Click a menu to interact");
+		JLabel lblClickMenu = new JLabel("Click on a menu to interact");
 		lblClickMenu.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClickMenu.setFont(new Font("SF Pro", Font.PLAIN, 16));
 		lblClickMenu.setBounds(189, 250, 272, 16);
