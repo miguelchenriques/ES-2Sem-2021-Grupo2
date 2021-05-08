@@ -51,9 +51,8 @@ public class QualityEvalChart extends ApplicationFrame{
              dataset.addValue( qualityEval.getLongMethodTrueNegatives() , LM , VN);
              dataset.addValue( qualityEval.getLongMethodFalsePositives() , LM ,FP);
              dataset.addValue( qualityEval.getLongMethodFalseNegatives() , LM , FN);
-         }catch(Exception e){
-        	 System.out.println("podre");
-        	 
+         }catch(IllegalArgumentException e){
+        	 e.printStackTrace();
          }
 
            
