@@ -14,6 +14,10 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
+/**
+ * Sums the cyclomatic complexity from a class' methods
+ *
+ */
 public class WMCClass {
 
 	/***

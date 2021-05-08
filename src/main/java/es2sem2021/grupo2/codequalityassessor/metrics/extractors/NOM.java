@@ -13,6 +13,10 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.utils.Pair; 
 
+/**
+ *	Countes the number of methods in a class 
+ *
+ */
 public class NOM {
 
 	/**

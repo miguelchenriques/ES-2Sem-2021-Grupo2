@@ -15,3 +15,4 @@ rules.dat
 codesmells.dat
 
 !Code_Smells.xlsx
+!testFiles/*.xlsx

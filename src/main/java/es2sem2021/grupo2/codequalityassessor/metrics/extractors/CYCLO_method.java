@@ -24,6 +24,11 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
+
+/**
+ *	CYCLO_method counts the cyclomatic complexity of each method, adding every loop and possible branches in a method 
+ *
+ */
 public class CYCLO_method {
 
 	/**

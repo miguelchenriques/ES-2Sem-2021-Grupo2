@@ -59,7 +59,7 @@ public class Rule implements Serializable {
 
 		String rule = this.conditions;
 
-		Pattern p = Pattern.compile("[A-Za-z_]*\s(>|<|=|>=|<=)\\s[0-9]*");
+		Pattern p = Pattern.compile("[A-Za-z_]*\\s(>|<|=|>=|<=)\\s[0-9]*");
 		Matcher matcher = p.matcher(this.conditions);
 
 		while (matcher.find()) {
