@@ -157,6 +157,7 @@ public class RulesPanel extends JPanel {
 		HashMap<String, Rule> rules = RulesSet.getRules();
 		model.getDataVector().removeAllElements();
 		revalidate();
+		repaint();
 		for (Map.Entry<String, Rule> entry : rules.entrySet()) {
 			addRuleRow(entry);
 		}
