@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FinalResults.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.rules</a> &gt; <span class="el_source">FinalResults.java</span></div><h1>FinalResults.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.rules;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FinalResults.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 19:50:53)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.rules</a> &gt; <span class="el_source">FinalResults.java</span></div><h1>FinalResults.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.rules;
 
 import java.util.List;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 			HashMap&lt;String, Rule&gt; codeSmellsSet, String smell) {
 <span class="fc" id="L46">		Rule r = codeSmellsSet.get(smell);</span>
 <span class="fc" id="L47">		HashMap&lt;String,Boolean&gt; results = new HashMap&lt;String,Boolean&gt;();</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">		if(r != null) {</span>
+<span class="pc bpc" id="L48" title="1 of 4 branches missed.">		if(r != null &amp;&amp; methods != null) {</span>
 <span class="fc bfc" id="L49" title="All 2 branches covered.">			for(Method m: methods) {</span>
 <span class="fc" id="L50">				Boolean result = r.assertRule(m);</span>
 <span class="fc" id="L51">				results.put(m.m_class+&quot;.&quot;+m.m_method, result);</span>
@@ -54,4 +54,4 @@ import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 <span class="fc" id="L54">		return results;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 19:50:53)</div></body></html>
