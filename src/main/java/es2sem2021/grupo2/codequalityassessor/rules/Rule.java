@@ -88,7 +88,6 @@ public class Rule implements Serializable {
 	 * 		  condition		condition that is going to be compared with the method
 	 * @return				true if the comparison is true, false otherwise
 	 */
-
 	private boolean assertCondition(Method m, String[] condition) {
 		String metric = condition[0];
 		String comp = condition[1];

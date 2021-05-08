@@ -29,7 +29,11 @@ public class Method {
 		m_package = packageName;
 		m_class = className;
 		m_method = method.replaceAll(" ", "");
-
+		nom_class = NOM;
+		loc_class = LOC_Class;
+		wmc_class = WMC_Class;
+		loc_method = LOC_Method;
+		cyclo_method = CYCLO_Method;
 	}
 	
 	/**
