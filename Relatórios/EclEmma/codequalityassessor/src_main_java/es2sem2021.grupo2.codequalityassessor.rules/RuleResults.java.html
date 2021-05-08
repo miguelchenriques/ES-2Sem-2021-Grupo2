@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RuleResults.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.rules</a> &gt; <span class="el_source">RuleResults.java</span></div><h1>RuleResults.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.rules;
+
+import java.util.ArrayList;
+
+/**
+ *	
+ *	Object that stores the rule and an array of objects of type RuleMethod that stores the method and
+ *	the result when asserted to the rule
+ *
+ */
+public class RuleResults {
+
+	public String rule;
+	public ArrayList&lt;RuleMethod&gt; methodsresults;
+	
+<span class="nc" id="L16">	RuleResults(String rule){</span>
+<span class="nc" id="L17">		this.rule=rule;</span>
+<span class="nc" id="L18">		methodsresults = new ArrayList&lt;RuleMethod&gt;();</span>
+<span class="nc" id="L19">	}</span>
+
+	public String getRule() {
+<span class="nc" id="L22">		return rule;</span>
+	}
+
+	public ArrayList&lt;RuleMethod&gt; getMethodsresults() {
+<span class="nc" id="L26">		return methodsresults;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>

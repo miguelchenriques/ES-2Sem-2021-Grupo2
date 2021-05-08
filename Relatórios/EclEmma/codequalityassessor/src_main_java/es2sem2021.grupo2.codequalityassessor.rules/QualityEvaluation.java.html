@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>QualityEvaluation.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.rules</a> &gt; <span class="el_source">QualityEvaluation.java</span></div><h1>QualityEvaluation.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.rules;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import es2sem2021.grupo2.codequalityassessor.xlsx.FileGenerator;
+import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
+
+public class QualityEvaluation {
+<span class="fc" id="L21">	private ArrayList&lt;String&gt; truePositivesGC = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L22">	private ArrayList&lt;String&gt; trueNegativesGC = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L23">	private ArrayList&lt;String&gt; falsePositivesGC = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L24">	private ArrayList&lt;String&gt; falseNegativesGC = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L25">	private ArrayList&lt;String&gt; truePositivesLM = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L26">	private ArrayList&lt;String&gt; trueNegativesLM = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L27">	private ArrayList&lt;String&gt; falsePositivesLM = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L28">	private ArrayList&lt;String&gt; falseNegativesLM = new ArrayList&lt;&gt;();</span>
+	
+	
+	/**
+	 * Constructor of the class QualityEvaluation that will evaluate the quality of the codesmells is_God_Class and is_Long_Method according to the default xlsx file given by the teachers
+	 * If there is some issue with the creation of the workbook it will throw an IOException and if the workbook's first sheet is empty or the name of the rows are incorrect it will throw an IllegalArgumentException
+	 * 
+	 * @param fr FinalResults object that contains the detected codesmells
+	 * @throws IllegalArgumentException or IOException
+	 */
+<span class="fc" id="L38">	public QualityEvaluation() {</span>
+		File folder;
+		FileInputStream file;
+<span class="fc" id="L41">		Workbook workbook=new XSSFWorkbook();</span>
+		try {
+<span class="fc" id="L43">			folder = new File(&quot;testFiles&quot; + File.separator + &quot;src&quot; + File.separator + &quot;com&quot; + File.separator + &quot;jasml&quot;);</span>
+<span class="fc" id="L44">			List&lt;Method&gt; methods = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L45">			FileGenerator.parseFolders(folder,methods);</span>
+<span class="fc" id="L46">			HashMap&lt;String,HashMap&lt;String,Boolean&gt;&gt; codeSmells = FinalResults.getRulesResults(methods);</span>
+<span class="fc" id="L47">			HashMap&lt;String,Boolean&gt; godClass = codeSmells.get(&quot;is_God_Class&quot;);</span>
+<span class="fc" id="L48">			HashMap&lt;String,Boolean&gt; longMethod = codeSmells.get(&quot;is_Long_Method&quot;);</span>
+<span class="fc" id="L49">			file = new FileInputStream(new File(&quot;Code_Smells.xlsx&quot;));</span>
+<span class="fc" id="L50">			workbook = new XSSFWorkbook(file);</span>
+<span class="fc" id="L51">			Sheet sheet = workbook.getSheetAt(0);</span>
+<span class="fc" id="L52">			Iterator&lt;Row&gt; rowIterator = sheet.iterator();</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">			if(!rowIterator.hasNext())</span>
+<span class="nc" id="L54">				throw new IllegalArgumentException(&quot;An error has occured, xlsx file doesn't have any rows, please try again.&quot;);</span>
+			
+<span class="fc" id="L56">			Row firstRow = rowIterator.next();</span>
+<span class="fc" id="L57">			int classIndex = -1;</span>
+<span class="fc" id="L58">			int methodIndex = -1;</span>
+<span class="fc" id="L59">			int godClassIndex = -1;</span>
+<span class="fc" id="L60">			int longMethodIndex = -1;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">			for (int i=firstRow.getFirstCellNum(); i&lt;firstRow.getLastCellNum();i++) {</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">				if(firstRow.getCell(i).getStringCellValue().equals(&quot;class&quot;)) </span>
+<span class="fc" id="L63">					classIndex = i;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">				if(firstRow.getCell(i).getStringCellValue().equals(&quot;method&quot;)) </span>
+<span class="fc" id="L65">					methodIndex = i;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">				if(firstRow.getCell(i).getStringCellValue().equals(&quot;is_God_Class&quot;)) </span>
+<span class="fc" id="L67">					godClassIndex = i;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">				if(firstRow.getCell(i).getStringCellValue().equals(&quot;is_Long_Method&quot;)) </span>
+<span class="fc" id="L69">					longMethodIndex = i;</span>
+			}
+<span class="pc bpc" id="L71" title="4 of 8 branches missed.">			if(classIndex == -1 || methodIndex == -1 || godClassIndex == -1 || longMethodIndex == -1) </span>
+<span class="nc" id="L72">				throw new IllegalArgumentException(&quot;An error has occured, your rows don't have the correct metrics' name, please check the syntax again.&quot;);	</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			while (rowIterator.hasNext()) {</span>
+<span class="fc" id="L74">				Row row = rowIterator.next();</span>
+<span class="fc" id="L75">				String className = row.getCell(classIndex).getStringCellValue();</span>
+<span class="fc" id="L76">				String methodName = row.getCell(methodIndex).getStringCellValue().replaceAll(&quot; &quot;, &quot;&quot;);</span>
+<span class="fc" id="L77">				String key = className + &quot;.&quot; + methodName;</span>
+<span class="pc bpc" id="L78" title="1 of 4 branches missed.">				if(godClass.get(key)!=null &amp;&amp; row.getCell(godClassIndex).getCellType() == Cell.CELL_TYPE_BOOLEAN) {</span>
+<span class="fc" id="L79">					Boolean godClassValue = row.getCell(godClassIndex).getBooleanCellValue();</span>
+<span class="pc bpc" id="L80" title="1 of 6 branches missed.">					if(!truePositivesGC.contains(className) &amp;&amp; godClassValue &amp;&amp; godClass.get(key))</span>
+<span class="fc" id="L81">						truePositivesGC.add(className);</span>
+<span class="fc bfc" id="L82" title="All 6 branches covered.">					if(!trueNegativesGC.contains(className) &amp;&amp; !godClassValue &amp;&amp; !godClass.get(key))</span>
+<span class="fc" id="L83">						trueNegativesGC.add(className);</span>
+<span class="fc bfc" id="L84" title="All 6 branches covered.">					if(!falsePositivesGC.contains(className) &amp;&amp; !godClassValue &amp;&amp; godClass.get(key))</span>
+<span class="fc" id="L85">						falsePositivesGC.add(className);</span>
+<span class="pc bpc" id="L86" title="2 of 6 branches missed.">					if(!falseNegativesGC.contains(className) &amp;&amp; godClassValue &amp;&amp; !godClass.get(key))</span>
+<span class="nc" id="L87">						falseNegativesGC.add(className);</span>
+				}
+<span class="fc bfc" id="L89" title="All 4 branches covered.">				if(longMethod.get(key)!=null &amp;&amp; row.getCell(longMethodIndex).getCellType() == Cell.CELL_TYPE_BOOLEAN) {</span>
+<span class="fc" id="L90">					Boolean longMethodValue = row.getCell(longMethodIndex).getBooleanCellValue();</span>
+<span class="fc bfc" id="L91" title="All 4 branches covered.">					if(longMethodValue &amp;&amp; longMethod.get(key))</span>
+<span class="fc" id="L92">						truePositivesLM.add(key);</span>
+<span class="fc bfc" id="L93" title="All 4 branches covered.">					if(!longMethodValue &amp;&amp; !longMethod.get(key))</span>
+<span class="fc" id="L94">						trueNegativesLM.add(key);	</span>
+<span class="fc bfc" id="L95" title="All 4 branches covered.">					if(!longMethodValue &amp;&amp; longMethod.get(key))</span>
+<span class="fc" id="L96">						falsePositivesLM.add(key);	</span>
+<span class="fc bfc" id="L97" title="All 4 branches covered.">					if(longMethodValue &amp;&amp; !longMethod.get(key))</span>
+<span class="fc" id="L98">						falseNegativesLM.add(key);</span>
+				}
+			}
+<span class="pc" id="L101">		} catch (IOException e) {</span>
+<span class="nc" id="L102">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L104">	}</span>
+	/**
+	 * 
+	 * @return true positives to GodClass code smell
+	 */
+	public int getGodClassTruePositives() {
+<span class="fc" id="L110">		return truePositivesGC.size();</span>
+	}
+	/**
+	 * 
+	 * @return	true negatives to GodClass code smell
+	 */
+	public int getGodClassTrueNegatives() {
+<span class="fc" id="L117">		return trueNegativesGC.size();</span>
+	}
+	/**
+	 * 
+	 * @return	false positives to GodClass code smell
+	 */
+	public int getGodClassFalsePositives() {
+<span class="fc" id="L124">		return falsePositivesGC.size();</span>
+	}
+	/**
+	 * 
+	 * @return false negatives to GodClass code smell
+	 */
+	public int getGodClassFalseNegatives() {
+<span class="fc" id="L131">		return falseNegativesGC.size();</span>
+	}
+	/**
+	 * 
+	 * @return	true positives to LongMethod code smell
+	 */
+	public int getLongMethodTruePositives() {
+<span class="fc" id="L138">		return truePositivesLM.size();</span>
+	}
+	/**
+	 * 
+	 * @return	true negatives to LongMethod code smell
+	 */
+	public int getLongMethodTrueNegatives() {
+<span class="fc" id="L145">		return trueNegativesLM.size();</span>
+	}
+	/**
+	 * 
+	 * @return	false positives to LongMethod code smell
+	 */
+	public int getLongMethodFalsePositives() {
+<span class="fc" id="L152">		return falsePositivesLM.size();</span>
+	}
+	/**
+	 * 
+	 * @return false negatives to LongMethod code smell
+	 */
+	public int getLongMethodFalseNegatives() {
+<span class="fc" id="L159">		return falseNegativesLM.size();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>
