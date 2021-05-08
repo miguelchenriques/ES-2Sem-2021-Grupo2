@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CodeSmellsPanel.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.gui</a> &gt; <span class="el_source">CodeSmellsPanel.java</span></div><h1>CodeSmellsPanel.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.gui;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CodeSmellsPanel.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 19:50:53)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.gui</a> &gt; <span class="el_source">CodeSmellsPanel.java</span></div><h1>CodeSmellsPanel.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.gui;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,52 +43,51 @@ public class CodeSmellsPanel extends JPanel {
 <span class="nc" id="L43">		table = new JTable();</span>
 <span class="nc" id="L44">		table.setModel(model);</span>
 <span class="nc" id="L45">		JScrollPane scrollPane = new JScrollPane(table);</span>
-<span class="nc" id="L46">		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);</span>
-<span class="nc" id="L47">		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);</span>
-<span class="nc" id="L48">		table.setFillsViewportHeight(true);</span>
-<span class="nc" id="L49">		scrollPane.setBounds(0, 49, 650, 434);</span>
-<span class="nc" id="L50">		add(scrollPane);</span>
+<span class="nc" id="L46">		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);</span>
+<span class="nc" id="L47">		table.setFillsViewportHeight(true);</span>
+<span class="nc" id="L48">		scrollPane.setBounds(0, 49, 650, 434);</span>
+<span class="nc" id="L49">		add(scrollPane);</span>
 
-<span class="nc" id="L52">		JButton refreshButton = new JButton(&quot;Refresh&quot;);</span>
-<span class="nc" id="L53">		refreshButton.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L51">		JButton refreshButton = new JButton(&quot;Refresh&quot;);</span>
+<span class="nc" id="L52">		refreshButton.addActionListener(new ActionListener() {</span>
 			public void actionPerformed(ActionEvent arg0) {
-<span class="nc" id="L55">				updateColunms(FileGenerator.getMethods());</span>
-<span class="nc" id="L56">			}</span>
+<span class="nc" id="L54">				updateColunms(FileGenerator.getMethods());</span>
+<span class="nc" id="L55">			}</span>
 		});
-<span class="nc" id="L58">		refreshButton.setBounds(260, 6, 130, 39);</span>
-<span class="nc" id="L59">		add(refreshButton);</span>
+<span class="nc" id="L57">		refreshButton.setBounds(260, 6, 130, 39);</span>
+<span class="nc" id="L58">		add(refreshButton);</span>
 
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L60">	}</span>
 
 	public static void updateColunms(List&lt;Method&gt; methods) {
-<span class="nc" id="L64">		model.getDataVector().removeAllElements();</span>
-<span class="nc" id="L65">		model.setColumnCount(0);</span>
+<span class="nc" id="L63">		model.getDataVector().removeAllElements();</span>
+<span class="nc" id="L64">		model.setColumnCount(0);</span>
 
-<span class="nc" id="L67">		HashMap&lt;String, HashMap&lt;String, Boolean&gt;&gt; ruleResults = FinalResults.getRulesResults(methods);</span>
+<span class="nc" id="L66">		HashMap&lt;String, HashMap&lt;String, Boolean&gt;&gt; ruleResults = FinalResults.getRulesResults(methods);</span>
 
-<span class="nc" id="L69">		int j = 2;</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		for (Map.Entry&lt;String, HashMap&lt;String, Boolean&gt;&gt; entry : ruleResults.entrySet()) {</span>
-<span class="nc" id="L71">			int i = 0;</span>
-<span class="nc bnc" id="L72" title="All 4 branches missed.">			if (j == 2 &amp;&amp; !entry.getValue().isEmpty()) {</span>
-<span class="nc" id="L73">				model.addColumn(&quot;Class&quot;);</span>
-<span class="nc" id="L74">				model.addColumn(&quot;Method&quot;);</span>
+<span class="nc" id="L68">		int j = 2;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		for (Map.Entry&lt;String, HashMap&lt;String, Boolean&gt;&gt; entry : ruleResults.entrySet()) {</span>
+<span class="nc" id="L70">			int i = 0;</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">			if (j == 2 &amp;&amp; !entry.getValue().isEmpty()) {</span>
+<span class="nc" id="L72">				model.addColumn(&quot;Class&quot;);</span>
+<span class="nc" id="L73">				model.addColumn(&quot;Method&quot;);</span>
 			}
 
-<span class="nc bnc" id="L77" title="All 2 branches missed.">			if (!entry.getValue().isEmpty()) {</span>
-<span class="nc" id="L78">				model.addColumn(entry.getKey());</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">				for (Map.Entry&lt;String, Boolean&gt; entry1 : entry.getValue().entrySet()) {</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">					if (j == 2) {</span>
-<span class="nc" id="L81">						model.addRow(new Object[] { methods.get(i).m_class, methods.get(i).m_method });</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (!entry.getValue().isEmpty()) {</span>
+<span class="nc" id="L77">				model.addColumn(entry.getKey());</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">				for (Map.Entry&lt;String, Boolean&gt; entry1 : entry.getValue().entrySet()) {</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">					if (j == 2) {</span>
+<span class="nc" id="L80">						model.addRow(new Object[] { methods.get(i).m_class, methods.get(i).m_method });</span>
 					}
-<span class="nc" id="L83">					model.setValueAt(entry1.getValue(), i, j);</span>
-<span class="nc" id="L84">					i++;</span>
+<span class="nc" id="L82">					model.setValueAt(entry1.getValue(), i, j);</span>
+<span class="nc" id="L83">					i++;</span>
 				}
-
+<span class="nc" id="L85">				j++;</span>
 			}
-<span class="nc" id="L88">			j++;</span>
+			
 		}
 
-<span class="nc" id="L91">		table.setModel(model);</span>
-<span class="nc" id="L92">	}</span>
+<span class="nc" id="L90">		table.setModel(model);</span>
+<span class="nc" id="L91">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 19:50:53)</div></body></html>

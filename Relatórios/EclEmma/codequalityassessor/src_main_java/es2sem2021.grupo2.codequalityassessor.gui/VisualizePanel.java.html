@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>VisualizePanel.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.gui</a> &gt; <span class="el_source">VisualizePanel.java</span></div><h1>VisualizePanel.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.gui;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>VisualizePanel.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 19:50:53)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.gui</a> &gt; <span class="el_source">VisualizePanel.java</span></div><h1>VisualizePanel.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.gui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -103,30 +103,32 @@ public class VisualizePanel extends JPanel {
 <span class="nc" id="L103">						e1.printStackTrace();</span>
 <span class="nc" id="L104">					} catch (IOException e1) {</span>
 <span class="nc" id="L105">						e1.printStackTrace();</span>
+<span class="nc" id="L106">					} catch (IllegalArgumentException e1) {</span>
+<span class="nc" id="L107">						e1.printStackTrace();</span>
 					}
 
 				}
-<span class="nc" id="L109">			}</span>
+<span class="nc" id="L111">			}</span>
 		});
 
-<span class="nc" id="L112">		JLabel lblNewLabel = new JLabel(&quot;Number of Packages:&quot;);</span>
-<span class="nc" id="L113">		lblNewLabel.setBounds(168, 246, 140, 16);</span>
-<span class="nc" id="L114">		add(lblNewLabel);</span>
+<span class="nc" id="L114">		JLabel lblNewLabel = new JLabel(&quot;Number of Packages:&quot;);</span>
+<span class="nc" id="L115">		lblNewLabel.setBounds(168, 246, 140, 16);</span>
+<span class="nc" id="L116">		add(lblNewLabel);</span>
 
-<span class="nc" id="L116">		JLabel lblNumberOfClasses = new JLabel(&quot;Number of Classes:&quot;);</span>
-<span class="nc" id="L117">		lblNumberOfClasses.setBounds(168, 274, 140, 16);</span>
-<span class="nc" id="L118">		add(lblNumberOfClasses);</span>
+<span class="nc" id="L118">		JLabel lblNumberOfClasses = new JLabel(&quot;Number of Classes:&quot;);</span>
+<span class="nc" id="L119">		lblNumberOfClasses.setBounds(168, 274, 140, 16);</span>
+<span class="nc" id="L120">		add(lblNumberOfClasses);</span>
 
-<span class="nc" id="L120">		JLabel lblNumberOfMethods = new JLabel(&quot;Number of Methods:&quot;);</span>
-<span class="nc" id="L121">		lblNumberOfMethods.setBounds(168, 302, 140, 16);</span>
-<span class="nc" id="L122">		add(lblNumberOfMethods);</span>
+<span class="nc" id="L122">		JLabel lblNumberOfMethods = new JLabel(&quot;Number of Methods:&quot;);</span>
+<span class="nc" id="L123">		lblNumberOfMethods.setBounds(168, 302, 140, 16);</span>
+<span class="nc" id="L124">		add(lblNumberOfMethods);</span>
 
-<span class="nc" id="L124">		JLabel lblNumberOfLines = new JLabel(&quot;Number of Lines Of Code:&quot;);</span>
-<span class="nc" id="L125">		lblNumberOfLines.setBounds(168, 330, 180, 16);</span>
-<span class="nc" id="L126">		add(lblNumberOfLines);</span>
+<span class="nc" id="L126">		JLabel lblNumberOfLines = new JLabel(&quot;Number of Lines Of Code:&quot;);</span>
+<span class="nc" id="L127">		lblNumberOfLines.setBounds(168, 330, 180, 16);</span>
+<span class="nc" id="L128">		add(lblNumberOfLines);</span>
 		
 
-<span class="nc" id="L129">	}</span>
+<span class="nc" id="L131">	}</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 19:50:53)</div></body></html>

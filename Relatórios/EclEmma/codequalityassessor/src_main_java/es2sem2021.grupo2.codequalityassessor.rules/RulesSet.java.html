@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RulesSet.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.rules</a> &gt; <span class="el_source">RulesSet.java</span></div><h1>RulesSet.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.rules;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RulesSet.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 19:50:53)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.rules</a> &gt; <span class="el_source">RulesSet.java</span></div><h1>RulesSet.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.rules;
 
 import java.io.EOFException;
 import java.io.File;
@@ -9,14 +9,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
+<span class="nc" id="L12">public class RulesSet {</span>
 
-<span class="nc" id="L13">public class RulesSet {</span>
+<span class="fc" id="L14">	private static HashMap&lt;String, Rule&gt; rules = new HashMap&lt;String, Rule&gt;();</span>
 
-<span class="fc" id="L15">	private static HashMap&lt;String,Rule&gt; rules = new HashMap&lt;String,Rule&gt;();</span>
-	
 	/**
-	 * Returns a boolean
-	 * If the adding process is successful returns true if not returns false
+	 * Returns a boolean If the adding process is successful returns true if not
+	 * returns false
+	 * 
+	 * @param name-Rule name (string), conditions-Rule Condition
+	 * @return true/false
+	 * @throws IllegalArgumentException
+	 */
+	public static HashMap&lt;String, Rule&gt; getRules() {
+<span class="fc" id="L25">		return rules;</span>
+	}
+
+	/**
+	 * Returns a boolean If the adding process is successful returns true if not
+	 * returns false
 	 * 
 	 * @param name-Rule name (string), conditions-Rule Condition
 	 * @return true/false
@@ -24,32 +35,20 @@ import java.util.HashMap;
 	 */
 	public static boolean addRule(String name, String conditions) {
 		try {
-<span class="fc" id="L27">			Rule r = new Rule(name,conditions);</span>
-<span class="fc bfc" id="L28" title="All 2 branches covered.">			if(rules.get(name) != null)</span>
-<span class="fc" id="L29">				return false;</span>
-<span class="fc" id="L30">			rules.put(name, r);</span>
-<span class="fc" id="L31">			saveToFile();</span>
-<span class="fc" id="L32">			return true;</span>
-<span class="fc" id="L33">		} catch(IllegalArgumentException e) {</span>
-<span class="fc" id="L34">			return false;</span>
+<span class="fc" id="L38">			Rule r = new Rule(name, conditions);</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">			if (rules.get(name) != null)</span>
+<span class="fc" id="L40">				return false;</span>
+<span class="fc" id="L41">			rules.put(name, r);</span>
+<span class="fc" id="L42">			saveToFile();</span>
+<span class="fc" id="L43">			return true;</span>
+<span class="fc" id="L44">		} catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L45">			return false;</span>
 		}
 	}
 
 	/**
-	 * Returns a boolean
-	 * If the adding process is successful returns true if not returns false
-	 * 
-	 * @param name-Rule name (string), conditions-Rule Condition
-	 * @return true/false
-	 * @throws IllegalArgumentException
-	 */
-	public static HashMap&lt;String, Rule&gt; getRules() {
-<span class="fc" id="L47">		return rules;</span>
-	}
-
-	/**
-	 * Returns a boolean
-	 * If the changing process is successful returns true if not returns false
+	 * Returns a boolean If the changing process is successful returns true if not
+	 * returns false
 	 * 
 	 * @param name-Rule name (string), conditions-Rule Condition
 	 * @return true/false
@@ -57,76 +56,96 @@ import java.util.HashMap;
 	 */
 	public static boolean changeRule(String name, String conditions) {
 		try {
-<span class="fc" id="L60">			Rule r = new Rule(name,conditions);</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">			if(rules.get(name) == null)</span>
-<span class="fc" id="L62">				return false;</span>
-<span class="fc" id="L63">			rules.put(name, r);</span>
-<span class="fc" id="L64">			saveToFile();</span>
-<span class="fc" id="L65">			return true;</span>
-<span class="fc" id="L66">		} catch(IllegalArgumentException e) {</span>
-<span class="fc" id="L67">			return false;</span>
+<span class="fc" id="L59">			Rule r = new Rule(name, conditions);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">			if (rules.get(name) == null)</span>
+<span class="fc" id="L61">				return false;</span>
+<span class="fc" id="L62">			rules.put(name, r);</span>
+<span class="fc" id="L63">			saveToFile();</span>
+<span class="fc" id="L64">			HashMap&lt;String, Rule&gt; codesmells = CodeSmells.getCodeSmells();</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			for (String code : codesmells.keySet()) {</span>
+				try {
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">					if (codesmells.get(code).getName().equals(name)) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">						if (!CodeSmells.addRuleToCodeSmell(code, r)) {</span>
+<span class="nc" id="L69">							CodeSmells.deleteRuleToCodeSmell(code);</span>
+						}
+					}
+<span class="pc" id="L72">				} catch (NullPointerException e) {</span>
+				}
+			}
+<span class="fc" id="L75">			return true;</span>
+<span class="fc" id="L76">		} catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L77">			return false;</span>
 		}
 	}
 
 	/**
-	 * Returns a boolean
-	 * If the deleting process is successful returns true if not returns false
+	 * Returns a boolean If the deleting process is successful returns true if not
+	 * returns false
 	 * 
 	 * @param name-Rule name (string)
 	 * @return true/false
 	 */
 	public static boolean deleteRule(String name) {
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		if(rules.get(name) == null)</span>
-<span class="fc" id="L80">			return false;</span>
-<span class="fc" id="L81">		rules.remove(name);</span>
-<span class="fc" id="L82">		saveToFile();</span>
-<span class="fc" id="L83">		return true;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (rules.get(name) == null)</span>
+<span class="fc" id="L90">			return false;</span>
+<span class="fc" id="L91">		rules.remove(name);</span>
+<span class="fc" id="L92">		saveToFile();</span>
+<span class="fc" id="L93">		HashMap&lt;String, Rule&gt; codesmells = CodeSmells.getCodeSmells();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (String code : codesmells.keySet()) {</span>
+			try {
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">				if (codesmells.get(code).getName().equals(name)) {</span>
+<span class="nc" id="L97">					CodeSmells.deleteRuleToCodeSmell(code);</span>
+				}
+<span class="pc" id="L99">			} catch (NullPointerException e) {</span>
+			}
+		}
+<span class="fc" id="L102">		return true;</span>
 	}
-	
+
 	/**
 	 * Saves the rules into a file
 	 */
 	public static void saveToFile() {
 		try {
-<span class="fc" id="L91">			FileOutputStream f = new FileOutputStream(new File(Constants.RULE_DATA_FILE));</span>
-<span class="fc" id="L92">			ObjectOutputStream o = new ObjectOutputStream(f);</span>
-			
-<span class="fc" id="L94">			o.writeObject(rules);</span>
-			
-<span class="fc" id="L96">			o.close();</span>
-<span class="fc" id="L97">			f.close();</span>
-<span class="pc" id="L98">		} catch (IOException e) {</span>
-<span class="nc" id="L99">			e.printStackTrace();</span>
+<span class="fc" id="L110">			FileOutputStream f = new FileOutputStream(new File(Constants.RULE_DATA_FILE));</span>
+<span class="fc" id="L111">			ObjectOutputStream o = new ObjectOutputStream(f);</span>
+
+<span class="fc" id="L113">			o.writeObject(rules);</span>
+
+<span class="fc" id="L115">			o.close();</span>
+<span class="fc" id="L116">			f.close();</span>
+<span class="pc" id="L117">		} catch (IOException e) {</span>
+<span class="nc" id="L118">			e.printStackTrace();</span>
 		}
-<span class="fc" id="L101">	}</span>
-	
+<span class="fc" id="L120">	}</span>
+
 	/**
 	 * Loads the rules from a file
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
 	public static void loadFromFile() {
 		try {
-<span class="nc" id="L109">			File dataFile = new File(Constants.RULE_DATA_FILE);</span>
-<span class="nc" id="L110">			dataFile.createNewFile();</span>
-<span class="nc" id="L111">			FileInputStream f = new FileInputStream(dataFile);</span>
-<span class="nc" id="L112">			ObjectInputStream o = new ObjectInputStream(f);</span>
-			
-<span class="nc" id="L114">			Object in = o.readObject();</span>
-			
-<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (in instanceof HashMap) {</span>
-<span class="nc" id="L117">				rules = (HashMap&lt;String, Rule&gt;) in;</span>
+<span class="nc" id="L128">			File dataFile = new File(Constants.RULE_DATA_FILE);</span>
+<span class="nc" id="L129">			dataFile.createNewFile();</span>
+<span class="nc" id="L130">			FileInputStream f = new FileInputStream(dataFile);</span>
+<span class="nc" id="L131">			ObjectInputStream o = new ObjectInputStream(f);</span>
+
+<span class="nc" id="L133">			Object in = o.readObject();</span>
+
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (in instanceof HashMap) {</span>
+<span class="nc" id="L136">				rules = (HashMap&lt;String, Rule&gt;) in;</span>
 			}
 
-<span class="nc" id="L120">			o.close();</span>
-<span class="nc" id="L121">			f.close();</span>
-			
-<span class="nc" id="L123">		} catch (EOFException e) {</span>
-			
-<span class="nc" id="L125">		} catch (IOException e) {</span>
-<span class="nc" id="L126">			e.printStackTrace();</span>
-<span class="nc" id="L127">		} catch (ClassNotFoundException e) {</span>
-<span class="nc" id="L128">			e.printStackTrace();</span>
+<span class="nc" id="L139">			o.close();</span>
+<span class="nc" id="L140">			f.close();</span>
+
+<span class="nc" id="L142">		} catch (EOFException e) {</span>
+
+<span class="nc" id="L144">		} catch (IOException e) {</span>
+<span class="nc" id="L145">			e.printStackTrace();</span>
+<span class="nc" id="L146">		} catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L147">			e.printStackTrace();</span>
 		}
-<span class="nc" id="L130">	}</span>
+<span class="nc" id="L149">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 19:50:53)</div></body></html>
