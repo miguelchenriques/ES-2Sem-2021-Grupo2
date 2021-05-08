@@ -13,3 +13,5 @@ buildNumber.properties
 *.xlsx
 rules.dat
 codesmells.dat
+
+!Code_Smells.xlsx
