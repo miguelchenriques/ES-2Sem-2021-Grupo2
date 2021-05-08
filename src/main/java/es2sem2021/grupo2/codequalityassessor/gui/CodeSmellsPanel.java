@@ -43,7 +43,6 @@ public class CodeSmellsPanel extends JPanel {
 		table = new JTable();
 		table.setModel(model);
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		table.setFillsViewportHeight(true);
 		scrollPane.setBounds(0, 49, 650, 434);
@@ -83,9 +82,9 @@ public class CodeSmellsPanel extends JPanel {
 					model.setValueAt(entry1.getValue(), i, j);
 					i++;
 				}
-
+				j++;
 			}
-			j++;
+			
 		}
 
 		table.setModel(model);
