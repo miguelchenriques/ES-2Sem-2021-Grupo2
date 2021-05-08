@@ -1,5 +1,7 @@
 package es2sem2021.grupo2.codequalityassessor.metrics.extractors;
 
+import static es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor.getMethodSignature;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -10,7 +12,6 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.stmt.DoStmt;
@@ -23,6 +24,11 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
+
+/**
+ *	CYCLO_method counts the cyclomatic complexity of each method, adding every loop and possible branches in a method 
+ *
+ */
 public class CYCLO_method {
 
 	/**
@@ -31,7 +37,6 @@ public class CYCLO_method {
 	 * 
 	 * @param f	java file to be parsed
 	 * @return the methods of the file and their number of cycles
-	 * @throws FileNotFoundException or ParseProblemException
 	 */
 	public static HashMap<String, Integer> getMethodCyclo(File f) {
 		try {
@@ -74,6 +79,7 @@ public class CYCLO_method {
 	}
 	
 	public static class MethodNameCollector extends VoidVisitorAdapter<List<Pair<String, Integer>>>{
+		
 		@Override
 		public void visit(MethodDeclaration n, List<Pair<String, Integer>> collector) {
 			super.visit(n, collector);
@@ -82,10 +88,7 @@ public class CYCLO_method {
 			Visitor v = new Visitor();
 			v.visit(n, l);
 			
-			String s = n.getDeclarationAsString(false,false,false);
-			s = s.substring(s.indexOf(" ")+1);
-			String className = ((ClassOrInterfaceDeclaration)n.getParentNode().get()).getNameAsString();
-			s = className + "." + s;
+			String s = getMethodSignature(n);
 			
 			collector.add(new Pair<String, Integer>(s, l.size()+1));
 		}
@@ -107,6 +110,10 @@ public class CYCLO_method {
 		}
 	}
 
+	/**
+	 * 
+	 *	Visitor class that will visit every possible cyclic or branching line in the class and add it to the list of nodes
+	 */
 	public static class Visitor extends VoidVisitorAdapter<List<Node>>{
 		@Override
 		public void visit(ForStmt stmt, List<Node> collector) {

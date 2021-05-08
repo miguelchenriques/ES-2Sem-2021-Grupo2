@@ -1,22 +1,6 @@
 package es2sem2021.grupo2.codequalityassessor.gui;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
-
-import es2sem2021.grupo2.codequalityassessor.rules.CodeSmells;
-import es2sem2021.grupo2.codequalityassessor.rules.Rule;
-import es2sem2021.grupo2.codequalityassessor.rules.RulesSet;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -24,8 +8,20 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.ScrollPaneConstants;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import es2sem2021.grupo2.codequalityassessor.rules.CodeSmells;
+import es2sem2021.grupo2.codequalityassessor.rules.Rule;
 
 public class CreateCodeSmellsPanel extends JPanel {
 
@@ -116,7 +112,7 @@ public class CreateCodeSmellsPanel extends JPanel {
 				if(codeSmell.equals("is_Long_Method") || codeSmell.equals("is_God_Class") )
 					errorLabel.setVisible(true);
 				else errorLabel.setVisible(false);
-				CodeSmells.deleteRuleToCodeSmell(codeSmell);
+				CodeSmells.deleteCodeSmell(codeSmell);
 				updateCodeSmells();
 			}
 		};
@@ -132,13 +128,17 @@ public class CreateCodeSmellsPanel extends JPanel {
 		repaint();
 		
 		for (Map.Entry<String, Rule> entry : codeSmells.entrySet()) {
-			String key = entry.getKey();
+			setCodeSmellsRows(entry);
+			}
+	}
 
-				if (entry.getValue() == null) {
-					model.addRow(new Object[] { key, "", "Delete" });
-				} else {
-					model.addRow(new Object[] { key, entry.getValue().getName(), "Delete" });
-				}
+	private void setCodeSmellsRows(Map.Entry<String, Rule> entry) {
+		String key = entry.getKey();
+
+			if (entry.getValue() == null) {
+				model.addRow(new Object[] { key, "", "Delete" });
+			} else {
+				model.addRow(new Object[] { key, entry.getValue().getName(), "Delete" });
 			}
 	}
 }

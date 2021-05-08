@@ -99,8 +99,6 @@ public class RulesPanel extends JPanel {
 		model.setColumnIdentifiers(columnNames);
 		table.setModel(model);
 		table.getColumnModel().getColumn(1).setPreferredWidth(500);
-		// table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor());
-		// table.setPreferredScrollableViewportSize(new Dimension(500, 200));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -159,9 +157,13 @@ public class RulesPanel extends JPanel {
 		revalidate();
 		repaint();
 		for (Map.Entry<String, Rule> entry : rules.entrySet()) {
-			String key = entry.getKey();
-			Rule rule = entry.getValue();
-			model.addRow(new Object[] { key, rule.getConditions(), "Delete", "Change" });
+			addRuleRow(entry);
 		}
+	}
+
+	private void addRuleRow(Map.Entry<String, Rule> entry) {
+		String key = entry.getKey();
+		Rule rule = entry.getValue();
+		model.addRow(new Object[] { key, rule.getConditions(), "Delete", "Change" });
 	}
 }

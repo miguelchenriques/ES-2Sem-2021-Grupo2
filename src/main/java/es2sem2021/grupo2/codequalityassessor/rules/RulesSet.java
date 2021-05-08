@@ -1,5 +1,6 @@
 package es2sem2021.grupo2.codequalityassessor.rules;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -87,7 +88,7 @@ public class RulesSet {
 	 */
 	public static void saveToFile() {
 		try {
-			FileOutputStream f = new FileOutputStream(new File("rules"));
+			FileOutputStream f = new FileOutputStream(new File(Constants.RULE_DATA_FILE));
 			ObjectOutputStream o = new ObjectOutputStream(f);
 			
 			o.writeObject(rules);
@@ -105,7 +106,9 @@ public class RulesSet {
 	@SuppressWarnings("unchecked")
 	public static void loadFromFile() {
 		try {
-			FileInputStream f = new FileInputStream(new File("rules"));
+			File dataFile = new File(Constants.RULE_DATA_FILE);
+			dataFile.createNewFile();
+			FileInputStream f = new FileInputStream(dataFile);
 			ObjectInputStream o = new ObjectInputStream(f);
 			
 			Object in = o.readObject();
@@ -116,6 +119,8 @@ public class RulesSet {
 
 			o.close();
 			f.close();
+			
+		} catch (EOFException e) {
 			
 		} catch (IOException e) {
 			e.printStackTrace();

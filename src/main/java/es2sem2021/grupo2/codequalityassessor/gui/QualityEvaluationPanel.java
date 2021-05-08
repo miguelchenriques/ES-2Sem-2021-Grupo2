@@ -32,43 +32,73 @@ public class QualityEvaluationPanel extends JPanel{
 
 		JLabel VerdadeirosPositivoLabel = new JLabel("True Positives:");
 		VerdadeirosPositivoLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		VerdadeirosPositivoLabel.setBounds(21, 57, 116, 14);
+		VerdadeirosPositivoLabel.setBounds(31, 60, 96, 14);
 		add(VerdadeirosPositivoLabel);
 
 		JLabel VerdadeirosNegativoLabel = new JLabel("True Negatives:");
 		VerdadeirosNegativoLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		VerdadeirosNegativoLabel.setBounds(21, 94, 117, 14);
+		VerdadeirosNegativoLabel.setBounds(31, 77, 96, 14);
 		add(VerdadeirosNegativoLabel);
 
 		JLabel FalsoPositivoLabel = new JLabel("False Positives:");
 		FalsoPositivoLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		FalsoPositivoLabel.setBounds(243, 57, 98, 14);
+		FalsoPositivoLabel.setBounds(31, 91, 96, 14);
 		add(FalsoPositivoLabel);
 
 		JLabel FalsosNegativosLabel = new JLabel("False Negatives:");
 		FalsosNegativosLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		FalsosNegativosLabel.setBounds(225, 94, 116, 14);
+		FalsosNegativosLabel.setBounds(31, 108, 96, 14);
 		add(FalsosNegativosLabel);
 
-		JLabel n_verdadeiros_positivos = new JLabel("VP");
-		n_verdadeiros_positivos.setHorizontalAlignment(SwingConstants.LEFT);
-		n_verdadeiros_positivos.setBounds(149, 57, 82, 14);
+		JLabel n_verdadeiros_positivos = new JLabel("TP");
+		n_verdadeiros_positivos.setHorizontalAlignment(SwingConstants.CENTER);
+		n_verdadeiros_positivos.setBounds(325, 60, 67, 14);
 		add(n_verdadeiros_positivos);
 
-		JLabel n_verdadeiros_negativos = new JLabel("VN");
-		n_verdadeiros_negativos.setHorizontalAlignment(SwingConstants.LEFT);
-		n_verdadeiros_negativos.setBounds(148, 94, 65, 14);
+		JLabel n_verdadeiros_negativos = new JLabel("TN");
+		n_verdadeiros_negativos.setHorizontalAlignment(SwingConstants.CENTER);
+		n_verdadeiros_negativos.setBounds(325, 77, 67, 14);
 		add(n_verdadeiros_negativos);
 
 		JLabel n_falsos_positivos = new JLabel("FP");
-		n_falsos_positivos.setHorizontalAlignment(SwingConstants.LEFT);
-		n_falsos_positivos.setBounds(351, 57, 84, 14);
+		n_falsos_positivos.setHorizontalAlignment(SwingConstants.CENTER);
+		n_falsos_positivos.setBounds(325, 91, 67, 14);
 		add(n_falsos_positivos);
 
 		JLabel n_falsos_negativos = new JLabel("FN");
-		n_falsos_negativos.setHorizontalAlignment(SwingConstants.LEFT);
-		n_falsos_negativos.setBounds(353, 94, 82, 14);
+		n_falsos_negativos.setHorizontalAlignment(SwingConstants.CENTER);
+		n_falsos_negativos.setBounds(325, 108, 67, 14);
 		add(n_falsos_negativos);
+		
+		JLabel n_falsos_negativos_1 = new JLabel("FN");
+		n_falsos_negativos_1.setHorizontalAlignment(SwingConstants.CENTER);
+		n_falsos_negativos_1.setBounds(182, 108, 67, 14);
+		add(n_falsos_negativos_1);
+		
+		JLabel n_falsos_positivos_1 = new JLabel("FP");
+		n_falsos_positivos_1.setHorizontalAlignment(SwingConstants.CENTER);
+		n_falsos_positivos_1.setBounds(182, 91, 67, 14);
+		add(n_falsos_positivos_1);
+		
+		JLabel n_verdadeiros_negativos_1 = new JLabel("TN");
+		n_verdadeiros_negativos_1.setHorizontalAlignment(SwingConstants.CENTER);
+		n_verdadeiros_negativos_1.setBounds(182, 77, 67, 14);
+		add(n_verdadeiros_negativos_1);
+		
+		JLabel n_verdadeiros_positivos_1 = new JLabel("TP");
+		n_verdadeiros_positivos_1.setHorizontalAlignment(SwingConstants.CENTER);
+		n_verdadeiros_positivos_1.setBounds(182, 60, 67, 14);
+		add(n_verdadeiros_positivos_1);
+		
+		JLabel lblNewLabel = new JLabel("is_Long_Method");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(311, 35, 96, 14);
+		add(lblNewLabel);
+		
+		JLabel lblIsgodclass = new JLabel("is_God_Class");
+		lblIsgodclass.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIsgodclass.setBounds(167, 35, 82, 14);
+		add(lblIsgodclass);
 
 		QualityEvalChart qechart = new QualityEvalChart("Codesmells","QualityEvaluation");
 
@@ -90,10 +120,14 @@ public class QualityEvaluationPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				QualityEvalChart qechart = new QualityEvalChart("Codesmells","QualityEvaluation");
 				QualityEvaluation qe = new QualityEvaluation();
-				n_verdadeiros_positivos.setText(Integer.toString(qe.getLongMethodTruePositives()) + " / " + Integer.toString(qe.getGodClassTruePositives()));
-				n_verdadeiros_negativos.setText(Integer.toString(qe.getLongMethodTrueNegatives()) + " / " + Integer.toString(qe.getGodClassTrueNegatives()));
-				n_falsos_positivos.setText(Integer.toString(qe.getLongMethodFalsePositives()) + " / " + Integer.toString(qe.getGodClassFalsePositives()));
-				n_falsos_negativos.setText(Integer.toString(qe.getLongMethodFalseNegatives()) + " / " + Integer.toString(qe.getGodClassFalseNegatives()));
+				n_verdadeiros_positivos.setText(Integer.toString(qe.getLongMethodTruePositives()));
+				n_verdadeiros_negativos.setText(Integer.toString(qe.getLongMethodTrueNegatives()));
+				n_falsos_positivos.setText(Integer.toString(qe.getLongMethodFalsePositives()));
+				n_falsos_negativos.setText(Integer.toString(qe.getLongMethodFalseNegatives()));
+				n_verdadeiros_positivos_1.setText(Integer.toString(qe.getGodClassTruePositives()));
+				n_verdadeiros_negativos_1.setText(Integer.toString(qe.getGodClassTrueNegatives()));
+				n_falsos_positivos_1.setText(Integer.toString(qe.getGodClassFalsePositives()));
+				n_falsos_negativos_1.setText(Integer.toString(qe.getGodClassFalseNegatives()));
 				JFreeChart chart = ChartFactory.createBarChart(
 						"Quality Evaluation",
 						"",
@@ -108,6 +142,8 @@ public class QualityEvaluationPanel extends JPanel{
 		});
 		changeCS.setBounds(462, 61, 153, 47);
 		add(changeCS);
+		
+
 
 	}   
 }

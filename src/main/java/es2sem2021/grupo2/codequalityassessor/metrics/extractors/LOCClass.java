@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
@@ -16,6 +15,10 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
+/**
+ *	Counts the non blank lines of code from a class 
+ *
+ */
 public class LOCClass {
 	
 	/**
@@ -77,7 +80,10 @@ public class LOCClass {
 	 */
 	private static int countLines(String classCode) {
 		List<String> lines = Arrays.asList(classCode.split("\r\n"));
-		lines = lines.stream().filter(l -> !l.equals("")).collect(Collectors.toList());
-		return lines.size();
+		
+		return (int) lines.stream()
+				.map(l -> l.replaceAll("\t", ""))
+				.filter(l -> !l.equals(""))
+				.count();
 	}
 }

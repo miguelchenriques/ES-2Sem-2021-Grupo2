@@ -14,8 +14,20 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
+/**
+ * Sums the cyclomatic complexity from a class' methods
+ *
+ */
 public class WMCClass {
 
+	/***
+	 * 
+	 * Returns a hashmap with all the classes names present in the file f as keys and an integer representing the sum of
+	 * cyclomatic complexity of the class' methods
+	 * 
+	 * @param f	java file to be parsed
+	 * @return	the classes and the sum of its method's cyclomatic complexity
+	 */
 	public static HashMap<String, Integer> getClassWMC(File f) {
 		try {
 			CompilationUnit compilationUnit = StaticJavaParser.parse(f);
@@ -34,7 +46,16 @@ public class WMCClass {
 			return null;
 		}
 	}
-
+	
+	/**
+	 * 
+	 * 	Cycles through the classes passed and uses the cyclo hash map to sum the cyclomatic complexities that belong to
+	 * 	each class.
+	 * 
+	 * @param classes		the list of classes to get the wmc
+	 * @param cycloMethod	Hash map that contains the methods and it's cyclomatic complexity
+	 * @return				List of pairs class and wmc
+	 */
 	private static ArrayList<Pair<String, Integer>> getPair(ArrayList<String> classes, HashMap<String, Integer> cycloMethod ) {
 		if (classes.size() < 1)
 			return null;
@@ -42,22 +63,43 @@ public class WMCClass {
 		ArrayList<Pair<String, Integer>> results = new ArrayList<>();
 
 		for(String classString : classes ){
-			int count=0;
-			for(String s : cycloMethod.keySet()) {	
-				String[] c;
-				if(s.indexOf(".")!=-1 && s.indexOf(".")<s.indexOf("("))
-					c = s.split("\\.");
-				else
-					c = s.split("\\(");
-				if(c[0].equals(classString)) {
-					count += cycloMethod.get(s);			
-				}
-			}
+			int count = sumClassCyclos(cycloMethod, classString);
 			results.add(new Pair<String,Integer>(classString,count));
 		}
 		return results;
 	}
+
+	/**
+	 * 
+	 * Sums the cyclomatic complexity of a class functions
+	 * 
+	 * @param cycloMethod	hash map that contains the functions' cyclomatic complexities
+	 * @param classString	class name
+	 * @return				the class wmc
+	 */
+	private static int sumClassCyclos(HashMap<String, Integer> cycloMethod, String classString) {
+		int count=0;
+		for(String s : cycloMethod.keySet()) {	
+			String[] c;
+			if(s.indexOf(".")!=-1 && s.indexOf(".")<s.indexOf("("))
+				c = s.split("\\.");
+			else
+				c = s.split("\\(");
+			if(c[0].equals(classString)) {
+				count += cycloMethod.get(s);			
+			}
+		}
+		return count;
+	}
 	
+	
+	/***
+	 * 
+	 * Transforms an array of pairs (class, wmc) to an hashmap where inner classes names are defined as Outter.Inner
+	 * 
+	 * @param classes	array of pairs (classes, wmc)
+	 * @return			hashmap with the class name as key and it's wmc
+	 */
 	private static HashMap<String,Integer> getResults(ArrayList<Pair<String,Integer>> classes){
 		if (classes.size()<1) return null;
 		

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CreateCodeSmellsPanel.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.gui</a> &gt; <span class="el_source">CreateCodeSmellsPanel.java</span></div><h1>CreateCodeSmellsPanel.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.gui;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import es2sem2021.grupo2.codequalityassessor.rules.CodeSmells;
+import es2sem2021.grupo2.codequalityassessor.rules.Rule;
+
+public class CreateCodeSmellsPanel extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField CodeSmellsText;
+	private  DefaultTableModel model;
+	private JLabel errorLabel;
+
+<span class="nc" id="L36">	public CreateCodeSmellsPanel() {</span>
+<span class="nc" id="L37">		setBounds(0, 0, 650, 483);</span>
+<span class="nc" id="L38">		setLayout(null);</span>
+<span class="nc" id="L39">		setVisible(false);</span>
+
+<span class="nc" id="L41">		CodeSmellsText = new JTextField();</span>
+<span class="nc" id="L42">		CodeSmellsText.setColumns(10);</span>
+<span class="nc" id="L43">		CodeSmellsText.setBounds(69, 67, 232, 40);</span>
+<span class="nc" id="L44">		add(CodeSmellsText);</span>
+
+<span class="nc" id="L46">		JLabel CodeSmellsLabel = new JLabel(&quot;Code Smells Name&quot;);</span>
+<span class="nc" id="L47">		CodeSmellsLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L48">		CodeSmellsLabel.setBounds(69, 40, 232, 16);</span>
+<span class="nc" id="L49">		add(CodeSmellsLabel);</span>
+
+<span class="nc" id="L51">		JButton addCodeSmell = new JButton(&quot;Add Code Smell&quot;);</span>
+<span class="nc" id="L52">		addCodeSmell.setBounds(376, 61, 184, 46);</span>
+<span class="nc" id="L53">		addCodeSmell.addMouseListener(new MouseAdapter() {</span>
+			@Override
+			public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L56">				errorLabel.setVisible(false);</span>
+<span class="nc" id="L57">				CodeSmells.addCodeSmell(CodeSmellsText.getText());</span>
+<span class="nc" id="L58">				updateCodeSmells();</span>
+<span class="nc" id="L59">			}</span>
+		});
+<span class="nc" id="L61">		add(addCodeSmell);</span>
+
+<span class="nc" id="L63">		JTable table = new JTable();</span>
+<span class="nc" id="L64">		String[] columnNames = { &quot;CodeSmell Name&quot;, &quot;Rule Name&quot;, &quot;&quot; };</span>
+<span class="nc" id="L65">		model = new DefaultTableModel() {</span>
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">				if(column &lt; 2) return false;</span>
+<span class="nc" id="L74">				return true;</span>
+			}
+		};
+<span class="nc" id="L77">		model.setColumnIdentifiers(columnNames);</span>
+<span class="nc" id="L78">		table.setModel(model);</span>
+<span class="nc" id="L79">		table.getColumnModel().getColumn(0).setPreferredWidth(256);</span>
+<span class="nc" id="L80">		table.getColumnModel().getColumn(1).setPreferredWidth(256);</span>
+<span class="nc" id="L81">		table.getColumnModel().getColumn(2).setPreferredWidth(120);</span>
+
+<span class="nc" id="L83">		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);</span>
+<span class="nc" id="L84">		JScrollPane scrollPane = new JScrollPane(table);</span>
+<span class="nc" id="L85">		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);</span>
+<span class="nc" id="L86">		table.setFillsViewportHeight(true);</span>
+<span class="nc" id="L87">		scrollPane.setViewportView(table);</span>
+<span class="nc" id="L88">		scrollPane.setBounds(6, 167, 638, 288);</span>
+<span class="nc" id="L89">		add(scrollPane);</span>
+		
+		
+<span class="nc" id="L92">		errorLabel = new JLabel(&quot;You can't delete Code Smell \&quot;is_Long_Method\&quot; or \&quot;is_God_Class\&quot; &quot;);</span>
+<span class="nc" id="L93">		errorLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L94">		errorLabel.setForeground(Color.RED);</span>
+<span class="nc" id="L95">		errorLabel.setBounds(79, 128, 466, 16);</span>
+<span class="nc" id="L96">		errorLabel.setVisible(false);</span>
+<span class="nc" id="L97">		add(errorLabel);</span>
+		
+<span class="nc" id="L99">		updateCodeSmells();</span>
+
+<span class="nc" id="L101">		Action delete = new AbstractAction() {</span>
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L108">				errorLabel.setVisible(false);</span>
+<span class="nc" id="L109">				JTable table = (JTable) e.getSource();</span>
+<span class="nc" id="L110">				int modelRow = Integer.valueOf(e.getActionCommand());</span>
+<span class="nc" id="L111">				String codeSmell = table.getModel().getValueAt(modelRow, 0).toString();</span>
+<span class="nc bnc" id="L112" title="All 4 branches missed.">				if(codeSmell.equals(&quot;is_Long_Method&quot;) || codeSmell.equals(&quot;is_God_Class&quot;) )</span>
+<span class="nc" id="L113">					errorLabel.setVisible(true);</span>
+<span class="nc" id="L114">				else errorLabel.setVisible(false);</span>
+<span class="nc" id="L115">				CodeSmells.deleteCodeSmell(codeSmell);</span>
+<span class="nc" id="L116">				updateCodeSmells();</span>
+<span class="nc" id="L117">			}</span>
+		};
+
+<span class="nc" id="L120">		ButtonColumn deleteButton = new ButtonColumn(table, delete, 2);</span>
+<span class="nc" id="L121">		deleteButton.setMnemonic(KeyEvent.VK_D);</span>
+<span class="nc" id="L122">	}</span>
+
+	public void updateCodeSmells() {
+<span class="nc" id="L125">		HashMap&lt;String, Rule&gt; codeSmells = CodeSmells.getCodeSmells();</span>
+<span class="nc" id="L126">		model.getDataVector().removeAllElements();</span>
+<span class="nc" id="L127">		revalidate();</span>
+<span class="nc" id="L128">		repaint();</span>
+		
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		for (Map.Entry&lt;String, Rule&gt; entry : codeSmells.entrySet()) {</span>
+<span class="nc" id="L131">			setCodeSmellsRows(entry);</span>
+			}
+<span class="nc" id="L133">	}</span>
+
+	private void setCodeSmellsRows(Map.Entry&lt;String, Rule&gt; entry) {
+<span class="nc" id="L136">		String key = entry.getKey();</span>
+
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			if (entry.getValue() == null) {</span>
+<span class="nc" id="L139">				model.addRow(new Object[] { key, &quot;&quot;, &quot;Delete&quot; });</span>
+<span class="nc" id="L140">			} else {</span>
+<span class="nc" id="L141">				model.addRow(new Object[] { key, entry.getValue().getName(), &quot;Delete&quot; });</span>
+			}
+<span class="nc" id="L143">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>

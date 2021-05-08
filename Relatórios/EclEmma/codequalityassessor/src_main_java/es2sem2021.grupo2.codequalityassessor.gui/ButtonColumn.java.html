@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ButtonColumn.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.gui</a> &gt; <span class="el_source">ButtonColumn.java</span></div><h1>ButtonColumn.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.gui;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.AbstractCellEditor;
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
+
+/**
+ *  The ButtonColumn class provides a renderer and an editor that looks like a
+ *  JButton. The renderer and editor will then be used for a specified column
+ *  in the table. The TableModel will contain the String to be displayed on
+ *  the button.
+ *
+ *  The button can be invoked by a mouse click or by pressing the space bar
+ *  when the cell has focus. Optionally a mnemonic can be set to invoke the
+ *  button. When the button is invoked the provided Action is invoked. The
+ *  source of the Action will be the table. The action command will contain
+ *  the model row number of the button that was clicked.
+ *
+ */
+public class ButtonColumn extends AbstractCellEditor
+	implements TableCellRenderer, TableCellEditor, ActionListener, MouseListener
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTable table;
+	private Action action;
+	private int mnemonic;
+	private Border originalBorder;
+	private Border focusBorder;
+
+	private JButton renderButton;
+	private JButton editButton;
+	private Object editorValue;
+	private boolean isButtonColumnEditor;
+
+	/**
+	 *  Create the ButtonColumn to be used as a renderer and editor. The
+	 *  renderer and editor will automatically be installed on the TableColumn
+	 *  of the specified column.
+	 *
+	 *  @param table the table containing the button renderer/editor
+	 *  @param action the Action to be invoked when the button is invoked
+	 *  @param column the column to which the button renderer/editor is added
+	 */
+<span class="nc" id="L62">	public ButtonColumn(JTable table, Action action, int column)</span>
+	{
+<span class="nc" id="L64">		this.table = table;</span>
+<span class="nc" id="L65">		this.action = action;</span>
+
+<span class="nc" id="L67">		renderButton = new JButton();</span>
+<span class="nc" id="L68">		editButton = new JButton();</span>
+<span class="nc" id="L69">		editButton.setFocusPainted( false );</span>
+<span class="nc" id="L70">		editButton.addActionListener( this );</span>
+<span class="nc" id="L71">		originalBorder = editButton.getBorder();</span>
+<span class="nc" id="L72">		setFocusBorder( new LineBorder(Color.BLUE) );</span>
+
+<span class="nc" id="L74">		TableColumnModel columnModel = table.getColumnModel();</span>
+<span class="nc" id="L75">		columnModel.getColumn(column).setCellRenderer( this );</span>
+<span class="nc" id="L76">		columnModel.getColumn(column).setCellEditor( this );</span>
+<span class="nc" id="L77">		table.addMouseListener( this );</span>
+<span class="nc" id="L78">	}</span>
+
+
+	/**
+	 *  Get foreground color of the button when the cell has focus
+	 *
+	 *  @return the foreground color
+	 */
+	public Border getFocusBorder()
+	{
+<span class="nc" id="L88">		return focusBorder;</span>
+	}
+
+	/**
+	 *  The foreground color of the button when the cell has focus
+	 *
+	 *  @param focusBorder the foreground color
+	 */
+	public void setFocusBorder(Border focusBorder)
+	{
+<span class="nc" id="L98">		this.focusBorder = focusBorder;</span>
+<span class="nc" id="L99">		editButton.setBorder( focusBorder );</span>
+<span class="nc" id="L100">	}</span>
+
+	public int getMnemonic()
+	{
+<span class="nc" id="L104">		return mnemonic;</span>
+	}
+
+	/**
+	 *  The mnemonic to activate the button when the cell has focus
+	 *
+	 *  @param mnemonic the mnemonic
+	 */
+	public void setMnemonic(int mnemonic)
+	{
+<span class="nc" id="L114">		this.mnemonic = mnemonic;</span>
+<span class="nc" id="L115">		renderButton.setMnemonic(mnemonic);</span>
+<span class="nc" id="L116">		editButton.setMnemonic(mnemonic);</span>
+<span class="nc" id="L117">	}</span>
+
+	@Override
+	public Component getTableCellEditorComponent(
+		JTable table, Object value, boolean isSelected, int row, int column)
+	{
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (value == null)</span>
+		{
+<span class="nc" id="L125">			editButton.setText( &quot;&quot; );</span>
+<span class="nc" id="L126">			editButton.setIcon( null );</span>
+<span class="nc" id="L127">		}</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		else if (value instanceof Icon)</span>
+		{
+<span class="nc" id="L130">			editButton.setText( &quot;&quot; );</span>
+<span class="nc" id="L131">			editButton.setIcon( (Icon)value );</span>
+<span class="nc" id="L132">		}</span>
+		else
+		{
+<span class="nc" id="L135">			editButton.setText( value.toString() );</span>
+<span class="nc" id="L136">			editButton.setIcon( null );</span>
+		}
+
+<span class="nc" id="L139">		this.editorValue = value;</span>
+<span class="nc" id="L140">		return editButton;</span>
+	}
+
+	@Override
+	public Object getCellEditorValue()
+	{
+<span class="nc" id="L146">		return editorValue;</span>
+	}
+
+	public Component getTableCellRendererComponent(
+		JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+	{
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (isSelected)</span>
+		{
+<span class="nc" id="L154">			renderButton.setForeground(table.getSelectionForeground());</span>
+<span class="nc" id="L155">	 		renderButton.setBackground(table.getSelectionBackground());</span>
+<span class="nc" id="L156">		}</span>
+		else
+		{
+<span class="nc" id="L159">			renderButton.setForeground(table.getForeground());</span>
+<span class="nc" id="L160">			renderButton.setBackground(UIManager.getColor(&quot;Button.background&quot;));</span>
+		}
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (hasFocus)</span>
+		{
+<span class="nc" id="L165">			renderButton.setBorder( focusBorder );</span>
+<span class="nc" id="L166">		}</span>
+		else
+		{
+<span class="nc" id="L169">			renderButton.setBorder( originalBorder );</span>
+		}
+
+//		renderButton.setText( (value == null) ? &quot;&quot; : value.toString() );
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (value == null)</span>
+		{
+<span class="nc" id="L175">			renderButton.setText( &quot;&quot; );</span>
+<span class="nc" id="L176">			renderButton.setIcon( null );</span>
+<span class="nc" id="L177">		}</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		else if (value instanceof Icon)</span>
+		{
+<span class="nc" id="L180">			renderButton.setText( &quot;&quot; );</span>
+<span class="nc" id="L181">			renderButton.setIcon( (Icon)value );</span>
+<span class="nc" id="L182">		}</span>
+		else
+		{
+<span class="nc" id="L185">			renderButton.setText( value.toString() );</span>
+<span class="nc" id="L186">			renderButton.setIcon( null );</span>
+		}
+
+<span class="nc" id="L189">		return renderButton;</span>
+	}
+
+
+	/*
+	 *	The button has been pressed. Stop editing and invoke the custom Action
+	 */
+	public void actionPerformed(ActionEvent e)
+	{
+<span class="nc" id="L198">		int row = table.convertRowIndexToModel( table.getEditingRow() );</span>
+<span class="nc" id="L199">		fireEditingStopped();</span>
+
+		//  Invoke the Action
+
+<span class="nc" id="L203">		ActionEvent event = new ActionEvent(</span>
+<span class="nc" id="L204">			table,</span>
+<span class="nc" id="L205">			ActionEvent.ACTION_PERFORMED,</span>
+<span class="nc" id="L206">			&quot;&quot; + row);</span>
+<span class="nc" id="L207">		action.actionPerformed(event);</span>
+<span class="nc" id="L208">	}</span>
+
+
+	/*
+	 *  When the mouse is pressed the editor is invoked. If you then then drag
+	 *  the mouse to another cell before releasing it, the editor is still
+	 *  active. Make sure editing is stopped when the mouse is released.
+	 */
+    public void mousePressed(MouseEvent e)
+    {
+<span class="nc bnc" id="L218" title="All 2 branches missed.">    	if (table.isEditing()</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		&amp;&amp;  table.getCellEditor() == this)</span>
+<span class="nc" id="L220">			isButtonColumnEditor = true;</span>
+<span class="nc" id="L221">    }</span>
+
+    public void mouseReleased(MouseEvent e)
+    {
+<span class="nc bnc" id="L225" title="All 2 branches missed.">    	if (isButtonColumnEditor</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">    	&amp;&amp;  table.isEditing())</span>
+<span class="nc" id="L227">    		table.getCellEditor().stopCellEditing();</span>
+
+<span class="nc" id="L229">		isButtonColumnEditor = false;</span>
+<span class="nc" id="L230">    }</span>
+
+<span class="nc" id="L232">    public void mouseClicked(MouseEvent e) {}</span>
+<span class="nc" id="L233">	public void mouseEntered(MouseEvent e) {}</span>
+<span class="nc" id="L234">    public void mouseExited(MouseEvent e) {}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>

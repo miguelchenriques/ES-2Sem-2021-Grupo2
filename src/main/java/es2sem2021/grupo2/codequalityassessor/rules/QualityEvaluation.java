@@ -2,7 +2,6 @@ package es2sem2021.grupo2.codequalityassessor.rules;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +14,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor;
 import es2sem2021.grupo2.codequalityassessor.xlsx.FileGenerator;
 import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
 
@@ -75,7 +73,7 @@ public class QualityEvaluation {
 			while (rowIterator.hasNext()) {
 				Row row = rowIterator.next();
 				String className = row.getCell(classIndex).getStringCellValue();
-				String methodName = row.getCell(methodIndex).getStringCellValue();
+				String methodName = row.getCell(methodIndex).getStringCellValue().replaceAll(" ", "");
 				String key = className + "." + methodName;
 				if(godClass.get(key)!=null && row.getCell(godClassIndex).getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 					Boolean godClassValue = row.getCell(godClassIndex).getBooleanCellValue();
@@ -91,48 +89,72 @@ public class QualityEvaluation {
 				if(longMethod.get(key)!=null && row.getCell(longMethodIndex).getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 					Boolean longMethodValue = row.getCell(longMethodIndex).getBooleanCellValue();
 					if(longMethodValue && longMethod.get(key))
-						truePositivesLM.add(methodName);
+						truePositivesLM.add(key);
 					if(!longMethodValue && !longMethod.get(key))
-						trueNegativesLM.add(methodName);	
+						trueNegativesLM.add(key);	
 					if(!longMethodValue && longMethod.get(key))
-						falsePositivesLM.add(methodName);	
+						falsePositivesLM.add(key);	
 					if(longMethodValue && !longMethod.get(key))
-						falseNegativesLM.add(methodName);
+						falseNegativesLM.add(key);
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 
+	 * @return true positives to GodClass code smell
+	 */
 	public int getGodClassTruePositives() {
 		return truePositivesGC.size();
 	}
-	
+	/**
+	 * 
+	 * @return	true negatives to GodClass code smell
+	 */
 	public int getGodClassTrueNegatives() {
 		return trueNegativesGC.size();
 	}
-	
+	/**
+	 * 
+	 * @return	false positives to GodClass code smell
+	 */
 	public int getGodClassFalsePositives() {
 		return falsePositivesGC.size();
 	}
-	
+	/**
+	 * 
+	 * @return false negatives to GodClass code smell
+	 */
 	public int getGodClassFalseNegatives() {
 		return falseNegativesGC.size();
 	}
-	
+	/**
+	 * 
+	 * @return	true positives to LongMethod code smell
+	 */
 	public int getLongMethodTruePositives() {
 		return truePositivesLM.size();
 	}
-	
+	/**
+	 * 
+	 * @return	true negatives to LongMethod code smell
+	 */
 	public int getLongMethodTrueNegatives() {
 		return trueNegativesLM.size();
 	}
-	
+	/**
+	 * 
+	 * @return	false positives to LongMethod code smell
+	 */
 	public int getLongMethodFalsePositives() {
 		return falsePositivesLM.size();
 	}
-	
+	/**
+	 * 
+	 * @return false negatives to LongMethod code smell
+	 */
 	public int getLongMethodFalseNegatives() {
 		return falseNegativesLM.size();
 	}

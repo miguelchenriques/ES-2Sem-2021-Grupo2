@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MetricsSummary.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.metrics</a> &gt; <span class="el_source">MetricsSummary.java</span></div><h1>MetricsSummary.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.metrics;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
+import es2sem2021.grupo2.codequalityassessor.rules.Constants;
+import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
+
+public class MetricsSummary {
+<span class="fc" id="L14">	private ArrayList&lt;Method&gt; methods = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L15">	private ArrayList&lt;String&gt; packages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L16">	private ArrayList&lt;String&gt; classes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L17">	private int totalLOC = 0;</span>
+	
+	/**
+	 * Constructor of the MetricsSummary class, that gets all the metrics from an xlsx file
+	 * If the workbook's first sheet doesn't have any rows or the rows don't have all the correct metrics' names it returns an IllegalArgumentException
+	 * 
+	 * @param workbook workbook that has the metrics to be summarized 
+	 * @throws IllegalArgumentException
+	 */
+	
+<span class="fc" id="L27">	public MetricsSummary(Workbook workbook) {</span>
+<span class="fc" id="L28">		Sheet sheet = workbook.getSheetAt(0);</span>
+<span class="fc" id="L29">		Iterator&lt;Row&gt; rowIterator = sheet.iterator();</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">		if(!rowIterator.hasNext())</span>
+<span class="fc" id="L31">			throw new IllegalArgumentException(&quot;An error has occured, xlsx file doesn't have any rows, please try again.&quot;);</span>
+	
+<span class="fc" id="L33">		Row firstRow = rowIterator.next();</span>
+<span class="fc" id="L34">		int classIndex = -1;</span>
+<span class="fc" id="L35">		int packageIndex = -1;</span>
+<span class="fc" id="L36">		int methodIndex = -1;</span>
+<span class="fc" id="L37">		int lOCClassIndex = -1;</span>
+<span class="fc" id="L38">		int nOMClassIndex = -1;</span>
+<span class="fc" id="L39">		int wMCClassIndex = -1;</span>
+<span class="fc" id="L40">		int lOCMethodIndex = -1;</span>
+<span class="fc" id="L41">		int cYCLOMethodIndex = -1;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		for (int i=firstRow.getFirstCellNum(); i&lt;firstRow.getLastCellNum();i++) {</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">			if(firstRow.getCell(i) == null) </span>
+<span class="fc" id="L44">				throw new IllegalArgumentException(&quot;An error has occured, your rows don't have the correct metrics' name, please check the syntax again.&quot;);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">			if(firstRow.getCell(i).getStringCellValue().equals(&quot;Package&quot;)) </span>
+<span class="fc" id="L46">				packageIndex = i;</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">			if(firstRow.getCell(i).getStringCellValue().equals(&quot;Class&quot;)) </span>
+<span class="fc" id="L48">				classIndex = i;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">			if(firstRow.getCell(i).getStringCellValue().equals(&quot;Method&quot;)) </span>
+<span class="fc" id="L50">				methodIndex = i;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">			if(firstRow.getCell(i).getStringCellValue().equals(Constants.NOM_CLASS)) </span>
+<span class="fc" id="L52">				nOMClassIndex = i;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">			if(firstRow.getCell(i).getStringCellValue().equals(Constants.LOC_CLASS)) </span>
+<span class="fc" id="L54">				lOCClassIndex = i;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			if(firstRow.getCell(i).getStringCellValue().equals(Constants.WMC_CLASS)) </span>
+<span class="fc" id="L56">				wMCClassIndex = i;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">			if(firstRow.getCell(i).getStringCellValue().equals(Constants.LOC_METHOD)) </span>
+<span class="fc" id="L58">				lOCMethodIndex = i;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			if(firstRow.getCell(i).getStringCellValue().equals(Constants.CYCLO_METHOD)) </span>
+<span class="fc" id="L60">				cYCLOMethodIndex = i;	</span>
+		}
+<span class="pc bpc" id="L62" title="7 of 16 branches missed.">		if(classIndex == -1 || packageIndex == -1 || methodIndex == -1 || nOMClassIndex == -1 || lOCClassIndex == -1 || wMCClassIndex == -1 || lOCMethodIndex == -1 || cYCLOMethodIndex == -1) </span>
+<span class="fc" id="L63">			throw new IllegalArgumentException(&quot;An error has occured, your rows don't have the correct metrics' name, please check the syntax again.&quot;);	</span>
+		
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		while (rowIterator.hasNext()) {</span>
+<span class="fc" id="L66">			Row row = rowIterator.next();</span>
+<span class="fc" id="L67">			String packageName = row.getCell(packageIndex).getStringCellValue();</span>
+<span class="fc" id="L68">			String className = row.getCell(classIndex).getStringCellValue();</span>
+<span class="fc" id="L69">			String methodName = row.getCell(methodIndex).getStringCellValue();</span>
+<span class="fc" id="L70">			int nOMClass = (int) row.getCell(nOMClassIndex).getNumericCellValue();</span>
+<span class="fc" id="L71">			int lOCClass = (int) row.getCell(lOCClassIndex).getNumericCellValue();</span>
+<span class="fc" id="L72">			int wMCClass = (int) row.getCell(wMCClassIndex).getNumericCellValue();</span>
+<span class="fc" id="L73">			int lOCMethod = (int) row.getCell(lOCMethodIndex).getNumericCellValue();</span>
+<span class="fc" id="L74">			int cYCLOMethod = (int) row.getCell(cYCLOMethodIndex).getNumericCellValue();</span>
+<span class="fc" id="L75">			methods.add(new Method(packageName,className,methodName,nOMClass,lOCClass,wMCClass,lOCMethod,cYCLOMethod));</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">			if(!classes.contains(className)) { </span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">				if(!className.contains(&quot;.&quot;))</span>
+<span class="fc" id="L78">					totalLOC+=lOCClass;</span>
+<span class="fc" id="L79">				classes.add(className);</span>
+			}
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			if(!packages.contains(packageName))</span>
+<span class="fc" id="L82">				packages.add(packageName);</span>
+		}
+<span class="fc" id="L84">	}</span>
+		
+	/**
+	 * @return the number of java packages
+	 */
+	public int getNumberOfPackages() {
+<span class="fc" id="L90">		return packages.size();</span>
+	}
+	
+	/**
+	 * @return number of classes, both normal classes as inner classes
+	 */
+	public int getNumberOfClasses() {
+<span class="fc" id="L97">		return classes.size();</span>
+	}
+	
+	/**
+	 * @return sum of the total non blanck lines of code in the java project
+	 */
+	public int getTotalLinesOfCode() {
+<span class="fc" id="L104">		return totalLOC;</span>
+	}
+	
+	/**
+	 * @return	sum of total methods in the selected java project
+	 */
+	public int getTotalNumberOfMethods() {
+<span class="fc" id="L111">		return methods.size();</span>
+	}
+	
+	/**
+	 * @return all the methods and constructors available in the selected project
+	 */
+	public ArrayList&lt;Method&gt; getMethods() {
+<span class="fc" id="L118">		return methods;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>

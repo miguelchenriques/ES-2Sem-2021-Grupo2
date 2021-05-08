@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MetricsExtractor.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.metrics</a> &gt; <span class="el_source">MetricsExtractor.java</span></div><h1>MetricsExtractor.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.metrics;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.github.javaparser.ParseProblemException;
+import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.PackageDeclaration;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.utils.Pair;
+
+import es2sem2021.grupo2.codequalityassessor.metrics.extractors.CYCLO_method;
+import es2sem2021.grupo2.codequalityassessor.metrics.extractors.LOCClass;
+import es2sem2021.grupo2.codequalityassessor.metrics.extractors.LOC_method;
+import es2sem2021.grupo2.codequalityassessor.metrics.extractors.NOM;
+import es2sem2021.grupo2.codequalityassessor.metrics.extractors.WMCClass;
+import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
+
+<span class="nc" id="L28">public class MetricsExtractor {</span>
+	
+	/**
+	 * Returns the list of Method objects with all the metrics from the java file passed as argument
+	 * 
+	 * @param f		the java file to extract metrics and methods
+	 * @return		list of Method objects 
+	 * @throws FileNotFoundException
+	 */
+	public static List&lt;Method&gt; extract(File f) throws FileNotFoundException {
+<span class="fc" id="L38">		List&lt;Method&gt; methods = new ArrayList&lt;Method&gt;();</span>
+		
+<span class="fc" id="L40">		String packageName = getPackage(f);</span>
+		
+<span class="fc" id="L42">		HashMap&lt;String, Integer&gt; locClass = LOCClass.getClassLOC(f);</span>
+<span class="fc" id="L43">		HashMap&lt;String, Integer&gt; locMethod = LOC_method.getLOCMethod(f);</span>
+<span class="fc" id="L44">		HashMap&lt;String, Integer&gt; cycloMethod = CYCLO_method.getMethodCyclo(f);</span>
+<span class="fc" id="L45">		HashMap&lt;String, Integer&gt; nom = NOM.getClassNOM(f);</span>
+<span class="fc" id="L46">		HashMap&lt;String, Integer&gt; wmcClass = WMCClass.getClassWMC(f);</span>
+		
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if(locClass!=null) {</span>
+<span class="fc" id="L49">			String mainClass = getMainClass(locClass.keySet());</span>
+<span class="pc bpc" id="L50" title="1 of 4 branches missed.">			if(nom!=null &amp;&amp; locMethod==null) {</span>
+<span class="fc" id="L51">				methods.add(new Method (packageName,mainClass,mainClass+&quot;()&quot;,0,locClass.get(mainClass),0,0,0));</span>
+			}
+<span class="pc bpc" id="L53" title="3 of 8 branches missed.">			if(locMethod!=null &amp;&amp; cycloMethod!= null &amp;&amp; nom!=null &amp;&amp; wmcClass!=null) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">				for (String method: locMethod.keySet()) {</span>
+<span class="fc" id="L55">				Pair&lt;String, String&gt; methodPair = getMethodPair(method);</span>
+<span class="fc" id="L56">				String className = methodPair.a;</span>
+<span class="fc" id="L57">				String methodDeclaration = methodPair.b;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">				if(!mainClass.equals(className)) {</span>
+<span class="fc" id="L59">					className=mainClass + &quot;.&quot; + className;</span>
+				}
+<span class="fc" id="L61">				methods.add(new Method( packageName, className, methodDeclaration, nom.get(className), locClass.get(className),wmcClass.get(className) , locMethod.get(method), cycloMethod.get(method)));</span>
+				}				
+			}			
+		}
+<span class="fc" id="L65">		return methods;</span>
+	}
+	
+	/**
+	 * 
+	 * 	Returns the method name from a MethodDeclaration in the format &quot;Class.Method(Types)&quot; or
+	 * 	&quot;Constructor(Types)&quot;
+	 * 
+	 * @param n	the method declaration
+	 * @return	the formated name
+	 */
+	public static String getMethodSignature(MethodDeclaration n) {
+<span class="fc" id="L77">		String s = n.getDeclarationAsString(false,false,false);</span>
+<span class="fc" id="L78">		s = s.substring(s.indexOf(&quot; &quot;)+1);</span>
+<span class="fc" id="L79">		String className = ((ClassOrInterfaceDeclaration)n.getParentNode().get()).getNameAsString();</span>
+<span class="fc" id="L80">		s = className + &quot;.&quot; + s;</span>
+<span class="fc" id="L81">		return s;</span>
+	}
+	
+	/**
+	 * Returns the name of the Parent class from the set of classes passed. The classes inside the Set must be 
+	 * &quot;ParentClass.InnerClass1&quot; for a inner class and &quot;ParentClass&quot; for the parent class.
+	 * 
+	 * @param classes	the set of classes in the file
+	 * @return			the parent class name
+	 */
+	private static String getMainClass(Set&lt;String&gt; classes) {
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		for (String s: classes) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			if (!s.contains(&quot;.&quot;)) {</span>
+<span class="fc" id="L94">				return s;</span>
+			}
+		}
+<span class="nc" id="L97">		return null;</span>
+	}
+	
+	/**
+	 * Returns a pair with the first element being the class name and the second being the method name and it's
+	 * parameter types. The method passed can be a constructor or a method, if it is a method it has do be passed
+	 * with the following format: &quot;Class.method(ParamType1, ParamType2, etc..)&quot;
+	 * If it is a constructor: &quot;Class(ParamType1, ParamType2, etc...)&quot;
+	 * 
+	 * @param method    the method or constructor declaration
+	 * @return			A pair with class as the first element and the name and parameters as the second element
+	 */
+	private static Pair&lt;String, String&gt; getMethodPair(String method) {
+<span class="fc" id="L110">		Pattern patternStart = Pattern.compile(&quot;^[a-z0-9\\_]*\\.[a-z0-9]*&quot;, Pattern.CASE_INSENSITIVE);</span>
+<span class="fc" id="L111">		Matcher matcher = patternStart.matcher(method);</span>
+		
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (matcher.find()) {</span>
+<span class="fc" id="L114">			int ponto = method.indexOf(&quot;.&quot;);</span>
+<span class="fc" id="L115">			String className = method.substring(0, ponto);</span>
+<span class="fc" id="L116">			String methodDeclaration = method.substring(ponto+1);</span>
+<span class="fc" id="L117">			return new Pair&lt;String, String&gt;(className, methodDeclaration);</span>
+		}
+		
+<span class="fc" id="L120">		String className = method.substring(0, method.indexOf(&quot;(&quot;));</span>
+<span class="fc" id="L121">		return new Pair&lt;String, String&gt;(className, method);</span>
+	}
+	
+	/**
+	 * Returns the package name from the file java file passed as argument if it exists a package declaration,
+	 * return an empty string if it doesn't exist.
+	 * 
+	 * @param f  java file to be parsed
+	 * @return   the package name
+	 * @throws FileNotFoundException
+	 */
+	private static String getPackage(File f){
+		CompilationUnit compilationUnit;
+		try {
+<span class="fc" id="L135">			compilationUnit = StaticJavaParser.parse(f);</span>
+<span class="fc" id="L136">			Optional&lt;PackageDeclaration&gt; packageDeclaration = compilationUnit.getPackageDeclaration();</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			if (!packageDeclaration.isPresent()) return &quot;&quot;;</span>
+<span class="fc" id="L138">			return packageDeclaration.get().getNameAsString();</span>
+<span class="nc" id="L139">		} catch (FileNotFoundException | ParseProblemException e) {</span>
+<span class="nc" id="L140">			return &quot;&quot;;</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>

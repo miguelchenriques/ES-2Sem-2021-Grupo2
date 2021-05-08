@@ -1,5 +1,8 @@
 package es2sem2021.grupo2.codequalityassessor.rules;
 
+/**
+ *	Constants used in the project 
+ */
 public class Constants {
 
 	public static final String LOC_METHOD = "LOC_Method";
@@ -7,5 +10,7 @@ public class Constants {
 	public static final String NOM_CLASS = "NOM_Class";
 	public static final String CYCLO_METHOD = "CYCLO_Method";
 	public static final String WMC_CLASS = "WMC_Class";
+	public static final String RULE_DATA_FILE = "rules.dat";
+	public static final String CODE_SMELLS_DATA_FILE = "codesmells.dat";
 	
 }

@@ -14,6 +14,8 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.PackageDeclaration;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.utils.Pair;
 
 import es2sem2021.grupo2.codequalityassessor.metrics.extractors.CYCLO_method;
@@ -60,8 +62,23 @@ public class MetricsExtractor {
 				}				
 			}			
 		}
-		//methods.add(new Method( packageName, "Fill", "Main", 10, 11, 12, 14, 15));
 		return methods;
+	}
+	
+	/**
+	 * 
+	 * 	Returns the method name from a MethodDeclaration in the format "Class.Method(Types)" or
+	 * 	"Constructor(Types)"
+	 * 
+	 * @param n	the method declaration
+	 * @return	the formated name
+	 */
+	public static String getMethodSignature(MethodDeclaration n) {
+		String s = n.getDeclarationAsString(false,false,false);
+		s = s.substring(s.indexOf(" ")+1);
+		String className = ((ClassOrInterfaceDeclaration)n.getParentNode().get()).getNameAsString();
+		s = className + "." + s;
+		return s;
 	}
 	
 	/**
@@ -90,8 +107,6 @@ public class MetricsExtractor {
 	 * @return			A pair with class as the first element and the name and parameters as the second element
 	 */
 	private static Pair<String, String> getMethodPair(String method) {
-		// Pattern para verificar se existe um ponto entre nomes por ex: Class.Methodo(Tipo, int)
-		// Pattern falha se for depois dos parenteses por ex: Construtor(Tipo.OutroTipo, int, String)
 		Pattern patternStart = Pattern.compile("^[a-z0-9\\_]*\\.[a-z0-9]*", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = patternStart.matcher(method);
 		
@@ -122,12 +137,7 @@ public class MetricsExtractor {
 			if (!packageDeclaration.isPresent()) return "";
 			return packageDeclaration.get().getNameAsString();
 		} catch (FileNotFoundException | ParseProblemException e) {
-			// TODO Auto-generated catch block
 			return "";
 		}
-		
-		
-
 	}
-	
 }

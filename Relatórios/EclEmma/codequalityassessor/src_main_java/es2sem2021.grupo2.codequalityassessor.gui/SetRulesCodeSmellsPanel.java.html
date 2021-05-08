@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SetRulesCodeSmellsPanel.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.gui</a> &gt; <span class="el_source">SetRulesCodeSmellsPanel.java</span></div><h1>SetRulesCodeSmellsPanel.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.gui;
+
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import es2sem2021.grupo2.codequalityassessor.rules.CodeSmells;
+import es2sem2021.grupo2.codequalityassessor.rules.Rule;
+import es2sem2021.grupo2.codequalityassessor.rules.RulesSet;
+
+public class SetRulesCodeSmellsPanel extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Create the panel.
+	 */
+	
+	private JComboBox&lt;String&gt; codeSmellCB;
+	private JComboBox&lt;String&gt; ruleCB;
+	private JLabel errorLabel;
+	private JLabel successLabel;
+	
+<span class="nc" id="L34">	public SetRulesCodeSmellsPanel() {</span>
+<span class="nc" id="L35">		setBounds(0, 0, 650, 483);</span>
+<span class="nc" id="L36">		setLayout(null);</span>
+<span class="nc" id="L37">		setVisible(false);</span>
+		
+<span class="nc" id="L39">		codeSmellCB = new JComboBox&lt;String&gt;();</span>
+<span class="nc" id="L40">		codeSmellCB.setBounds(248, 117, 153, 27);</span>
+<span class="nc" id="L41">		add(codeSmellCB);</span>
+		
+<span class="nc" id="L43">		ruleCB = new JComboBox&lt;String&gt;();</span>
+<span class="nc" id="L44">		ruleCB.setBounds(248, 224, 153, 27);</span>
+<span class="nc" id="L45">		add(ruleCB);</span>
+		
+<span class="nc" id="L47">		JLabel lblNewLabel = new JLabel(&quot;Code Smell&quot;);</span>
+<span class="nc" id="L48">		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L49">		lblNewLabel.setBounds(271, 89, 107, 16);</span>
+<span class="nc" id="L50">		add(lblNewLabel);</span>
+		
+<span class="nc" id="L52">		JLabel lblRule = new JLabel(&quot;Rule&quot;);</span>
+<span class="nc" id="L53">		lblRule.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L54">		lblRule.setBounds(271, 196, 107, 16);</span>
+<span class="nc" id="L55">		add(lblRule);</span>
+		
+<span class="nc" id="L57">		JButton changeCS = new JButton(&quot;Change Code Smell&quot;);</span>
+<span class="nc" id="L58">		changeCS.addMouseListener(new MouseAdapter() {</span>
+           @Override
+            public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L61">        	   errorLabel.setVisible(false);</span>
+<span class="nc" id="L62">        	   successLabel.setVisible(false);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        	   if(ruleCB.getSelectedItem().toString() == &quot;&quot;) {</span>
+<span class="nc" id="L64">        		   errorLabel.setVisible(true);</span>
+<span class="nc" id="L65">        		   return;</span>
+        	   } 
+<span class="nc" id="L67">        	   String codeSmell = codeSmellCB.getSelectedItem().toString();</span>
+<span class="nc" id="L68">        	   String ruleName = ruleCB.getSelectedItem().toString();</span>
+<span class="nc" id="L69">        	   Rule rule = RulesSet.getRules().get(ruleName);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        	   if(CodeSmells.addRuleToCodeSmell(codeSmell, rule) == false) {</span>
+<span class="nc" id="L71">        		   errorLabel.setVisible(true);</span>
+<span class="nc" id="L72">        	   }else successLabel.setVisible(true);</span>
+<span class="nc" id="L73">        	   }</span>
+           });
+<span class="nc" id="L75">		changeCS.setBounds(205, 313, 240, 44);</span>
+<span class="nc" id="L76">		add(changeCS);</span>
+		
+<span class="nc" id="L78">		errorLabel = new JLabel(&quot;You must enter a valid rule for that code smell&quot;);</span>
+<span class="nc" id="L79">		errorLabel.setForeground(Color.RED);</span>
+<span class="nc" id="L80">		errorLabel.setBounds(172, 394, 305, 16);</span>
+<span class="nc" id="L81">		errorLabel.setVisible(false);</span>
+<span class="nc" id="L82">		add(errorLabel);</span>
+		
+<span class="nc" id="L84">		successLabel = new JLabel(&quot;Code smell updated with success&quot;);</span>
+<span class="nc" id="L85">		successLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L86">		successLabel.setBounds(179, 394, 292, 16);</span>
+<span class="nc" id="L87">		successLabel.setVisible(false);</span>
+<span class="nc" id="L88">		add(successLabel);</span>
+		
+<span class="nc" id="L90">		CodeSmells.loadFromFile();;</span>
+<span class="nc" id="L91">		update();</span>
+		
+<span class="nc" id="L93">	}</span>
+	
+	public void update(){
+<span class="nc" id="L96">		codeSmellCB.removeAllItems();</span>
+<span class="nc" id="L97">		ruleCB.removeAllItems();</span>
+<span class="nc" id="L98">		HashMap&lt;String, Rule&gt; codeSmells = CodeSmells.getCodeSmells();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (Map.Entry&lt;String, Rule&gt; c : codeSmells.entrySet()) {</span>
+<span class="nc" id="L100">			codeSmellCB.addItem(c.getKey());</span>
+		}
+<span class="nc" id="L102">		HashMap&lt;String, Rule&gt; rules = RulesSet.getRules();</span>
+<span class="nc" id="L103">		ruleCB.addItem(&quot;&quot;);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (Map.Entry&lt;String, Rule&gt; rule : rules.entrySet()) {</span>
+<span class="nc" id="L105">			ruleCB.addItem(rule.getKey());</span>
+		}
+<span class="nc" id="L107">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>

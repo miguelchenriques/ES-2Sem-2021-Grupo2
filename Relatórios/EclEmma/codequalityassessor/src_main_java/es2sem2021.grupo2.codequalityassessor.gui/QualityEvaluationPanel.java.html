@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>QualityEvaluationPanel.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.gui</a> &gt; <span class="el_source">QualityEvaluationPanel.java</span></div><h1>QualityEvaluationPanel.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.gui;
+
+import javax.swing.JPanel;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+
+import javax.swing.JLabel;
+
+
+import org.jfree.chart.plot.PlotOrientation;
+
+import es2sem2021.grupo2.codequalityassessor.rules.QualityEvaluation;
+
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+
+
+
+public class QualityEvaluationPanel extends JPanel{
+	private static final long serialVersionUID = 1L;
+
+<span class="nc" id="L27">	public QualityEvaluationPanel() {</span>
+
+<span class="nc" id="L29">		setBounds(0, 0, 650, 483);</span>
+<span class="nc" id="L30">		setLayout(null);     </span>
+<span class="nc" id="L31">		setVisible(false);</span>
+
+<span class="nc" id="L33">		JLabel VerdadeirosPositivoLabel = new JLabel(&quot;True Positives:&quot;);</span>
+<span class="nc" id="L34">		VerdadeirosPositivoLabel.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="nc" id="L35">		VerdadeirosPositivoLabel.setBounds(31, 60, 96, 14);</span>
+<span class="nc" id="L36">		add(VerdadeirosPositivoLabel);</span>
+
+<span class="nc" id="L38">		JLabel VerdadeirosNegativoLabel = new JLabel(&quot;True Negatives:&quot;);</span>
+<span class="nc" id="L39">		VerdadeirosNegativoLabel.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="nc" id="L40">		VerdadeirosNegativoLabel.setBounds(31, 77, 96, 14);</span>
+<span class="nc" id="L41">		add(VerdadeirosNegativoLabel);</span>
+
+<span class="nc" id="L43">		JLabel FalsoPositivoLabel = new JLabel(&quot;False Positives:&quot;);</span>
+<span class="nc" id="L44">		FalsoPositivoLabel.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="nc" id="L45">		FalsoPositivoLabel.setBounds(31, 91, 96, 14);</span>
+<span class="nc" id="L46">		add(FalsoPositivoLabel);</span>
+
+<span class="nc" id="L48">		JLabel FalsosNegativosLabel = new JLabel(&quot;False Negatives:&quot;);</span>
+<span class="nc" id="L49">		FalsosNegativosLabel.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="nc" id="L50">		FalsosNegativosLabel.setBounds(31, 108, 96, 14);</span>
+<span class="nc" id="L51">		add(FalsosNegativosLabel);</span>
+
+<span class="nc" id="L53">		JLabel n_verdadeiros_positivos = new JLabel(&quot;TP&quot;);</span>
+<span class="nc" id="L54">		n_verdadeiros_positivos.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L55">		n_verdadeiros_positivos.setBounds(325, 60, 67, 14);</span>
+<span class="nc" id="L56">		add(n_verdadeiros_positivos);</span>
+
+<span class="nc" id="L58">		JLabel n_verdadeiros_negativos = new JLabel(&quot;TN&quot;);</span>
+<span class="nc" id="L59">		n_verdadeiros_negativos.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L60">		n_verdadeiros_negativos.setBounds(325, 77, 67, 14);</span>
+<span class="nc" id="L61">		add(n_verdadeiros_negativos);</span>
+
+<span class="nc" id="L63">		JLabel n_falsos_positivos = new JLabel(&quot;FP&quot;);</span>
+<span class="nc" id="L64">		n_falsos_positivos.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L65">		n_falsos_positivos.setBounds(325, 91, 67, 14);</span>
+<span class="nc" id="L66">		add(n_falsos_positivos);</span>
+
+<span class="nc" id="L68">		JLabel n_falsos_negativos = new JLabel(&quot;FN&quot;);</span>
+<span class="nc" id="L69">		n_falsos_negativos.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L70">		n_falsos_negativos.setBounds(325, 108, 67, 14);</span>
+<span class="nc" id="L71">		add(n_falsos_negativos);</span>
+		
+<span class="nc" id="L73">		JLabel n_falsos_negativos_1 = new JLabel(&quot;FN&quot;);</span>
+<span class="nc" id="L74">		n_falsos_negativos_1.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L75">		n_falsos_negativos_1.setBounds(182, 108, 67, 14);</span>
+<span class="nc" id="L76">		add(n_falsos_negativos_1);</span>
+		
+<span class="nc" id="L78">		JLabel n_falsos_positivos_1 = new JLabel(&quot;FP&quot;);</span>
+<span class="nc" id="L79">		n_falsos_positivos_1.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L80">		n_falsos_positivos_1.setBounds(182, 91, 67, 14);</span>
+<span class="nc" id="L81">		add(n_falsos_positivos_1);</span>
+		
+<span class="nc" id="L83">		JLabel n_verdadeiros_negativos_1 = new JLabel(&quot;TN&quot;);</span>
+<span class="nc" id="L84">		n_verdadeiros_negativos_1.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L85">		n_verdadeiros_negativos_1.setBounds(182, 77, 67, 14);</span>
+<span class="nc" id="L86">		add(n_verdadeiros_negativos_1);</span>
+		
+<span class="nc" id="L88">		JLabel n_verdadeiros_positivos_1 = new JLabel(&quot;TP&quot;);</span>
+<span class="nc" id="L89">		n_verdadeiros_positivos_1.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L90">		n_verdadeiros_positivos_1.setBounds(182, 60, 67, 14);</span>
+<span class="nc" id="L91">		add(n_verdadeiros_positivos_1);</span>
+		
+<span class="nc" id="L93">		JLabel lblNewLabel = new JLabel(&quot;is_Long_Method&quot;);</span>
+<span class="nc" id="L94">		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L95">		lblNewLabel.setBounds(311, 35, 96, 14);</span>
+<span class="nc" id="L96">		add(lblNewLabel);</span>
+		
+<span class="nc" id="L98">		JLabel lblIsgodclass = new JLabel(&quot;is_God_Class&quot;);</span>
+<span class="nc" id="L99">		lblIsgodclass.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L100">		lblIsgodclass.setBounds(167, 35, 82, 14);</span>
+<span class="nc" id="L101">		add(lblIsgodclass);</span>
+
+<span class="nc" id="L103">		QualityEvalChart qechart = new QualityEvalChart(&quot;Codesmells&quot;,&quot;QualityEvaluation&quot;);</span>
+
+<span class="nc" id="L105">		JFreeChart chart = ChartFactory.createBarChart(</span>
+<span class="nc" id="L106">				&quot;Quality Evaluation&quot;,</span>
+<span class="nc" id="L107">				&quot;&quot;,</span>
+<span class="nc" id="L108">				&quot;&quot;,</span>
+<span class="nc" id="L109">				qechart.getDataset(),</span>
+<span class="nc" id="L110">				PlotOrientation.VERTICAL,</span>
+<span class="nc" id="L111">				true, true, false);</span>
+
+
+<span class="nc" id="L114">		ChartPanel chartPanel = new ChartPanel(chart);</span>
+<span class="nc" id="L115">		chartPanel.setBounds(10, 157, 630, 289);</span>
+<span class="nc" id="L116">		add(chartPanel);</span>
+
+<span class="nc" id="L118">		JButton changeCS = new JButton(&quot;Refresh&quot;);</span>
+<span class="nc" id="L119">		changeCS.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L121">				QualityEvalChart qechart = new QualityEvalChart(&quot;Codesmells&quot;,&quot;QualityEvaluation&quot;);</span>
+<span class="nc" id="L122">				QualityEvaluation qe = new QualityEvaluation();</span>
+<span class="nc" id="L123">				n_verdadeiros_positivos.setText(Integer.toString(qe.getLongMethodTruePositives()));</span>
+<span class="nc" id="L124">				n_verdadeiros_negativos.setText(Integer.toString(qe.getLongMethodTrueNegatives()));</span>
+<span class="nc" id="L125">				n_falsos_positivos.setText(Integer.toString(qe.getLongMethodFalsePositives()));</span>
+<span class="nc" id="L126">				n_falsos_negativos.setText(Integer.toString(qe.getLongMethodFalseNegatives()));</span>
+<span class="nc" id="L127">				n_verdadeiros_positivos_1.setText(Integer.toString(qe.getGodClassTruePositives()));</span>
+<span class="nc" id="L128">				n_verdadeiros_negativos_1.setText(Integer.toString(qe.getGodClassTrueNegatives()));</span>
+<span class="nc" id="L129">				n_falsos_positivos_1.setText(Integer.toString(qe.getGodClassFalsePositives()));</span>
+<span class="nc" id="L130">				n_falsos_negativos_1.setText(Integer.toString(qe.getGodClassFalseNegatives()));</span>
+<span class="nc" id="L131">				JFreeChart chart = ChartFactory.createBarChart(</span>
+<span class="nc" id="L132">						&quot;Quality Evaluation&quot;,</span>
+<span class="nc" id="L133">						&quot;&quot;,</span>
+<span class="nc" id="L134">						&quot;&quot;,</span>
+<span class="nc" id="L135">						qechart.getDataset(),</span>
+<span class="nc" id="L136">						PlotOrientation.VERTICAL,</span>
+<span class="nc" id="L137">						true, true, false);</span>
+
+<span class="nc" id="L139">				chartPanel.setChart(chart);</span>
+
+<span class="nc" id="L141">			}</span>
+		});
+<span class="nc" id="L143">		changeCS.setBounds(462, 61, 153, 47);</span>
+<span class="nc" id="L144">		add(changeCS);</span>
+		
+
+
+<span class="nc" id="L148">	}   </span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>
