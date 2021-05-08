@@ -207,7 +207,7 @@ public class App {
 		lblNewLabel_2.setBounds(116, 122, 417, 58);
 		contentPane.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Click a menu to interact");
+		JLabel lblNewLabel_3 = new JLabel("Click on a menu to interact");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("SF Pro", Font.PLAIN, 16));
 		lblNewLabel_3.setBounds(189, 250, 272, 16);
