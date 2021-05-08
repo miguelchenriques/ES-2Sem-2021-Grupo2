@@ -45,7 +45,7 @@ public class FinalResults {
 			HashMap<String, Rule> codeSmellsSet, String smell) {
 		Rule r = codeSmellsSet.get(smell);
 		HashMap<String,Boolean> results = new HashMap<String,Boolean>();
-		if(r != null) {
+		if(r != null && methods != null) {
 			for(Method m: methods) {
 				Boolean result = r.assertRule(m);
 				results.put(m.m_class+"."+m.m_method, result);
