@@ -14,7 +14,7 @@ class MetricsSummaryTest {
 
 	@Test
 	void testCompilerMetrics() throws InvalidFormatException, IOException {
-		File f = new File("compiler_metrics.xlsx");
+		File f = new File("testFiles" + File.separator + "compiler_metrics.xlsx");
 		Workbook workbook = WorkbookFactory.create(f);
 		MetricsSummary metricsSummary = new MetricsSummary(workbook);
 		assertEquals(11, metricsSummary.getNumberOfClasses());
@@ -26,7 +26,7 @@ class MetricsSummaryTest {
 	
 	@Test
 	void testJasmlMetrics() throws InvalidFormatException, IOException {
-		File f = new File("jasml_metrics.xlsx");
+		File f = new File("testFiles" + File.separator + "jasml_metrics.xlsx");
 		Workbook workbook = WorkbookFactory.create(f);
 		MetricsSummary metricsSummary = new MetricsSummary(workbook);
 		assertEquals(51, metricsSummary.getNumberOfClasses());
@@ -37,6 +37,20 @@ class MetricsSummaryTest {
 	void testError() throws InvalidFormatException, IOException {
 	    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
 			File f = new File("testFiles" + File.separator + "excel_errado.xlsx");
+			Workbook workbook = WorkbookFactory.create(f);
+			new MetricsSummary(workbook);
+	    });
+
+	    String expectedMessage = "An error has occured, your rows don't have the correct metrics' name, please check the syntax again.";
+	    String actualMessage = exception.getMessage();
+
+	    assertTrue(actualMessage.equals(expectedMessage));
+	}
+	
+	@Test
+	void testError2() throws InvalidFormatException, IOException {
+	    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+			File f = new File("testFiles" + File.separator + "excel_errado2.xlsx");
 			Workbook workbook = WorkbookFactory.create(f);
 			new MetricsSummary(workbook);
 	    });

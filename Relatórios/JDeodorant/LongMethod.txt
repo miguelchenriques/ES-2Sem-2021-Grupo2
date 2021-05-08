@@ -1,0 +1,9 @@
+es2sem2021.grupo2.codequalityassessor.metrics.extractors.WMCClass	private static int sumClassCyclos(HashMap<java.lang.String,java.lang.Integer>, java.lang.String) 	c	B3	0/4
+es2sem2021.grupo2.codequalityassessor.rules.CodeSmells	public static void loadFromFile() 	codesmells	B3	0/4
+es2sem2021.grupo2.codequalityassessor.gui.App	private void initialize() 	frame	B1	0/3
+es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor	private static java.lang.String getPackage(java.io.File) 	compilationUnit	B1	0/3
+es2sem2021.grupo2.codequalityassessor.gui.CreateCodeSmellsPanel	public void updateCodeSmells() 	model	B1	0/3
+es2sem2021.grupo2.codequalityassessor.gui.CreateCodeSmellsPanel	public void updateCodeSmells() 	model	B2	0/2
+es2sem2021.grupo2.codequalityassessor.gui.RulesPanel	private void updateRules() 	model	B1	0/3
+es2sem2021.grupo2.codequalityassessor.gui.RulesPanel	private void updateRules() 	model	B2	0/2
+es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor	public static List<es2sem2021.grupo2.codequalityassessor.xlsx.Method> extract(java.io.File) throws java.io.FileNotFoundException	className	B6	1/4
