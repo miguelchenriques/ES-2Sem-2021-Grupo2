@@ -129,6 +129,7 @@ public class CreateCodeSmellsPanel extends JPanel {
 		HashMap<String, Rule> codeSmells = CodeSmells.getCodeSmells();
 		model.getDataVector().removeAllElements();
 		revalidate();
+		repaint();
 		
 		for (Map.Entry<String, Rule> entry : codeSmells.entrySet()) {
 			String key = entry.getKey();
