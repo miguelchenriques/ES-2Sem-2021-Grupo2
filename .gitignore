@@ -12,3 +12,4 @@ buildNumber.properties
 .DS_Store
 *.xlsx
 rules.dat
+codesmells.dat
