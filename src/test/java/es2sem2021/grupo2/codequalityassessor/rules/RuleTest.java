@@ -69,7 +69,7 @@ public class RuleTest {
 	
 	@Test
 	void complexRule() {
-		Rule complex = new Rule("complex", "LOC_Method >= 45 And ( ( CYCLO_Method < 10 OR WMC_Class = 3 ) or ( LOC_Class > 80 and NOM <= 20 ) )");
+		Rule complex = new Rule("complex", "LOC_Method >= 45 And ( ( CYCLO_Method < 10 OR WMC_Class = 3 ) or ( LOC_Class > 80 and NOM_Class <= 20 ) )");
 		Method m1 = new Method("a","b","c",10, 68, 3, 45, 3);
 		Method m2 = new Method("a","b","c",10, 88, 3, 40, 3);
 		

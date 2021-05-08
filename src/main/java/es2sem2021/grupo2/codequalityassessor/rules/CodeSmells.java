@@ -94,7 +94,9 @@ public class CodeSmells {
 	@SuppressWarnings("unchecked")
 	public static void loadFromFile() {
 		try {
-			FileInputStream f = new FileInputStream(new File(Constants.CODE_SMELLS_DATA_FILE));
+			File dataFile = new File(Constants.CODE_SMELLS_DATA_FILE);
+			dataFile.createNewFile();
+			FileInputStream f = new FileInputStream(dataFile);
 			ObjectInputStream o = new ObjectInputStream(f);
 			
 			Object in = o.readObject();

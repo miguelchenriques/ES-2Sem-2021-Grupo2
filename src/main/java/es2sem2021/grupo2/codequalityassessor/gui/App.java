@@ -295,6 +295,12 @@ public class App {
 		return lblCreateCodeSmels;
 	}
 	
+	/**
+	 * 
+	 * Changes the visible JPanel to the one passed as argument to the 
+	 * 
+	 * @param panel	panel that will be the one visible
+	 */
 	public void menuClicked(JPanel panel) {
 		extract_panel.setVisible(false);
 		visualize_panel.setVisible(false);

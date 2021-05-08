@@ -42,7 +42,16 @@ public class WMCClass {
 			return null;
 		}
 	}
-
+	
+	/**
+	 * 
+	 * 	Cycles through the classes passed and uses the cyclo hash map to sum the cyclomatic complexities that belong to
+	 * 	each class.
+	 * 
+	 * @param classes		the list of classes to get the wmc
+	 * @param cycloMethod	Hash map that contains the methods and it's cyclomatic complexity
+	 * @return				List of pairs class and wmc
+	 */
 	private static ArrayList<Pair<String, Integer>> getPair(ArrayList<String> classes, HashMap<String, Integer> cycloMethod ) {
 		if (classes.size() < 1)
 			return null;

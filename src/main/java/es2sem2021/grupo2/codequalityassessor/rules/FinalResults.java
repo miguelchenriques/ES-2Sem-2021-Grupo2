@@ -32,7 +32,15 @@ public class FinalResults {
 		return finalresults;
 	}
 
-
+	/**
+	 * 
+	 * 	Asserts the methods that contain the given code smell
+	 * 
+	 * @param methods			list of methods to assert code smell
+	 * @param codeSmellsSet		set of available code smells and their rules
+	 * @param smell				code smell to assert
+	 * @return					Hash map containing the methods as keys and their result from the code smell assertion
+	 */
 	private static HashMap<String, Boolean> getResultsFromCodeSmell(List<Method> methods,
 			HashMap<String, Rule> codeSmellsSet, String smell) {
 		Rule r = codeSmellsSet.get(smell);

@@ -80,23 +80,37 @@ public class MetricsSummary {
 		}
 	}
 		
-	
+	/**
+	 * @return the number of java packages
+	 */
 	public int getNumberOfPackages() {
 		return packages.size();
 	}
 	
+	/**
+	 * @return number of classes, both normal classes as inner classes
+	 */
 	public int getNumberOfClasses() {
 		return classes.size();
 	}
 	
+	/**
+	 * @return sum of the total non blanck lines of code in the java project
+	 */
 	public int getTotalLinesOfCode() {
 		return totalLOC;
 	}
 	
+	/**
+	 * @return	sum of total methods in the selected java project
+	 */
 	public int getTotalNumberOfMethods() {
 		return methods.size();
 	}
 	
+	/**
+	 * @return all the methods and constructors available in the selected project
+	 */
 	public ArrayList<Method> getMethods() {
 		return methods;
 	}
