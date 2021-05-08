@@ -13,7 +13,19 @@ import java.util.HashMap;
 public class RulesSet {
 
 	private static HashMap<String,Rule> rules = new HashMap<String,Rule>();
-	
+
+	/**
+	 * Returns a boolean
+	 * If the adding process is successful returns true if not returns false
+	 * 
+	 * @param name-Rule name (string), conditions-Rule Condition
+	 * @return true/false
+	 * @throws IllegalArgumentException
+	 */
+	public static HashMap<String, Rule> getRules() {
+		return rules;
+	}
+
 	/**
 	 * Returns a boolean
 	 * If the adding process is successful returns true if not returns false
@@ -37,18 +49,6 @@ public class RulesSet {
 
 	/**
 	 * Returns a boolean
-	 * If the adding process is successful returns true if not returns false
-	 * 
-	 * @param name-Rule name (string), conditions-Rule Condition
-	 * @return true/false
-	 * @throws IllegalArgumentException
-	 */
-	public static HashMap<String, Rule> getRules() {
-		return rules;
-	}
-
-	/**
-	 * Returns a boolean
 	 * If the changing process is successful returns true if not returns false
 	 * 
 	 * @param name-Rule name (string), conditions-Rule Condition
@@ -62,6 +62,14 @@ public class RulesSet {
 				return false;
 			rules.put(name, r);
 			saveToFile();
+			HashMap<String,Rule> codesmells = CodeSmells.getCodeSmells();
+			for(String code: codesmells.keySet()) {
+				if(codesmells.get(code).getName().equals(name)) {
+					if(!CodeSmells.addRuleToCodeSmell(code, r)) {
+						CodeSmells.deleteRuleToCodeSmell(code);			
+					}
+				}	
+			}
 			return true;
 		} catch(IllegalArgumentException e) {
 			return false;
@@ -80,9 +88,15 @@ public class RulesSet {
 			return false;
 		rules.remove(name);
 		saveToFile();
+		HashMap<String,Rule> codesmells = CodeSmells.getCodeSmells();
+		for(String code: codesmells.keySet()) {
+			if(codesmells.get(code).getName().equals(name)) {
+				CodeSmells.deleteRuleToCodeSmell(code);
+			}	
+		}
 		return true;
 	}
-	
+
 	/**
 	 * Saves the rules into a file
 	 */
@@ -90,16 +104,16 @@ public class RulesSet {
 		try {
 			FileOutputStream f = new FileOutputStream(new File(Constants.RULE_DATA_FILE));
 			ObjectOutputStream o = new ObjectOutputStream(f);
-			
+
 			o.writeObject(rules);
-			
+
 			o.close();
 			f.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Loads the rules from a file
 	 */
@@ -110,18 +124,18 @@ public class RulesSet {
 			dataFile.createNewFile();
 			FileInputStream f = new FileInputStream(dataFile);
 			ObjectInputStream o = new ObjectInputStream(f);
-			
+
 			Object in = o.readObject();
-			
+
 			if (in instanceof HashMap) {
 				rules = (HashMap<String, Rule>) in;
 			}
 
 			o.close();
 			f.close();
-			
+
 		} catch (EOFException e) {
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {

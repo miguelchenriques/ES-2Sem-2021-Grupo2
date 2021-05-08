@@ -29,6 +29,21 @@ public class CodeSmells {
 		return true;
 	}
 	
+	/**
+	 * Returns a boolean to indicate the result of the method.
+	 *
+	 * @param codesmell - name of the codesmell
+	 * @return boolean (true if succeded / false if failed)
+	 */
+	public static boolean deleteRuleToCodeSmell(String name) {
+		if(!codesmells.containsKey(name))
+			return false;
+		
+		codesmells.put(name,null);
+		saveToFile();
+		return true;
+	}
+	
 	
 	/**
 	 * Returns a boolean
