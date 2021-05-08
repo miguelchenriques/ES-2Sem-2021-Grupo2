@@ -103,34 +103,59 @@ public class QualityEvaluation {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 
+	 * @return true positives to GodClass code smell
+	 */
 	public int getGodClassTruePositives() {
 		return truePositivesGC.size();
 	}
-	
+	/**
+	 * 
+	 * @return	true negatives to GodClass code smell
+	 */
 	public int getGodClassTrueNegatives() {
 		return trueNegativesGC.size();
 	}
-	
+	/**
+	 * 
+	 * @return	false positives to GodClass code smell
+	 */
 	public int getGodClassFalsePositives() {
 		return falsePositivesGC.size();
 	}
-	
+	/**
+	 * 
+	 * @return false negatives to GodClass code smell
+	 */
 	public int getGodClassFalseNegatives() {
 		return falseNegativesGC.size();
 	}
-	
+	/**
+	 * 
+	 * @return	true positives to LongMethod code smell
+	 */
 	public int getLongMethodTruePositives() {
 		return truePositivesLM.size();
 	}
-	
+	/**
+	 * 
+	 * @return	true negatives to LongMethod code smell
+	 */
 	public int getLongMethodTrueNegatives() {
 		return trueNegativesLM.size();
 	}
-	
+	/**
+	 * 
+	 * @return	false positives to LongMethod code smell
+	 */
 	public int getLongMethodFalsePositives() {
 		return falsePositivesLM.size();
 	}
-	
+	/**
+	 * 
+	 * @return false negatives to LongMethod code smell
+	 */
 	public int getLongMethodFalseNegatives() {
 		return falseNegativesLM.size();
 	}

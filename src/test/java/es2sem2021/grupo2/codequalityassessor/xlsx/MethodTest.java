@@ -30,7 +30,7 @@ class MethodTest {
 	
 	@Test
 	void testGetMetric() {
-		assertEquals(5, method.getMetric("NOM"));
+		assertEquals(5, method.getMetric("NOM_Class"));
 		assertEquals(3, method.getMetric("LOC_Class"));
 		assertEquals(10, method.getMetric("WMC_Class"));
 		assertEquals(8, method.getMetric("LOC_Method"));

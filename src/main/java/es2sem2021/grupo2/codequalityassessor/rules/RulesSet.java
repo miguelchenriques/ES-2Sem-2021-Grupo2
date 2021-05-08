@@ -106,7 +106,9 @@ public class RulesSet {
 	@SuppressWarnings("unchecked")
 	public static void loadFromFile() {
 		try {
-			FileInputStream f = new FileInputStream(new File(Constants.RULE_DATA_FILE));
+			File dataFile = new File(Constants.RULE_DATA_FILE);
+			dataFile.createNewFile();
+			FileInputStream f = new FileInputStream(dataFile);
 			ObjectInputStream o = new ObjectInputStream(f);
 			
 			Object in = o.readObject();

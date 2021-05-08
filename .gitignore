@@ -12,3 +12,6 @@ buildNumber.properties
 .DS_Store
 *.xlsx
 rules.dat
+codesmells.dat
+
+!Code_Smells.xlsx

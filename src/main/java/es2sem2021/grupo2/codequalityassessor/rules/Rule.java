@@ -88,7 +88,6 @@ public class Rule implements Serializable {
 	 * 		  condition		condition that is going to be compared with the method
 	 * @return				true if the comparison is true, false otherwise
 	 */
-
 	private boolean assertCondition(Method m, String[] condition) {
 		String metric = condition[0];
 		String comp = condition[1];
@@ -126,11 +125,9 @@ public class Rule implements Serializable {
 
 	public static boolean validateConditionSyntax(String conditionCode) {
 
-		//TODO: Validate completly the condition
 		List<String> validMetrics = Arrays.asList(CYCLO_METHOD, LOC_CLASS, LOC_METHOD, NOM_CLASS, WMC_CLASS);
 		List<String> keywords = Arrays.asList("and", "or", "(", ")", ">", "<", ">=", "<=", "=");
 
-		// metricName pattern
 		Pattern metricName = Pattern.compile("^[a-z][a-z_]*$", Pattern.CASE_INSENSITIVE);
 
 		String[] conditions = conditionCode.split(" ");
@@ -239,6 +236,13 @@ public class Rule implements Serializable {
 		return true;
 	}
 
+	/**
+	 * 
+	 * Verifies if string is integer
+	 * 
+	 * @param i	string to verify if integer
+	 * @return	assertion i is integer
+	 */
 	private static boolean isInteger(String i) {
 		try {
 			Integer.parseInt(i);
@@ -248,19 +252,40 @@ public class Rule implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @return rule name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * 
+	 * @return	rule condition string
+	 */
 	public String getConditions() {
 		return conditions;
 	}
 
+	/**
+	 * 	
+	 * Changes the rule condition
+	 * 
+	 * @param conditions					new condition to set to the rule
+	 * @throws IllegalArgumentException		if condition syntax is invalid
+	 */
 	public void setConditions(String conditions) throws IllegalArgumentException {
 		if (!validateConditionSyntax(conditions)) throw new IllegalArgumentException();
 		this.conditions = conditions;
 	}
 
+	/**
+	 * 
+	 * 	Changes the rule name
+	 * 
+	 * @param name	new name to the rule
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
