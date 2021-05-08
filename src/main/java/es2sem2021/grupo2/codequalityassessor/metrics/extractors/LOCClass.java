@@ -15,6 +15,10 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 import com.github.javaparser.utils.Pair;
 
+/**
+ *	Counts the non blank lines of code from a class 
+ *
+ */
 public class LOCClass {
 	
 	/**
