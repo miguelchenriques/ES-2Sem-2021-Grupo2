@@ -36,9 +36,9 @@ class MetricsSummaryTest {
 	@Test
 	void testError() throws InvalidFormatException, IOException {
 	    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-			File f = new File("excel_errado.xlsx");
+			File f = new File("testFiles" + File.separator + "excel_errado.xlsx");
 			Workbook workbook = WorkbookFactory.create(f);
-			MetricsSummary metricsSummary = new MetricsSummary(workbook);
+			new MetricsSummary(workbook);
 	    });
 
 	    String expectedMessage = "An error has occured, your rows don't have the correct metrics' name, please check the syntax again.";
@@ -50,9 +50,9 @@ class MetricsSummaryTest {
 	@Test
 	void testEmpty() throws InvalidFormatException, IOException {
 	    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-			File f = new File("excel_vazio.xlsx");
+			File f = new File("testFiles" + File.separator + "excel_vazio.xlsx");
 			Workbook workbook = WorkbookFactory.create(f);
-			MetricsSummary metricsSummary = new MetricsSummary(workbook);
+			new MetricsSummary(workbook);
 	    });
 
 	    String expectedMessage = "An error has occured, xlsx file doesn't have any rows, please try again.";
