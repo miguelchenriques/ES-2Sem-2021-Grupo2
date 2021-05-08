@@ -1,0 +1,2 @@
+es2sem2021.grupo2.codequalityassessor.gui.App	[es2sem2021.grupo2.codequalityassessor.gui.App::javax.swing.JFrame frame, es2sem2021.grupo2.codequalityassessor.gui.App::main(java.lang.String[]):void, es2sem2021.grupo2.codequalityassessor.gui.App::createContentPane():javax.swing.JPanel]
+es2sem2021.grupo2.codequalityassessor.gui.ButtonColumn	[es2sem2021.grupo2.codequalityassessor.gui.ButtonColumn::int mnemonic, es2sem2021.grupo2.codequalityassessor.gui.ButtonColumn::setMnemonic(int):void, es2sem2021.grupo2.codequalityassessor.gui.ButtonColumn::javax.swing.JButton renderButton]
