@@ -9,14 +9,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
-
 public class RulesSet {
 
-	private static HashMap<String,Rule> rules = new HashMap<String,Rule>();
+	private static HashMap<String, Rule> rules = new HashMap<String, Rule>();
 
 	/**
-	 * Returns a boolean
-	 * If the adding process is successful returns true if not returns false
+	 * Returns a boolean If the adding process is successful returns true if not
+	 * returns false
 	 * 
 	 * @param name-Rule name (string), conditions-Rule Condition
 	 * @return true/false
@@ -27,8 +26,8 @@ public class RulesSet {
 	}
 
 	/**
-	 * Returns a boolean
-	 * If the adding process is successful returns true if not returns false
+	 * Returns a boolean If the adding process is successful returns true if not
+	 * returns false
 	 * 
 	 * @param name-Rule name (string), conditions-Rule Condition
 	 * @return true/false
@@ -36,20 +35,20 @@ public class RulesSet {
 	 */
 	public static boolean addRule(String name, String conditions) {
 		try {
-			Rule r = new Rule(name,conditions);
-			if(rules.get(name) != null)
+			Rule r = new Rule(name, conditions);
+			if (rules.get(name) != null)
 				return false;
 			rules.put(name, r);
 			saveToFile();
 			return true;
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			return false;
 		}
 	}
 
 	/**
-	 * Returns a boolean
-	 * If the changing process is successful returns true if not returns false
+	 * Returns a boolean If the changing process is successful returns true if not
+	 * returns false
 	 * 
 	 * @param name-Rule name (string), conditions-Rule Condition
 	 * @return true/false
@@ -57,42 +56,48 @@ public class RulesSet {
 	 */
 	public static boolean changeRule(String name, String conditions) {
 		try {
-			Rule r = new Rule(name,conditions);
-			if(rules.get(name) == null)
+			Rule r = new Rule(name, conditions);
+			if (rules.get(name) == null)
 				return false;
 			rules.put(name, r);
 			saveToFile();
-			HashMap<String,Rule> codesmells = CodeSmells.getCodeSmells();
-			for(String code: codesmells.keySet()) {
-				if(codesmells.get(code).getName().equals(name)) {
-					if(!CodeSmells.addRuleToCodeSmell(code, r)) {
-						CodeSmells.deleteRuleToCodeSmell(code);			
+			HashMap<String, Rule> codesmells = CodeSmells.getCodeSmells();
+			for (String code : codesmells.keySet()) {
+				try {
+					if (codesmells.get(code).getName().equals(name)) {
+						if (!CodeSmells.addRuleToCodeSmell(code, r)) {
+							CodeSmells.deleteRuleToCodeSmell(code);
+						}
 					}
-				}	
+				} catch (NullPointerException e) {
+				}
 			}
 			return true;
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			return false;
 		}
 	}
 
 	/**
-	 * Returns a boolean
-	 * If the deleting process is successful returns true if not returns false
+	 * Returns a boolean If the deleting process is successful returns true if not
+	 * returns false
 	 * 
 	 * @param name-Rule name (string)
 	 * @return true/false
 	 */
 	public static boolean deleteRule(String name) {
-		if(rules.get(name) == null)
+		if (rules.get(name) == null)
 			return false;
 		rules.remove(name);
 		saveToFile();
-		HashMap<String,Rule> codesmells = CodeSmells.getCodeSmells();
-		for(String code: codesmells.keySet()) {
-			if(codesmells.get(code).getName().equals(name)) {
-				CodeSmells.deleteRuleToCodeSmell(code);
-			}	
+		HashMap<String, Rule> codesmells = CodeSmells.getCodeSmells();
+		for (String code : codesmells.keySet()) {
+			try {
+				if (codesmells.get(code).getName().equals(name)) {
+					CodeSmells.deleteRuleToCodeSmell(code);
+				}
+			} catch (NullPointerException e) {
+			}
 		}
 		return true;
 	}

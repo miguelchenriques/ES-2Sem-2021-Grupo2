@@ -44,7 +44,7 @@ public class RulesPanel extends JPanel {
 		errorMsg = new JLabel("New label");
 		errorMsg.setHorizontalAlignment(SwingConstants.CENTER);
 		errorMsg.setForeground(Color.RED);
-		errorMsg.setBounds(117, 152, 417, 16);
+		errorMsg.setBounds(32, 152, 590, 16);
 		errorMsg.setVisible(false);
 		add(errorMsg);
 
@@ -74,7 +74,7 @@ public class RulesPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				errorMsg.setVisible(false);
 				if (RulesSet.addRule(ruleName.getText(), ruleCondition.getText()) == false) {
-					errorMsg.setText("Please enter a valid logic condition!");
+					errorMsg.setText("Either you already have a rule with that name or you entered an invalid condition");
 					errorMsg.setVisible(true);
 				}
 				updateRules();
