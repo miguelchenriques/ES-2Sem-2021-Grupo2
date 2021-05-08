@@ -103,6 +103,8 @@ public class VisualizePanel extends JPanel {
 						e1.printStackTrace();
 					} catch (IOException e1) {
 						e1.printStackTrace();
+					} catch (IllegalArgumentException e1) {
+						e1.printStackTrace();
 					}
 
 				}
