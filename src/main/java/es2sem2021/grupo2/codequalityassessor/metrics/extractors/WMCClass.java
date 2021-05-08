@@ -16,7 +16,6 @@ import com.github.javaparser.utils.Pair;
 
 public class WMCClass {
 
-	//TODO: Add javadocs
 	/***
 	 * 
 	 * Returns a hashmap with all the classes names present in the file f as keys and an integer representing the sum of

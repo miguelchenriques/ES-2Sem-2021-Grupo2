@@ -126,7 +126,6 @@ public class Rule implements Serializable {
 
 	public static boolean validateConditionSyntax(String conditionCode) {
 
-		//TODO: Validate completly the condition
 		List<String> validMetrics = Arrays.asList(CYCLO_METHOD, LOC_CLASS, LOC_METHOD, NOM_CLASS, WMC_CLASS);
 		List<String> keywords = Arrays.asList("and", "or", "(", ")", ">", "<", ">=", "<=", "=");
 

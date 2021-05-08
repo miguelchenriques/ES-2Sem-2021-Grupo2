@@ -99,7 +99,6 @@ public class QualityEvaluation {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

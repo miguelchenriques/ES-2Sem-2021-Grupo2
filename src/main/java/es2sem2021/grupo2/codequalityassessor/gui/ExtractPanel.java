@@ -64,10 +64,8 @@ public class ExtractPanel extends JPanel {
     				try {
     					fileGenerator.main();
     				} catch (InvalidFormatException i) {
-    					// TODO Auto-generated catch block
     					i.printStackTrace();
     				} catch (IOException i) {
-    					// TODO Auto-generated catch block
     					i.printStackTrace();
     				}
     				
