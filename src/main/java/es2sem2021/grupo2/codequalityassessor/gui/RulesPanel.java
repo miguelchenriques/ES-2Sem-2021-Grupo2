@@ -99,8 +99,6 @@ public class RulesPanel extends JPanel {
 		model.setColumnIdentifiers(columnNames);
 		table.setModel(model);
 		table.getColumnModel().getColumn(1).setPreferredWidth(500);
-		// table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor());
-		// table.setPreferredScrollableViewportSize(new Dimension(500, 200));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		JScrollPane scrollPane = new JScrollPane(table);

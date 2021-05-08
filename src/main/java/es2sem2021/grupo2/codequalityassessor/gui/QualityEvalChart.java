@@ -27,8 +27,6 @@ public class QualityEvalChart extends ApplicationFrame{
             
          ChartPanel chartPanel = new ChartPanel( barChart );        
          chartPanel.setPreferredSize(new java.awt.Dimension( 630, 336 ));
-         //chartPanel.setSize(50,50);
-//         setContentPane( chartPanel ); 
          getContentPane().add(chartPanel);
       }
       
