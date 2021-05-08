@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CYCLO_method.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.metrics.extractors</a> &gt; <span class="el_source">CYCLO_method.java</span></div><h1>CYCLO_method.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.metrics.extractors;
+
+import static es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor.getMethodSignature;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.github.javaparser.ParseProblemException;
+import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.stmt.DoStmt;
+import com.github.javaparser.ast.stmt.ForEachStmt;
+import com.github.javaparser.ast.stmt.ForStmt;
+import com.github.javaparser.ast.stmt.IfStmt;
+import com.github.javaparser.ast.stmt.SwitchStmt;
+import com.github.javaparser.ast.stmt.WhileStmt;
+import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
+import com.github.javaparser.utils.Pair;
+
+
+/**
+ *	CYCLO_method counts the cyclomatic complexity of each method, adding every loop and possible branches in a method 
+ *
+ */
+<span class="nc" id="L32">public class CYCLO_method {</span>
+
+	/**
+	 * Returns an HashMap with all the methods belonging to the file as keys and their corresponding number of cycles.
+	 * If the file doesn't exist or there is some problem with the parsing it returns null.
+	 * 
+	 * @param f	java file to be parsed
+	 * @return the methods of the file and their number of cycles
+	 */
+	public static HashMap&lt;String, Integer&gt; getMethodCyclo(File f) {
+		try {
+<span class="fc" id="L43">			CompilationUnit compilationUnit = StaticJavaParser.parse(f);</span>
+<span class="fc" id="L44">			LexicalPreservingPrinter.setup(compilationUnit);</span>
+			
+<span class="fc" id="L46">			ArrayList&lt;Pair&lt;String, Integer&gt;&gt; consts = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L47">			ConstructorNameCollector constsName = new ConstructorNameCollector();</span>
+<span class="fc" id="L48">			constsName.visit(compilationUnit, consts);</span>
+
+<span class="fc" id="L50">			ArrayList&lt;Pair&lt;String, Integer&gt;&gt; methods = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L51">			MethodNameCollector methodName = new MethodNameCollector();</span>
+<span class="fc" id="L52">			methodName.visit(compilationUnit, methods);</span>
+
+<span class="fc" id="L54">			consts.addAll(methods);</span>
+
+<span class="fc" id="L56">			return getResults(consts);</span>
+<span class="fc" id="L57">		} catch (FileNotFoundException | ParseProblemException e) {</span>
+<span class="fc" id="L58">			return null;</span>
+		}
+	}
+
+	/**
+	 * Returns an HashMap with all the Methods belonging to the file as keys and their corresponding number of cycles. 
+	 * The HashMap is a conversion of the ArrayList created on MethodNameCollector/ConstructorNameCollector with the methods named correctly.
+	 * Returns null if the ArrayList doesn't have any pair.
+	 * 
+	 * @param classes ArrayList with all the method names and their corresponding number of cycles
+	 * @return an HashMap with all the results
+	 */
+	private static HashMap&lt;String, Integer&gt; getResults(ArrayList&lt;Pair&lt;String, Integer&gt;&gt; methods) {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (methods.size()&lt;1) return null;</span>
+
+<span class="fc" id="L73">		HashMap&lt;String, Integer&gt; results = new HashMap&lt;&gt;();</span>
+
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (Pair&lt;String, Integer&gt; pair: methods) {</span>
+<span class="fc" id="L76">			results.put(pair.a, pair.b);</span>
+		}
+<span class="fc" id="L78">		return results;</span>
+	}
+	
+<span class="fc" id="L81">	public static class MethodNameCollector extends VoidVisitorAdapter&lt;List&lt;Pair&lt;String, Integer&gt;&gt;&gt;{</span>
+		
+		@Override
+		public void visit(MethodDeclaration n, List&lt;Pair&lt;String, Integer&gt;&gt; collector) {
+<span class="fc" id="L85">			super.visit(n, collector);</span>
+			
+<span class="fc" id="L87">			List&lt;Node&gt; l = new ArrayList&lt;Node&gt;();</span>
+<span class="fc" id="L88">			Visitor v = new Visitor();</span>
+<span class="fc" id="L89">			v.visit(n, l);</span>
+			
+<span class="fc" id="L91">			String s = getMethodSignature(n);</span>
+			
+<span class="fc" id="L93">			collector.add(new Pair&lt;String, Integer&gt;(s, l.size()+1));</span>
+<span class="fc" id="L94">		}</span>
+	}
+
+<span class="fc" id="L97">	public static class ConstructorNameCollector extends VoidVisitorAdapter&lt;List&lt;Pair&lt;String, Integer&gt;&gt;&gt;{</span>
+		@Override
+		public void visit(ConstructorDeclaration n, List&lt;Pair&lt;String, Integer&gt;&gt; collector) {
+<span class="fc" id="L100">			super.visit(n, collector);</span>
+			
+<span class="fc" id="L102">			List&lt;Node&gt; l = new ArrayList&lt;Node&gt;();</span>
+<span class="fc" id="L103">			Visitor v = new Visitor();</span>
+<span class="fc" id="L104">			v.visit(n, l);</span>
+						
+<span class="fc" id="L106">			String s = n.getDeclarationAsString(false,false,false);</span>
+
+
+<span class="fc" id="L109">			collector.add(new Pair&lt;String, Integer&gt;(s, l.size()+1));</span>
+<span class="fc" id="L110">		}</span>
+	}
+
+	/**
+	 * 
+	 *	Visitor class that will visit every possible cyclic or branching line in the class and add it to the list of nodes
+	 */
+<span class="fc" id="L117">	public static class Visitor extends VoidVisitorAdapter&lt;List&lt;Node&gt;&gt;{</span>
+		@Override
+		public void visit(ForStmt stmt, List&lt;Node&gt; collector) {
+<span class="fc" id="L120">			super.visit(stmt, collector);</span>
+<span class="fc" id="L121">			collector.add(stmt);</span>
+<span class="fc" id="L122">		}</span>
+
+		@Override
+		public void visit(ForEachStmt stmt, List&lt;Node&gt; collector) {
+<span class="nc" id="L126">			super.visit(stmt, collector);</span>
+<span class="nc" id="L127">			collector.add(stmt);</span>
+<span class="nc" id="L128">		}</span>
+
+		@Override
+		public void visit(IfStmt stmt, List&lt;Node&gt; collector) {
+<span class="fc" id="L132">			super.visit(stmt, collector);</span>
+<span class="fc" id="L133">			collector.add(stmt);</span>
+<span class="fc" id="L134">		}</span>
+
+		@Override
+		public void visit(WhileStmt stmt, List&lt;Node&gt; collector) {
+<span class="fc" id="L138">			super.visit(stmt, collector);</span>
+<span class="fc" id="L139">			collector.add(stmt);</span>
+<span class="fc" id="L140">		}</span>
+		
+		@Override
+		public void visit(SwitchStmt stmt, List&lt;Node&gt; collector) {
+<span class="fc" id="L144">			super.visit(stmt, collector);</span>
+<span class="fc" id="L145">			collector.addAll(stmt.getEntries());</span>
+<span class="fc" id="L146">		}</span>
+		
+		@Override
+		public void visit(DoStmt stmt, List&lt;Node&gt; collector) {
+<span class="fc" id="L150">			super.visit(stmt, collector);</span>
+<span class="fc" id="L151">			collector.add(stmt);</span>
+<span class="fc" id="L152">		}	</span>
+	}	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>

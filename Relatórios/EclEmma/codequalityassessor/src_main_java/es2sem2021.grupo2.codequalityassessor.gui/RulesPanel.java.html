@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RulesPanel.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.gui</a> &gt; <span class="el_source">RulesPanel.java</span></div><h1>RulesPanel.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.gui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import es2sem2021.grupo2.codequalityassessor.rules.Rule;
+import es2sem2021.grupo2.codequalityassessor.rules.RulesSet;
+import java.awt.Color;
+
+public class RulesPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField ruleName;
+	private JTextField ruleCondition;
+	private DefaultTableModel model;
+	private JLabel errorMsg;
+
+	/**
+	 * Create the panel.
+	 */
+<span class="nc" id="L39">	public RulesPanel() {</span>
+<span class="nc" id="L40">		setBounds(0, 0, 650, 483);</span>
+<span class="nc" id="L41">		setLayout(null);</span>
+<span class="nc" id="L42">		setVisible(false);</span>
+
+<span class="nc" id="L44">		errorMsg = new JLabel(&quot;New label&quot;);</span>
+<span class="nc" id="L45">		errorMsg.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L46">		errorMsg.setForeground(Color.RED);</span>
+<span class="nc" id="L47">		errorMsg.setBounds(117, 152, 417, 16);</span>
+<span class="nc" id="L48">		errorMsg.setVisible(false);</span>
+<span class="nc" id="L49">		add(errorMsg);</span>
+
+<span class="nc" id="L51">		ruleName = new JTextField();</span>
+<span class="nc" id="L52">		ruleName.setBounds(24, 66, 152, 43);</span>
+<span class="nc" id="L53">		add(ruleName);</span>
+<span class="nc" id="L54">		ruleName.setColumns(10);</span>
+
+<span class="nc" id="L56">		ruleCondition = new JTextField();</span>
+<span class="nc" id="L57">		ruleCondition.setBounds(207, 66, 258, 43);</span>
+<span class="nc" id="L58">		add(ruleCondition);</span>
+<span class="nc" id="L59">		ruleCondition.setColumns(10);</span>
+
+<span class="nc" id="L61">		JLabel ruleNameLabel = new JLabel(&quot;Rule Name&quot;);</span>
+<span class="nc" id="L62">		ruleNameLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L63">		ruleNameLabel.setBounds(50, 44, 98, 16);</span>
+<span class="nc" id="L64">		add(ruleNameLabel);</span>
+
+<span class="nc" id="L66">		JLabel ruleConditionLabel = new JLabel(&quot;Rule condition&quot;);</span>
+<span class="nc" id="L67">		ruleConditionLabel.setBounds(288, 44, 96, 16);</span>
+<span class="nc" id="L68">		add(ruleConditionLabel);</span>
+
+<span class="nc" id="L70">		JButton addRule = new JButton(&quot;Add Rule&quot;);</span>
+<span class="nc" id="L71">		addRule.setBounds(501, 69, 121, 38);</span>
+<span class="nc" id="L72">		addRule.addMouseListener(new MouseAdapter() {</span>
+			@Override
+			public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L75">				errorMsg.setVisible(false);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">				if (RulesSet.addRule(ruleName.getText(), ruleCondition.getText()) == false) {</span>
+<span class="nc" id="L77">					errorMsg.setText(&quot;Please enter a valid logic condition!&quot;);</span>
+<span class="nc" id="L78">					errorMsg.setVisible(true);</span>
+				}
+<span class="nc" id="L80">				updateRules();</span>
+<span class="nc" id="L81">			}</span>
+		});
+<span class="nc" id="L83">		add(addRule);</span>
+
+<span class="nc" id="L85">		JTable table = new JTable();</span>
+<span class="nc" id="L86">		String[] columnNames = { &quot;Rule Name&quot;, &quot;Rule Condition&quot;, &quot;&quot;, &quot;&quot; };</span>
+<span class="nc" id="L87">		model = new DefaultTableModel() {</span>
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				if(column &lt; 2) return false;</span>
+<span class="nc" id="L96">				return true;</span>
+			}
+		};
+<span class="nc" id="L99">		model.setColumnIdentifiers(columnNames);</span>
+<span class="nc" id="L100">		table.setModel(model);</span>
+<span class="nc" id="L101">		table.getColumnModel().getColumn(1).setPreferredWidth(500);</span>
+<span class="nc" id="L102">		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);</span>
+
+<span class="nc" id="L104">		JScrollPane scrollPane = new JScrollPane(table);</span>
+<span class="nc" id="L105">		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);</span>
+<span class="nc" id="L106">		table.setFillsViewportHeight(true);</span>
+<span class="nc" id="L107">		scrollPane.setBounds(6, 192, 638, 263);</span>
+<span class="nc" id="L108">		add(scrollPane);</span>
+
+<span class="nc" id="L110">		RulesSet.loadFromFile();</span>
+<span class="nc" id="L111">		updateRules();</span>
+
+<span class="nc" id="L113">		Action delete = new AbstractAction() {</span>
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L120">				JTable table = (JTable) e.getSource();</span>
+<span class="nc" id="L121">				int modelRow = Integer.valueOf(e.getActionCommand());</span>
+<span class="nc" id="L122">				RulesSet.deleteRule(table.getModel().getValueAt(modelRow, 0).toString());</span>
+<span class="nc" id="L123">				updateRules();</span>
+<span class="nc" id="L124">			}</span>
+		};
+
+<span class="nc" id="L127">		Action change = new AbstractAction() {</span>
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L134">				errorMsg.setVisible(false);</span>
+<span class="nc" id="L135">				JTable table = (JTable) e.getSource();</span>
+<span class="nc" id="L136">				int modelRow = Integer.valueOf(e.getActionCommand());</span>
+<span class="nc" id="L137">				if (RulesSet.changeRule(table.getModel().getValueAt(modelRow, 0).toString(),</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">						ruleCondition.getText()) == false) {</span>
+<span class="nc" id="L139">					errorMsg.setText(&quot;Please enter a valid condition!&quot;);</span>
+<span class="nc" id="L140">					errorMsg.setVisible(true);</span>
+				}
+<span class="nc" id="L142">				updateRules();</span>
+<span class="nc" id="L143">			}</span>
+		};
+
+<span class="nc" id="L146">		ButtonColumn deleteButton = new ButtonColumn(table, delete, 2);</span>
+<span class="nc" id="L147">		deleteButton.setMnemonic(KeyEvent.VK_D);</span>
+
+<span class="nc" id="L149">		ButtonColumn changeButton = new ButtonColumn(table, change, 3);</span>
+<span class="nc" id="L150">		changeButton.setMnemonic(KeyEvent.VK_D);</span>
+
+<span class="nc" id="L152">	}</span>
+
+	private void updateRules() {
+<span class="nc" id="L155">		HashMap&lt;String, Rule&gt; rules = RulesSet.getRules();</span>
+<span class="nc" id="L156">		model.getDataVector().removeAllElements();</span>
+<span class="nc" id="L157">		revalidate();</span>
+<span class="nc" id="L158">		repaint();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (Map.Entry&lt;String, Rule&gt; entry : rules.entrySet()) {</span>
+<span class="nc" id="L160">			addRuleRow(entry);</span>
+		}
+<span class="nc" id="L162">	}</span>
+
+	private void addRuleRow(Map.Entry&lt;String, Rule&gt; entry) {
+<span class="nc" id="L165">		String key = entry.getKey();</span>
+<span class="nc" id="L166">		Rule rule = entry.getValue();</span>
+<span class="nc" id="L167">		model.addRow(new Object[] { key, rule.getConditions(), &quot;Delete&quot;, &quot;Change&quot; });</span>
+<span class="nc" id="L168">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>

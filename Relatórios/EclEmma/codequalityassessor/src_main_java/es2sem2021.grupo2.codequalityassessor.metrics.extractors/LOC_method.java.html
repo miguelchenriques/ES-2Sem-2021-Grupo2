@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>LOC_method.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.metrics.extractors</a> &gt; <span class="el_source">LOC_method.java</span></div><h1>LOC_method.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.metrics.extractors;
+
+import static es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor.getMethodSignature;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import com.github.javaparser.ParseProblemException;
+import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
+import com.github.javaparser.utils.Pair;
+
+/**
+ *	Counts the non blank lines of code from a method
+ *
+ */
+<span class="nc" id="L25">public class LOC_method {	  </span>
+	 
+	/**
+	 *Returns the names of every method and constructor in the file with it's corresponding lines of code. The name of the
+	 *The name of the methods returns with the following format: &quot;ClassName.MethodName(Parameters)&quot;
+	 *The name of the constructors returns with the following format: &quot;ConstructorName(Parameters)&quot;
+	 *
+	 * @param f		java file to count methods lines of code
+	 * @return		hashmap with the method name and the lines of code
+	*/
+	public static HashMap&lt;String, Integer&gt; getLOCMethod(File f) {
+		try {
+<span class="fc" id="L37">			CompilationUnit compilationUnit = StaticJavaParser.parse(f);</span>
+<span class="fc" id="L38">			LexicalPreservingPrinter.setup(compilationUnit);</span>
+			
+			
+<span class="fc" id="L41">			ArrayList&lt;Pair&lt;String, Integer&gt;&gt; constructors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L42">			ConstructorNameCollector constName = new ConstructorNameCollector();</span>
+<span class="fc" id="L43">			constName.visit(compilationUnit, constructors);</span>
+			
+<span class="fc" id="L45">			ArrayList&lt;Pair&lt;String, Integer&gt;&gt; methods = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L46">			MethodNameCollector methodName = new MethodNameCollector();</span>
+<span class="fc" id="L47">			methodName.visit(compilationUnit, methods);				</span>
+			
+<span class="fc" id="L49">			constructors.addAll(methods);</span>
+			
+<span class="fc" id="L51">			return getResults(constructors);</span>
+<span class="fc" id="L52">		} catch (FileNotFoundException | ParseProblemException e) {	</span>
+<span class="fc" id="L53">			return null;</span>
+		}
+	}
+	
+	
+	/**
+	 * Transforms a List of pairs (methodName, lines of code) to an hashmap where the methodName is stored as a key to
+	 * it's lines of code
+	 * 
+	 * @param classes	list of pairs methodName,LOC
+	 * @return			Hashmap with methodName as key to it's LOC
+	 */
+	
+	private static HashMap&lt;String, Integer&gt; getResults(ArrayList&lt;Pair&lt;String, Integer&gt;&gt; methods) {
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (methods.size()&lt;1) return null;</span>
+		
+<span class="fc" id="L69">		HashMap&lt;String, Integer&gt; results = new HashMap&lt;&gt;();</span>
+		
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (Pair&lt;String, Integer&gt; pair: methods) {</span>
+<span class="fc" id="L72">			results.put(pair.a, pair.b);</span>
+		} 
+<span class="fc" id="L74">		return results;</span>
+	}
+	
+	
+<span class="fc" id="L78">	public static class MethodNameCollector extends VoidVisitorAdapter&lt;List&lt;Pair&lt;String, Integer&gt;&gt;&gt;{</span>
+	    @Override
+	    public void visit(MethodDeclaration n, List&lt;Pair&lt;String, Integer&gt;&gt; collector) {
+<span class="fc" id="L81">	        super.visit(n, collector);</span>
+<span class="fc" id="L82">	        String s = getMethodSignature(n);</span>
+<span class="fc" id="L83">	        int lines = countLines(LexicalPreservingPrinter.print(n));</span>
+<span class="fc" id="L84">	        collector.add(new Pair&lt;String, Integer&gt;(s, lines));</span>
+<span class="fc" id="L85">	    }</span>
+	}
+	
+<span class="fc" id="L88">	public static class ConstructorNameCollector extends VoidVisitorAdapter&lt;List&lt;Pair&lt;String, Integer&gt;&gt;&gt;{</span>
+	    @Override
+	    public void visit(ConstructorDeclaration n, List&lt;Pair&lt;String, Integer&gt;&gt; collector) {
+<span class="fc" id="L91">	        super.visit(n, collector);</span>
+<span class="fc" id="L92">	        String s = n.getDeclarationAsString(false,false,false);</span>
+<span class="fc" id="L93">	        int lines = countLines(LexicalPreservingPrinter.print(n));</span>
+<span class="fc" id="L94">	        collector.add(new Pair&lt;String, Integer&gt;(s, lines));</span>
+<span class="fc" id="L95">	    }</span>
+	}
+	
+	/**
+	 * Returns the number of lines of code, counting comments but not blank lines
+	 * 
+	 * @param classCode		the full method code
+	 * @return				the lines of code number
+	 */
+	private static int countLines(String code) {
+<span class="fc" id="L105">		List&lt;String&gt; lines = Arrays.asList(code.split(&quot;\r\n&quot;));</span>
+<span class="fc" id="L106">		return (int) lines.stream()</span>
+<span class="fc" id="L107">				.map(l -&gt; l.replaceAll(&quot;\t&quot;, &quot;&quot;))</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">				.filter(l -&gt; !l.equals(&quot;&quot;))</span>
+<span class="fc" id="L109">				.count();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>

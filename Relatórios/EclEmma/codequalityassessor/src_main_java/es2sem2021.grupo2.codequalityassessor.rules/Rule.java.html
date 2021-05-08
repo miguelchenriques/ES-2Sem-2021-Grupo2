@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Rule.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.rules</a> &gt; <span class="el_source">Rule.java</span></div><h1>Rule.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.rules;
+
+import static es2sem2021.grupo2.codequalityassessor.rules.Constants.CYCLO_METHOD;
+import static es2sem2021.grupo2.codequalityassessor.rules.Constants.LOC_CLASS;
+import static es2sem2021.grupo2.codequalityassessor.rules.Constants.LOC_METHOD;
+import static es2sem2021.grupo2.codequalityassessor.rules.Constants.NOM_CLASS;
+import static es2sem2021.grupo2.codequalityassessor.rules.Constants.WMC_CLASS;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.mvel2.MVEL;
+
+import es2sem2021.grupo2.codequalityassessor.xlsx.Method;
+
+public class Rule implements Serializable {
+
+
+	@Override
+	public String toString() {
+<span class="nc" id="L24">		return &quot;Rule [name=&quot; + name + &quot;, conditions=&quot; + conditions + &quot;]&quot;;</span>
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5618173094709221790L;
+	private String name, conditions;
+	
+	/**
+	 * 
+	 * Constructs a rule with the given name and condition, throws IllegalArgumentException if the condition has an
+	 * invalid syntax
+	 * 
+	 * @param name
+	 * @param conditions
+	 * @throws IllegalArgumentException
+	 */
+<span class="fc" id="L42">	public Rule(String name, String conditions) throws IllegalArgumentException { //verificar o conditions antes de criar</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		if(!validateConditionSyntax(conditions))</span>
+<span class="fc" id="L44">			throw new IllegalArgumentException(&quot;sintaxe nao valida&quot;);</span>
+<span class="fc" id="L45">		this.name = name;</span>
+<span class="fc" id="L46">		this.conditions = conditions;</span>
+<span class="fc" id="L47">	}</span>
+
+
+	/**
+	 * 
+	 * Evaluates if the method meets the rule's conditions
+	 * 
+	 * @param method		method that is going to be evaluated 
+	 * @return				true if method meets the conditions, false otherwise
+	 */
+
+	public boolean assertRule(Method method) {
+
+<span class="fc" id="L60">		String rule = this.conditions;</span>
+
+<span class="fc" id="L62">		Pattern p = Pattern.compile(&quot;[A-Za-z_]*\\s(&gt;|&lt;|=|&gt;=|&lt;=)\\s[0-9]*&quot;);</span>
+<span class="fc" id="L63">		Matcher matcher = p.matcher(this.conditions);</span>
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		while (matcher.find()) {</span>
+<span class="fc" id="L66">			int start = matcher.start();</span>
+<span class="fc" id="L67">			int end = matcher.end();</span>
+<span class="fc" id="L68">			String match = this.conditions.substring(start, end);</span>
+<span class="fc" id="L69">			String[] condition = match.split(&quot; &quot;);</span>
+<span class="fc" id="L70">			boolean value = assertCondition(method, condition);</span>
+
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			String valueString = value ? &quot;true&quot;: &quot;false&quot;;</span>
+
+<span class="fc" id="L74">			rule = rule.replaceAll(match, valueString);</span>
+
+		}
+<span class="fc" id="L77">		rule = rule.toLowerCase().replaceAll(&quot;and&quot;, &quot;&amp;&amp;&quot;);</span>
+<span class="fc" id="L78">		rule = rule.replaceAll(&quot;or&quot;, &quot;||&quot;);</span>
+
+<span class="fc" id="L80">		return (boolean) MVEL.eval(rule);</span>
+	}
+
+	/**
+	 * 
+	 * Evaluates if the condition is true in the given method
+	 * 
+	 * @param m				method that is going to be compared with the condition
+	 * 		  condition		condition that is going to be compared with the method
+	 * @return				true if the comparison is true, false otherwise
+	 */
+	private boolean assertCondition(Method m, String[] condition) {
+<span class="fc" id="L92">		String metric = condition[0];</span>
+<span class="fc" id="L93">		String comp = condition[1];</span>
+<span class="fc" id="L94">		int value = Integer.parseInt(condition[2]);</span>
+
+<span class="fc" id="L96">		return compare(m.getMetric(metric), comp, value);</span>
+	}
+
+	private boolean compare(int metric, String comp, int value) {
+<span class="pc bpc" id="L100" title="1 of 6 branches missed.">		switch (comp) {</span>
+		case &quot;&gt;&quot;:
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			return metric &gt; value;</span>
+		case &quot;&gt;=&quot;:
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			return metric &gt;= value;</span>
+		case &quot;&lt;&quot;:
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			return metric &lt; value;</span>
+		case &quot;&lt;=&quot;:
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			return metric &lt;= value;</span>
+		case &quot;=&quot;:
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			return metric == value;</span>
+
+		default:
+			break;
+		}
+<span class="nc" id="L115">		return false;</span>
+	}
+
+	/**
+	 * 
+	 * Validates the syntax from the conditions code
+	 * 
+	 * @param conditionCode	the code that specifies the condition
+	 * @return				true if it has a valid syntax, false otherwise
+	 */
+
+	public static boolean validateConditionSyntax(String conditionCode) {
+
+<span class="fc" id="L128">		List&lt;String&gt; validMetrics = Arrays.asList(CYCLO_METHOD, LOC_CLASS, LOC_METHOD, NOM_CLASS, WMC_CLASS);</span>
+<span class="fc" id="L129">		List&lt;String&gt; keywords = Arrays.asList(&quot;and&quot;, &quot;or&quot;, &quot;(&quot;, &quot;)&quot;, &quot;&gt;&quot;, &quot;&lt;&quot;, &quot;&gt;=&quot;, &quot;&lt;=&quot;, &quot;=&quot;);</span>
+
+<span class="fc" id="L131">		Pattern metricName = Pattern.compile(&quot;^[a-z][a-z_]*$&quot;, Pattern.CASE_INSENSITIVE);</span>
+
+<span class="fc" id="L133">		String[] conditions = conditionCode.split(&quot; &quot;);</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if(conditions.length &lt; 3)</span>
+<span class="nc" id="L135">			return false;</span>
+
+		// Splits the conditions
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		for (String element : Arrays.asList(conditions)) {</span>
+
+<span class="fc bfc" id="L140" title="All 2 branches covered.">			if (keywords.contains(element.toLowerCase()))</span>
+<span class="fc" id="L141">				continue; </span>
+
+<span class="fc bfc" id="L143" title="All 2 branches covered.">			if (metricName.matcher(element).matches()) {</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">				if (!validMetrics.contains(element))</span>
+<span class="fc" id="L145">					return false;</span>
+				continue;
+			}
+
+<span class="fc bfc" id="L149" title="All 2 branches covered.">			if (isInteger(element))</span>
+<span class="fc" id="L150">				continue;</span>
+
+<span class="fc" id="L152">			return false;</span>
+		}
+
+<span class="fc" id="L155">		String[] condition = conditionCode.split(&quot; &quot;);</span>
+<span class="fc" id="L156">		int abreParenteses = 0;</span>
+<span class="fc" id="L157">		int fechaParenteses = 0;</span>
+<span class="fc" id="L158">		int logical = 0;</span>
+<span class="fc" id="L159">		int metrics = 0;</span>
+<span class="fc" id="L160">		int integers = 0;</span>
+
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		for (int i = 0; i &lt; condition.length; i++) {</span>
+
+<span class="pc bpc" id="L164" title="2 of 6 branches missed.">			if(i==0 &amp;&amp; !(condition[i].equals(&quot;(&quot;) || validMetrics.contains(condition[i]))) {</span>
+<span class="nc" id="L165">				return false;</span>
+			}
+
+<span class="fc bfc" id="L168" title="All 10 branches covered.">			switch(condition[i].toLowerCase()) {</span>
+			case &quot;(&quot;:
+<span class="fc" id="L170">				abreParenteses++;</span>
+<span class="pc bpc" id="L171" title="1 of 6 branches missed.">				if(i&gt;0 &amp;&amp; !(condition[i-1].equals(&quot;(&quot;) || condition[i-1].toLowerCase().equals(&quot;and&quot;) </span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">						|| condition[i-1].toLowerCase().equals(&quot;or&quot;))) </span>
+<span class="nc" id="L173">					return false;</span>
+				break;
+			case &quot;)&quot;: 
+<span class="fc" id="L176">				fechaParenteses++; </span>
+<span class="pc bpc" id="L177" title="2 of 6 branches missed.">				if(i&gt;0 &amp;&amp; !(condition[i-1].equals(&quot;)&quot;) || isInteger(condition[i-1])))</span>
+<span class="nc" id="L178">					return false;</span>
+				break;
+			case &quot;and&quot;: 
+<span class="pc bpc" id="L181" title="3 of 6 branches missed.">				if(i&gt;0 &amp;&amp; !(condition[i-1].equals(&quot;)&quot;) || isInteger(condition[i-1]))) </span>
+<span class="nc" id="L182">					return false;</span>
+				break;
+			case &quot;or&quot;:
+<span class="pc bpc" id="L185" title="2 of 6 branches missed.">				if(i&gt;0 &amp;&amp; !(condition[i-1].equals(&quot;)&quot;) || isInteger(condition[i-1]))) </span>
+<span class="nc" id="L186">					return false;</span>
+				break;
+			case &quot;&gt;&quot;: 
+<span class="fc" id="L189">				logical++;</span>
+<span class="pc bpc" id="L190" title="2 of 4 branches missed.">				if(i&gt;0 &amp;&amp; !(validMetrics.contains(condition[i-1]))) </span>
+<span class="nc" id="L191">					return false;</span>
+				break;
+			case &quot;&lt;&quot;: 
+<span class="fc" id="L194">				logical++;</span>
+<span class="pc bpc" id="L195" title="2 of 4 branches missed.">				if(i&gt;0 &amp;&amp; !(validMetrics.contains(condition[i-1]))) </span>
+<span class="nc" id="L196">					return false;</span>
+				break;
+			case &quot;&gt;=&quot;: 
+<span class="fc" id="L199">				logical++;</span>
+<span class="pc bpc" id="L200" title="2 of 4 branches missed.">				if(i&gt;0 &amp;&amp; !(validMetrics.contains(condition[i-1])))</span>
+<span class="nc" id="L201">					return false;</span>
+				break;
+			case &quot;&lt;=&quot;: 
+<span class="fc" id="L204">				logical++;</span>
+<span class="pc bpc" id="L205" title="2 of 4 branches missed.">				if(i&gt;0 &amp;&amp; !(validMetrics.contains(condition[i-1])))</span>
+<span class="nc" id="L206">					return false;</span>
+				break;
+			case &quot;=&quot;: 
+<span class="fc" id="L209">				logical++;</span>
+<span class="pc bpc" id="L210" title="2 of 4 branches missed.">				if(i&gt;0 &amp;&amp; !(validMetrics.contains(condition[i-1])))</span>
+<span class="nc" id="L211">					return false;</span>
+				break;
+			default:
+<span class="fc bfc" id="L214" title="All 2 branches covered.">				if(validMetrics.contains(condition[i])) {</span>
+<span class="fc" id="L215">					metrics++;</span>
+<span class="fc bfc" id="L216" title="All 6 branches covered.">					if(i&gt;0 &amp;&amp; !(condition[i-1].equals(&quot;(&quot;) || condition[i-1].toLowerCase().equals(&quot;and&quot;) </span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">							|| condition[i-1].toLowerCase().equals(&quot;or&quot;)))</span>
+<span class="nc" id="L218">						return false;</span>
+					break;
+				}
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">				if(isInteger(condition[i])) {</span>
+<span class="fc" id="L222">					integers++;</span>
+<span class="pc bpc" id="L223" title="1 of 8 branches missed.">					if(i&gt;0 &amp;&amp; !(condition[i-1].equals(&quot;&lt;&quot;) || condition[i-1].equals(&quot;&gt;&quot;) || condition[i-1].equals(&quot;&lt;=&quot;) </span>
+<span class="pc bpc" id="L224" title="1 of 4 branches missed.">							|| condition[i-1].equals(&quot;&gt;=&quot;) || condition[i-1].equals(&quot;=&quot;))) </span>
+<span class="nc" id="L225">						return false;</span>
+					break;
+				}
+<span class="nc bnc" id="L228" title="All 2 branches missed.">				if(i==0) continue;</span>
+<span class="nc" id="L229">				return false;</span>
+			}
+		}
+
+<span class="pc bpc" id="L233" title="3 of 6 branches missed.">		if((logical != integers) || (logical != metrics) || (abreParenteses != fechaParenteses))</span>
+<span class="nc" id="L234">			return false;</span>
+
+<span class="fc" id="L236">		return true;</span>
+	}
+
+	/**
+	 * 
+	 * Verifies if string is integer
+	 * 
+	 * @param i	string to verify if integer
+	 * @return	assertion i is integer
+	 */
+	private static boolean isInteger(String i) {
+		try {
+<span class="fc" id="L248">			Integer.parseInt(i);</span>
+<span class="fc" id="L249">			return true;</span>
+<span class="fc" id="L250">		} catch (NumberFormatException e) {</span>
+<span class="fc" id="L251">			return false;</span>
+		}
+	}
+
+	/**
+	 * 
+	 * @return rule name
+	 */
+	public String getName() {
+<span class="fc" id="L260">		return name;</span>
+	}
+
+	/**
+	 * 
+	 * @return	rule condition string
+	 */
+	public String getConditions() {
+<span class="fc" id="L268">		return conditions;</span>
+	}
+
+	/**
+	 * 	
+	 * Changes the rule condition
+	 * 
+	 * @param conditions					new condition to set to the rule
+	 * @throws IllegalArgumentException		if condition syntax is invalid
+	 */
+	public void setConditions(String conditions) throws IllegalArgumentException {
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">		if (!validateConditionSyntax(conditions)) throw new IllegalArgumentException();</span>
+<span class="fc" id="L280">		this.conditions = conditions;</span>
+<span class="fc" id="L281">	}</span>
+
+	/**
+	 * 
+	 * 	Changes the rule name
+	 * 
+	 * @param name	new name to the rule
+	 */
+	public void setName(String name) {
+<span class="fc" id="L290">		this.name = name;</span>
+<span class="fc" id="L291">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>

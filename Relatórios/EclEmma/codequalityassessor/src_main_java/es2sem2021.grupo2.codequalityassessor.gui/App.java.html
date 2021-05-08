@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Test_CodeQualityAssessor (08/05/2021 16:18:26)</a> &gt; <a href="../../index.html" class="el_group">codequalityassessor</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">es2sem2021.grupo2.codequalityassessor.gui</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package es2sem2021.grupo2.codequalityassessor.gui;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.SwingConstants;
+import javax.swing.JPanel;
+import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
+
+public class App {
+
+	private JFrame frame;
+	private ExtractPanel extract_panel;
+	private VisualizePanel visualize_panel;
+	private RulesPanel rules_panel;
+	private CodeSmellsPanel codesmells_panel;
+	private SetRulesCodeSmellsPanel set_rules_code_smells_panel;
+	private QualityEvaluationPanel quality_evaluation_panel;
+	private CreateCodeSmellsPanel create_code_smells_panel;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+<span class="nc" id="L29">		EventQueue.invokeLater(new Runnable() {</span>
+			public void run() {
+				try {
+<span class="nc" id="L32">					App window = new App();</span>
+<span class="nc" id="L33">					window.frame.setVisible(true);</span>
+<span class="nc" id="L34">					window.frame.setResizable(false);</span>
+<span class="nc" id="L35">				} catch (Exception e) {</span>
+<span class="nc" id="L36">					e.printStackTrace();</span>
+				}
+<span class="nc" id="L38">			}</span>
+		});
+<span class="nc" id="L40">	}</span>
+
+	/**
+	 * Create the application.
+	 */
+<span class="nc" id="L45">	public App() {</span>
+<span class="nc" id="L46">		initialize();</span>
+<span class="nc" id="L47">	}</span>
+
+	/**
+	 * Initialize the contents of the main frame.
+	 */
+	private void initialize() {
+<span class="nc" id="L53">		frame = new JFrame();</span>
+<span class="nc" id="L54">		frame.setBounds(100, 100, 812, 483);</span>
+<span class="nc" id="L55">		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L56">		frame.getContentPane().setLayout(null);</span>
+		
+<span class="nc" id="L58">		extract_panel = new ExtractPanel();</span>
+<span class="nc" id="L59">		visualize_panel = new VisualizePanel();</span>
+<span class="nc" id="L60">		rules_panel = new RulesPanel();</span>
+<span class="nc" id="L61">		codesmells_panel = new CodeSmellsPanel();</span>
+<span class="nc" id="L62">		set_rules_code_smells_panel = new SetRulesCodeSmellsPanel();</span>
+<span class="nc" id="L63">		quality_evaluation_panel = new QualityEvaluationPanel();</span>
+<span class="nc" id="L64">		create_code_smells_panel = new CreateCodeSmellsPanel();</span>
+		
+<span class="nc" id="L66">		JPanel menuPane = new JPanel();</span>
+<span class="nc" id="L67">		menuPane.setBackground(Color.GRAY);</span>
+<span class="nc" id="L68">		menuPane.setBounds(0, 0, 162, 483);</span>
+<span class="nc" id="L69">		frame.getContentPane().add(menuPane);</span>
+<span class="nc" id="L70">		menuPane.setLayout(null);</span>
+		
+<span class="nc" id="L72">		JPanel extractMetricsPane = new JPanel();</span>
+<span class="nc" id="L73">		extractMetricsPane.addMouseListener(new MouseAdapter(){</span>
+			public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L75">				menuClicked(extract_panel);</span>
+<span class="nc" id="L76">			}</span>
+		});
+<span class="nc" id="L78">		extractMetricsPane.setBackground(Color.LIGHT_GRAY);</span>
+<span class="nc" id="L79">		extractMetricsPane.setBounds(6, 11, 150, 50);</span>
+<span class="nc" id="L80">		menuPane.add(extractMetricsPane);</span>
+<span class="nc" id="L81">		extractMetricsPane.setLayout(null);</span>
+		
+<span class="nc" id="L83">		extractMetricsPane.add(createExtractMetricsLbl());</span>
+		
+<span class="nc" id="L85">		JPanel visualizeMetricsPane = new JPanel();</span>
+<span class="nc" id="L86">		visualizeMetricsPane.addMouseListener(new MouseAdapter(){</span>
+			public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L88">				menuClicked(visualize_panel);</span>
+<span class="nc" id="L89">			}</span>
+		});
+<span class="nc" id="L91">		visualizeMetricsPane.setBackground(Color.LIGHT_GRAY);</span>
+<span class="nc" id="L92">		visualizeMetricsPane.setBounds(6, 72, 150, 50);</span>
+<span class="nc" id="L93">		menuPane.add(visualizeMetricsPane);</span>
+<span class="nc" id="L94">		visualizeMetricsPane.setLayout(null);</span>
+		
+<span class="nc" id="L96">		visualizeMetricsPane.add(createVisualizeMetricsLbl());</span>
+		
+<span class="nc" id="L98">		JPanel rulesPane = addRulesToMenuPane(menuPane);</span>
+		
+<span class="nc" id="L100">		JLabel lblAddViewRules = createAddViewRulesLbl();</span>
+<span class="nc" id="L101">		rulesPane.add(lblAddViewRules);</span>
+		
+<span class="nc" id="L103">		JPanel visualizeCodeSmellsPane = new JPanel();</span>
+<span class="nc" id="L104">		visualizeCodeSmellsPane.addMouseListener(new MouseAdapter(){</span>
+			public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L106">				menuClicked(codesmells_panel);</span>
+<span class="nc" id="L107">			}</span>
+		});
+<span class="nc" id="L109">		visualizeCodeSmellsPane.setLayout(null);</span>
+<span class="nc" id="L110">		visualizeCodeSmellsPane.setBackground(Color.LIGHT_GRAY);</span>
+<span class="nc" id="L111">		visualizeCodeSmellsPane.setBounds(6, 316, 150, 50);</span>
+<span class="nc" id="L112">		menuPane.add(visualizeCodeSmellsPane);</span>
+		
+<span class="nc" id="L114">		visualizeCodeSmellsPane.add(createVisualizeCodeSmellLbl());</span>
+		
+<span class="nc" id="L116">		JPanel codeSmellsPane = new JPanel();</span>
+<span class="nc" id="L117">		codeSmellsPane.addMouseListener(new MouseAdapter(){</span>
+			public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L119">				menuClicked(set_rules_code_smells_panel);</span>
+<span class="nc" id="L120">				set_rules_code_smells_panel.update();</span>
+<span class="nc" id="L121">			}</span>
+		});
+<span class="nc" id="L123">		codeSmellsPane.setLayout(null);</span>
+<span class="nc" id="L124">		codeSmellsPane.setBackground(Color.LIGHT_GRAY);</span>
+<span class="nc" id="L125">		codeSmellsPane.setBounds(6, 255, 150, 50);</span>
+<span class="nc" id="L126">		menuPane.add(codeSmellsPane);</span>
+		
+<span class="nc" id="L128">		codeSmellsPane.add(createSetRulesCodeSmellsLabel());</span>
+		
+<span class="nc" id="L130">		JPanel visualizeQualityEvaluationPane = createQualityEvalPane(menuPane);</span>
+		
+<span class="nc" id="L132">		visualizeQualityEvaluationPane.add(createQualityEvalLbl());</span>
+		
+<span class="nc" id="L134">		JPanel CreateCodeSmellsPanel = new JPanel();</span>
+<span class="nc" id="L135">		CreateCodeSmellsPanel.setBounds(6, 194, 150, 50);</span>
+<span class="nc" id="L136">		menuPane.add(CreateCodeSmellsPanel);</span>
+<span class="nc" id="L137">		CreateCodeSmellsPanel.addMouseListener(new MouseAdapter(){</span>
+            public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L139">                menuClicked(create_code_smells_panel);</span>
+<span class="nc" id="L140">                create_code_smells_panel.updateCodeSmells();</span>
+<span class="nc" id="L141">            }</span>
+        });
+<span class="nc" id="L143">		CreateCodeSmellsPanel.setLayout(null);</span>
+<span class="nc" id="L144">		CreateCodeSmellsPanel.setBackground(Color.LIGHT_GRAY);</span>
+		
+		;
+<span class="nc" id="L147">		CreateCodeSmellsPanel.add(createCreateCodeSmellsLabel());</span>
+		
+<span class="nc" id="L149">		JPanel contentPane = createContentPane();</span>
+		
+<span class="nc" id="L151">		contentPane.add(extract_panel);</span>
+<span class="nc" id="L152">		contentPane.add(visualize_panel);</span>
+<span class="nc" id="L153">		contentPane.add(rules_panel);</span>
+<span class="nc" id="L154">		contentPane.add(codesmells_panel);</span>
+<span class="nc" id="L155">		contentPane.add(set_rules_code_smells_panel);</span>
+<span class="nc" id="L156">		contentPane.add(quality_evaluation_panel);</span>
+<span class="nc" id="L157">		contentPane.add(create_code_smells_panel);</span>
+		
+<span class="nc" id="L159">		contentPane.add(createWelcomeLbl());</span>
+<span class="nc" id="L160">		contentPane.add(createClickMenuLbl());</span>
+<span class="nc" id="L161">	}</span>
+
+	/**
+	 * @return	centered label with content &quot;Add/View Rules&quot;
+	 */
+	private JLabel createAddViewRulesLbl() {
+<span class="nc" id="L167">		JLabel lblNewLabel_1_1 = new JLabel(&quot;Add/View Rules&quot;);</span>
+<span class="nc" id="L168">		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L169">		lblNewLabel_1_1.setBounds(6, 17, 132, 16);</span>
+<span class="nc" id="L170">		return lblNewLabel_1_1;</span>
+	}
+
+	/**
+	 * @return	centered label with content &quot;Visualize Code Smells&quot;
+	 */
+	private JLabel createVisualizeCodeSmellLbl() {
+<span class="nc" id="L177">		JLabel lblVisualizeCodeSmells = new JLabel(&quot;Visualize Code Smells&quot;);</span>
+<span class="nc" id="L178">		lblVisualizeCodeSmells.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L179">		lblVisualizeCodeSmells.setBounds(0, 16, 150, 16);</span>
+<span class="nc" id="L180">		return lblVisualizeCodeSmells;</span>
+	}
+
+	private JPanel addRulesToMenuPane(JPanel menuPane) {
+<span class="nc" id="L184">		JPanel rulesPane = new JPanel();</span>
+<span class="nc" id="L185">		rulesPane.addMouseListener(new MouseAdapter(){</span>
+			public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L187">				menuClicked(rules_panel);</span>
+<span class="nc" id="L188">			}</span>
+		});
+<span class="nc" id="L190">		rulesPane.setLayout(null);</span>
+<span class="nc" id="L191">		rulesPane.setBackground(Color.LIGHT_GRAY);</span>
+<span class="nc" id="L192">		rulesPane.setBounds(6, 133, 150, 50);</span>
+<span class="nc" id="L193">		menuPane.add(rulesPane);</span>
+<span class="nc" id="L194">		return rulesPane;</span>
+	}
+
+	/**
+	 * @return	centered label with content &quot;Visualize Metrics&quot;
+	 */
+	private JLabel createVisualizeMetricsLbl() {
+<span class="nc" id="L201">		JLabel lblVisMetrics = new JLabel(&quot;Visualize Metrics&quot;);</span>
+<span class="nc" id="L202">		lblVisMetrics.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L203">		lblVisMetrics.setBounds(6, 17, 132, 16);</span>
+<span class="nc" id="L204">		return lblVisMetrics;</span>
+	}
+
+	/**
+	 * @return	centered label with content &quot;Extract metrics&quot;
+	 */
+	private JLabel createExtractMetricsLbl() {
+<span class="nc" id="L211">		JLabel lblNewLabel = new JLabel(&quot;Extract metrics&quot;);</span>
+<span class="nc" id="L212">		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L213">		lblNewLabel.setBounds(22, 16, 99, 16);</span>
+<span class="nc" id="L214">		return lblNewLabel;</span>
+	}
+
+	/**
+	 * @return	centered label with content &quot;Visualize Quality Evaluation&quot;
+	 */
+	private JLabel createQualityEvalLbl() {
+<span class="nc" id="L221">		JLabel lblVisQualityEvaluation = new JLabel(&quot;Visualize Quality Evaluation&quot;);</span>
+<span class="nc" id="L222">		lblVisQualityEvaluation.setBounds(10, 11, 130, 28);</span>
+<span class="nc" id="L223">		lblVisQualityEvaluation.setFont(new Font(&quot;Lucida Grande&quot;, Font.PLAIN, 11));</span>
+<span class="nc" id="L224">		lblVisQualityEvaluation.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L225">		return lblVisQualityEvaluation;</span>
+	}
+
+	
+	private JPanel createQualityEvalPane(JPanel menuPane) {
+<span class="nc" id="L230">		JPanel visualizeQualityEvaluationPane_1 = new JPanel();</span>
+<span class="nc" id="L231">		visualizeQualityEvaluationPane_1.addMouseListener(new MouseAdapter(){</span>
+            public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L233">                menuClicked(quality_evaluation_panel);</span>
+<span class="nc" id="L234">            }</span>
+        });
+<span class="nc" id="L236">		visualizeQualityEvaluationPane_1.setLayout(null);</span>
+<span class="nc" id="L237">		visualizeQualityEvaluationPane_1.setBackground(Color.LIGHT_GRAY);</span>
+<span class="nc" id="L238">		visualizeQualityEvaluationPane_1.setBounds(6, 377, 150, 50);</span>
+<span class="nc" id="L239">		menuPane.add(visualizeQualityEvaluationPane_1);</span>
+<span class="nc" id="L240">		return visualizeQualityEvaluationPane_1;</span>
+	}
+	
+	/**
+	 * @return	centered label with content &quot;Set Rules for Code Smells&quot;
+	 */
+	private JLabel createSetRulesCodeSmellsLabel() {
+<span class="nc" id="L247">		JLabel lblSetRulesCodeSmmells = new JLabel(&quot;Set Rules for Code Smells&quot;);</span>
+<span class="nc" id="L248">		lblSetRulesCodeSmmells.setFont(new Font(&quot;Lucida Grande&quot;, Font.PLAIN, 11));</span>
+<span class="nc" id="L249">		lblSetRulesCodeSmmells.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L250">		lblSetRulesCodeSmmells.setBounds(6, 11, 138, 28);</span>
+<span class="nc" id="L251">		return lblSetRulesCodeSmmells;</span>
+	}
+	
+	/**
+	 * @return	centered label with content &quot;Welcome to the Code Evaluation App&quot;
+	 */
+	private JLabel createWelcomeLbl() {
+<span class="nc" id="L258">		JLabel lblWelcomeToCEA = new JLabel(&quot;Welcome to the Code Evaluation App&quot;);</span>
+<span class="nc" id="L259">		lblWelcomeToCEA.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L260">		lblWelcomeToCEA.setFont(new Font(&quot;SF Pro&quot;, Font.PLAIN, 20));</span>
+<span class="nc" id="L261">		lblWelcomeToCEA.setBounds(116, 122, 417, 58);</span>
+<span class="nc" id="L262">		return lblWelcomeToCEA;</span>
+	}
+	
+	/**
+	 * @return	centered label with content &quot;Click a menu to interact&quot;
+	 */
+	private JLabel createClickMenuLbl() {
+<span class="nc" id="L269">		JLabel lblClickMenu = new JLabel(&quot;Click a menu to interact&quot;);</span>
+<span class="nc" id="L270">		lblClickMenu.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L271">		lblClickMenu.setFont(new Font(&quot;SF Pro&quot;, Font.PLAIN, 16));</span>
+<span class="nc" id="L272">		lblClickMenu.setBounds(189, 250, 272, 16);</span>
+<span class="nc" id="L273">		return lblClickMenu;</span>
+	}
+
+	/**
+	 * @return	pane that will hold the content
+	 */
+	private JPanel createContentPane() {
+<span class="nc" id="L280">		JPanel contentPane = new JPanel();</span>
+<span class="nc" id="L281">		contentPane.setBounds(161, 0, 650, 455);</span>
+<span class="nc" id="L282">		frame.getContentPane().add(contentPane);</span>
+<span class="nc" id="L283">		contentPane.setLayout(null);</span>
+<span class="nc" id="L284">		return contentPane;</span>
+	}
+
+	/**
+	 * @return	centered label with content &quot;Create Code Smells&quot;
+	 */
+	private JLabel createCreateCodeSmellsLabel() {
+<span class="nc" id="L291">		JLabel lblCreateCodeSmels = new JLabel(&quot;Create Code Smells&quot;);</span>
+<span class="nc" id="L292">		lblCreateCodeSmels.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L293">		lblCreateCodeSmels.setFont(new Font(&quot;Dialog&quot;, Font.PLAIN, 11));</span>
+<span class="nc" id="L294">		lblCreateCodeSmels.setBounds(10, 11, 130, 28);</span>
+<span class="nc" id="L295">		return lblCreateCodeSmels;</span>
+	}
+	
+	/**
+	 * 
+	 * Changes the visible JPanel to the one passed as argument to the 
+	 * 
+	 * @param panel	panel that will be the one visible
+	 */
+	public void menuClicked(JPanel panel) {
+<span class="nc" id="L305">		extract_panel.setVisible(false);</span>
+<span class="nc" id="L306">		visualize_panel.setVisible(false);</span>
+<span class="nc" id="L307">		rules_panel.setVisible(false);</span>
+<span class="nc" id="L308">		codesmells_panel.setVisible(false);</span>
+<span class="nc" id="L309">		set_rules_code_smells_panel.setVisible(false);</span>
+<span class="nc" id="L310">		quality_evaluation_panel.setVisible(false);</span>
+<span class="nc" id="L311">		create_code_smells_panel.setVisible(false);</span>
+		
+<span class="nc" id="L313">		panel.setVisible(true);</span>
+<span class="nc" id="L314">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>Test_CodeQualityAssessor (08/05/2021 16:18:26)</div></body></html>
