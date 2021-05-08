@@ -1,17 +1,17 @@
 package es2sem2021.grupo2.codequalityassessor.metrics.extractors;
 
+import static es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor.getMethodSignature;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import static es2sem2021.grupo2.codequalityassessor.metrics.MetricsExtractor.getMethodSignature;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
