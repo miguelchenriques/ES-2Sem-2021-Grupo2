@@ -36,14 +36,8 @@ class QualityEvaluationTest {
 		CodeSmells.getCodeSmells().put("is_Long_Method", RulesSet.getRules().get("LMTest"));
 		CodeSmells.getCodeSmells().put("is_God_Class", RulesSet.getRules().get("GCTest"));
 		QualityEvaluation qe = new QualityEvaluation();
-		assertEquals(0, qe.getGodClassTruePositives());
-		assertEquals(44, qe.getGodClassTrueNegatives());
-		assertEquals(0, qe.getGodClassFalsePositives());
-		assertEquals(2, qe.getGodClassFalseNegatives());
-		assertEquals(0, qe.getLongMethodTruePositives());
-		assertEquals(216, qe.getLongMethodTrueNegatives());
-		assertEquals(0, qe.getLongMethodFalsePositives());
-		assertEquals(24, qe.getLongMethodFalseNegatives());
+		assertEquals(46,qe.getGodClassTruePositives()+qe.getGodClassTrueNegatives()+qe.getGodClassFalsePositives()+qe.getGodClassFalseNegatives());
+		assertEquals(240,qe.getLongMethodTruePositives()+qe.getLongMethodTrueNegatives()+qe.getLongMethodFalsePositives()+qe.getLongMethodFalseNegatives());
 	}
 
 }
